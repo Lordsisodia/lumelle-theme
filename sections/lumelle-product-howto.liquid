@@ -1,0 +1,415 @@
+{% comment %}
+  Lumelle How To Section - Step by step guide with expandable tips
+{% endcomment %}
+
+{%- style -%}
+.lumelle-howto {
+  padding: 40px 20px;
+}
+
+.lumelle-howto__container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.lumelle-howto__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lumelle-howto__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9999px;
+  background: rgba(253, 212, 220, 0.3);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: #55362A;
+}
+
+.lumelle-howto__time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 9999px;
+  background: rgba(85, 54, 42, 0.1);
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(85, 54, 42, 0.8);
+}
+
+.lumelle-howto__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lumelle-howto__step {
+  border-radius: 16px;
+  border: 1px solid rgba(253, 212, 220, 0.6);
+  background: rgba(253, 212, 220, 0.1);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  gap: 12px;
+}
+
+.lumelle-howto__step:hover {
+  border-color: rgba(253, 212, 220, 0.8);
+}
+
+.lumelle-howto__step.active {
+  border-color: #FDD4DC;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.lumelle-howto__step.active .lumelle-howto__number {
+  background: #55362A;
+  color: white;
+}
+
+.lumelle-howto__step:not(.active) .lumelle-howto__number {
+  background: #FDD4DC;
+  color: #55362A;
+}
+
+.lumelle-howto__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.lumelle-howto__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lumelle-howto__step-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lumelle-howto__step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #55362A;
+}
+
+.lumelle-howto__difficulty {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid;
+  padding: 0 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.lumelle-howto__difficulty--easy {
+  background: #dcfce7;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.lumelle-howto__difficulty--medium {
+  background: #fef3c7;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.lumelle-howto__time-estimate {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(85, 54, 42, 0.6);
+}
+
+.lumelle-howto__body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(85, 54, 42, 0.85);
+}
+
+.lumelle-howto__tips {
+  margin-top: 8px;
+}
+
+.lumelle-howto__tips-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #55362A;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.lumelle-howto__tips-toggle:hover {
+  opacity: 1;
+}
+
+.lumelle-howto__tips-content {
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(253, 212, 220, 0.4);
+  background: rgba(253, 212, 220, 0.05);
+  padding: 12px;
+}
+
+.lumelle-howto__tip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lumelle-howto__tip + .lumelle-howto__tip {
+  margin-top: 8px;
+}
+
+.lumelle-howto__tip-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(85, 54, 42, 0.8);
+}
+
+.lumelle-howto__tip-content {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(85, 54, 42, 0.9);
+}
+
+@media (max-width: 640px) {
+  .lumelle-howto {
+    padding: 24px 16px;
+  }
+}
+{%- endstyle -%}
+
+<div class="lumelle-howto">
+  <div class="lumelle-howto__container">
+    <div class="lumelle-howto__header">
+      <span class="lumelle-howto__badge">Your sign to try this</span>
+      {%- if section.settings.show_time and section.blocks.size > 0 -%}
+        {%- assign time_estimates = '' -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.time_estimate != blank -%}
+            {%- if time_estimates == '' -%}
+              {%- assign time_estimates = block.settings.time_estimate -%}
+            {%- else -%}
+              {%- assign time_estimates = time_estimates | append: ' + ' | append: block.settings.time_estimate -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if time_estimates != '' -%}
+          <span class="lumelle-howto__time">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {{ time_estimates }}
+          </span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <div class="lumelle-howto__steps">
+      {%- for block in section.blocks -%}
+        <div class="lumelle-howto__step" data-step="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          <span class="lumelle-howto__number">{{ forloop.index }}</span>
+          <div class="lumelle-howto__content">
+            <div class="lumelle-howto__step-header">
+              <span class="lumelle-howto__step-title">{{ block.settings.title }}</span>
+              {%- if block.settings.difficulty != 'none' -%}
+                <span class="lumelle-howto__difficulty lumelle-howto__difficulty--{{ block.settings.difficulty }}">
+                  {{ block.settings.difficulty }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.time_estimate != blank -%}
+                <span class="lumelle-howto__time-estimate">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ block.settings.time_estimate }}
+                </span>
+              {%- endif -%}
+            </div>
+            <p class="lumelle-howto__body">{{ block.settings.body }}</p>
+            
+            {%- if block.settings.tip_title != blank -%}
+              <div class="lumelle-howto__tips">
+                <button type="button" class="lumelle-howto__tips-toggle" onclick="this.nextElementSibling.classList.toggle('hidden'); this.classList.toggle('expanded');">
+                  <span class="toggle-text">Pro tips</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="lumelle-howto__tips-content hidden">
+                  <div class="lumelle-howto__tip">
+                    <span class="lumelle-howto__tip-title">{{ block.settings.tip_title }}</span>
+                    <span class="lumelle-howto__tip-content">{{ block.settings.tip_content }}</span>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const steps = document.querySelectorAll('.lumelle-howto__step');
+  const stepElements = document.querySelectorAll('.lumelle-howto__step');
+  
+  // Click to highlight
+  steps.forEach(function(step) {
+    step.addEventListener('click', function() {
+      steps.forEach(function(s) { s.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+  
+  // Intersection Observer for scroll highlighting
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const idx = Array.from(stepElements).indexOf(entry.target);
+        steps.forEach(function(s, i) {
+          s.classList.toggle('active', i === idx);
+        });
+      }
+    });
+  }, { threshold: 0.5, rootMargin: '-100px 0px -50% 0px' });
+  
+  stepElements.forEach(function(el) { observer.observe(el); });
+  
+  // Toggle tips
+  document.querySelectorAll('.lumelle-howto__tips-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var content = this.nextElementSibling;
+      content.classList.toggle('hidden');
+      this.classList.toggle('expanded');
+      var text = this.querySelector('.toggle-text');
+      if (content.classList.contains('hidden')) {
+        text.textContent = 'Pro tips';
+      } else {
+        text.textContent = 'Hide tips';
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle How To",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_time",
+      "label": "Show time estimates",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Step description",
+          "default": "Step description goes here."
+        },
+        {
+          "type": "text",
+          "id": "time_estimate",
+          "label": "Time estimate",
+          "default": "5 mins",
+          "info": "e.g., 5 mins, 10 mins"
+        },
+        {
+          "type": "select",
+          "id": "difficulty",
+          "label": "Difficulty",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "easy", "label": "Easy" },
+            { "value": "medium", "label": "Medium" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "tip_title",
+          "label": "Pro tip title",
+          "default": "Pro tip"
+        },
+        {
+          "type": "textarea",
+          "id": "tip_content",
+          "label": "Pro tip content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle How To",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

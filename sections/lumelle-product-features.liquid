@@ -1,0 +1,494 @@
+{% comment %}
+  Lumelle Feature Callouts - Product features grid or story layout
+{% endcomment %}
+
+{%- style -%}
+.lumelle-features {
+  padding: 64px 20px;
+  background: white;
+}
+
+.lumelle-features__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lumelle-features__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.lumelle-features__eyebrow {
+  display: inline-block;
+  border-radius: 9999px;
+  background: rgba(253, 212, 220, 0.4);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: rgba(85, 54, 42, 0.7);
+  margin-bottom: 16px;
+}
+
+.lumelle-features__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #55362A;
+  margin: 0 0 12px;
+}
+
+.lumelle-features__description {
+  font-size: 16px;
+  color: rgba(85, 54, 42, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Cards Variant */
+.lumelle-features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.lumelle-features__card {
+  border-radius: 16px;
+  border: 1px solid rgba(253, 212, 220, 0.6);
+  background: rgba(253, 212, 220, 0.2);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.lumelle-features__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(253, 212, 220, 0.6);
+  color: #55362A;
+  flex-shrink: 0;
+}
+
+.lumelle-features__card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #55362A;
+  margin-bottom: 4px;
+}
+
+.lumelle-features__card-desc {
+  font-size: 14px;
+  color: rgba(85, 54, 42, 0.75);
+  line-height: 1.5;
+}
+
+/* Story Variant */
+.lumelle-features__story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.lumelle-features__media {
+  border-radius: 24px;
+  border: 1px solid rgba(253, 212, 220, 0.5);
+  background: linear-gradient(135deg, rgba(253, 212, 220, 0.7), white, rgba(253, 212, 220, 0.3));
+  padding: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+.lumelle-features__media-inner {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  position: relative;
+}
+
+.lumelle-features__media img,
+.lumelle-features__media video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lumelle-features__media-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #55362A;
+  backdrop-filter: blur(4px);
+}
+
+.lumelle-features__media-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #55362A;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.lumelle-features__media-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FDD4DC;
+}
+
+.lumelle-features__story-content {
+  border-radius: 24px;
+  border: 1px solid rgba(253, 212, 220, 0.6);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 24px;
+  box-shadow: 0 22px 40px -8px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.lumelle-features__story-content::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(253, 212, 220, 0.6), rgba(253, 212, 220, 0.3), transparent);
+}
+
+.lumelle-features__story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lumelle-features__story-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(253, 212, 220, 0.6);
+  background: linear-gradient(135deg, rgba(255, 246, 243), white, rgba(255, 232, 220, 0.3));
+  transition: all 0.2s ease;
+}
+
+.lumelle-features__story-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+.lumelle-features__story-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FDD4DC, #FDE8DC);
+  color: #55362A;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lumelle-features__story-item-content {
+  flex: 1;
+}
+
+.lumelle-features__story-item-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #55362A;
+  margin-bottom: 4px;
+}
+
+.lumelle-features__story-item-desc {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(85, 54, 42, 0.9);
+}
+
+.lumelle-features__cta {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  border: 1px solid rgba(253, 212, 220, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.lumelle-features__cta-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #55362A;
+}
+
+.lumelle-features__cta-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FDD4DC;
+}
+
+.lumelle-features__cta-btn {
+  background: #55362A;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.lumelle-features__cta-btn:hover {
+  background: rgba(85, 54, 42, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+  .lumelle-features__story {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .lumelle-features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .lumelle-features__title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lumelle-features__grid {
+    grid-template-columns: 1fr;
+  }
+}
+{%- endstyle -%}
+
+<div class="lumelle-features">
+  <div class="lumelle-features__container">
+    <div class="lumelle-features__header">
+      <span class="lumelle-features__eyebrow">{{ section.settings.eyebrow | default: 'Features' }}</span>
+      <h2 class="lumelle-features__title">{{ section.settings.title | default: 'Small details, big results' }}</h2>
+      <p class="lumelle-features__description">{{ section.settings.description | default: 'Thoughtful materials and construction that protect your style and feel great to wear.' }}</p>
+    </div>
+
+    {%- if section.settings.variant == 'cards' -%}
+      <div class="lumelle-features__grid">
+        {%- for block in section.blocks -%}
+          <div class="lumelle-features__card" {{ block.shopify_attributes }}>
+            <div class="lumelle-features__icon">
+              {%- case block.settings.icon -%}
+                {%- when 'droplets' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                {%- when 'heart' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                {%- when 'leaf' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+                {%- when 'crown' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
+                {%- else -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+              {%- endcase -%}
+            </div>
+            <div>
+              <div class="lumelle-features__card-title">{{ block.settings.title }}</div>
+              <div class="lumelle-features__card-desc">{{ block.settings.description }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+    {%- else -%}
+      <div class="lumelle-features__story">
+        <div class="lumelle-features__media">
+          <div class="lumelle-features__media-inner">
+            {%- if section.settings.media != blank -%}
+              <img src="{{ section.settings.media | image_url: width: 600 }}" alt="{{ section.settings.media_alt | default: 'Product feature' }}">
+            {%- else -%}
+              <div style="aspect-ratio: 9/16; background: linear-gradient(135deg, rgba(253,212,220,0.3), rgba(255,255,255,0.5)); display: flex; align-items: center; justify-content: center; color: rgba(85,54,42,0.4);">
+                Add image in settings
+              </div>
+            {%- endif -%}
+            {%- if section.settings.media_label != blank -%}
+              <span class="lumelle-features__media-label">{{ section.settings.media_label }}</span>
+            {%- endif -%}
+            {%- if section.settings.media_badge != blank -%}
+              <span class="lumelle-features__media-badge">
+                <span class="lumelle-features__media-badge-dot"></span>
+                {{ section.settings.media_badge }}
+              </span>
+            {%- endif -%}
+          </div>
+        </div>
+        
+        <div class="lumelle-features__story-content">
+          <div class="lumelle-features__story-list">
+            {%- for block in section.blocks -%}
+              <div class="lumelle-features__story-item">
+                <span class="lumelle-features__story-number">{{ forloop.index }}</span>
+                <div class="lumelle-features__story-item-content">
+                  <div class="lumelle-features__story-item-title">{{ block.settings.title }}</div>
+                  <div class="lumelle-features__story-item-desc">{{ block.settings.description }}</div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          
+          {%- if section.settings.cta_link != blank -%}
+            <div class="lumelle-features__cta">
+              <span class="lumelle-features__cta-label">
+                <span class="lumelle-features__cta-dot"></span>
+                See it in action
+              </span>
+              <a href="{{ section.settings.cta_link }}" class="lumelle-features__cta-btn">
+                Watch routine
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lumelle Features",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "Layout variant",
+      "options": [
+        { "value": "cards", "label": "Cards (4 column grid)" },
+        { "value": "story", "label": "Story (media + list)" }
+      ],
+      "default": "cards"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Features"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Small details, big results"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Thoughtful materials and construction that protect your style and feel great to wear."
+    },
+    {
+      "type": "image_picker",
+      "id": "media",
+      "label": "Media (for story variant)"
+    },
+    {
+      "type": "text",
+      "id": "media_alt",
+      "label": "Media alt text"
+    },
+    {
+      "type": "text",
+      "id": "media_label",
+      "label": "Media label",
+      "info": "Label shown on media (e.g., 'Less breakage')"
+    },
+    {
+      "type": "text",
+      "id": "media_badge",
+      "label": "Media badge",
+      "info": "Badge shown on media (e.g., 'Safe for silk press')"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (cards only)",
+          "options": [
+            { "value": "droplets", "label": "Water/Droplets" },
+            { "value": "heart", "label": "Heart/Comfort" },
+            { "value": "leaf", "label": "Leaf/Reusable" },
+            { "value": "crown", "label": "Crown/Premium" }
+          ],
+          "default": "droplets"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature title",
+          "default": "Waterproof"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Moisture-guard lining keeps styles intact."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle Features",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "droplets", "title": "Waterproof", "description": "Moisture‑guard lining keeps styles intact." } },
+        { "type": "feature", "settings": { "icon": "heart", "title": "Comfort fit", "description": "Soft, secure band — no marks." } },
+        { "type": "feature", "settings": { "icon": "leaf", "title": "Reusable", "description": "Durable build that replaces disposables." } },
+        { "type": "feature", "settings": { "icon": "crown", "title": "Premium feel", "description": "Luxe materials designed to last." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

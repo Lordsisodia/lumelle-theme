@@ -1,0 +1,506 @@
+{% comment %}
+  Lumelle TikTok Section - Matches React FeaturedTikTok component
+  Horizontal scrolling carousel with drag support
+  Supports both hardcoded defaults and admin-configurable video URLs
+{% endcomment %}
+
+{%- style -%}
+  .lumelle-tiktok {
+    background: #FFFFFF;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .lumelle-tiktok__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .lumelle-tiktok__eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    color: #55362A;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .lumelle-tiktok__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: #12100F;
+    margin: 0 0 12px;
+  }
+
+  .lumelle-tiktok__description {
+    font-size: 16px;
+    color: #12100F;
+    opacity: 0.7;
+    margin: 0 0 40px;
+  }
+
+  /* Carousel container with gradient border */
+  .lumelle-tiktok__carousel-wrapper {
+    margin-top: 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(85, 54, 42, 0.15);
+    background: linear-gradient(90deg, #FDEBE3 0%, #FFFFFF 50%, #FDEBE3 100%);
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+
+  /* Horizontal scroll container */
+  .lumelle-tiktok__carousel {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    padding: 4px;
+  }
+
+  .lumelle-tiktok__carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lumelle-tiktok__carousel:active {
+    cursor: grabbing;
+  }
+
+  /* Video card */
+  .lumelle-tiktok__card {
+    flex: 0 0 auto;
+    min-width: min(72vw, 300px);
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  @media (min-width: 992px) {
+    .lumelle-tiktok__card {
+      min-width: min(340px, 26vw);
+    }
+  }
+
+  .lumelle-tiktok__video-wrapper {
+    position: relative;
+    aspect-ratio: 9/16;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .lumelle-tiktok__video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Creator info below video */
+  .lumelle-tiktok__card-info {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .lumelle-tiktok__card-name {
+    font-size: 14px;
+    color: #12100F;
+    opacity: 0.7;
+  }
+
+  .lumelle-tiktok__card-handle {
+    margin-top: 4px;
+  }
+
+  .lumelle-tiktok__card-handle a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid rgba(85, 54, 42, 0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #12100F;
+    opacity: 0.8;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .lumelle-tiktok__card-handle a:hover {
+    background: rgba(253, 235, 227, 0.5);
+    opacity: 1;
+  }
+
+  /* Dots indicator */
+  .lumelle-tiktok__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .lumelle-tiktok__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(85, 54, 42, 0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+  }
+
+  .lumelle-tiktok__dots button.active {
+    background: #55362A;
+    transform: scale(1.2);
+  }
+
+  .lumelle-tiktok__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    padding: 14px 28px;
+    background: #55362A;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .lumelle-tiktok__link:hover {
+    background: #12100F;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .lumelle-tiktok__title {
+      font-size: 32px;
+    }
+  }
+{%- endstyle -%}
+
+{% comment %} Default TikTok videos with creator info {% endcomment %}
+{% assign default_videos = '' | split: '' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7562893092957719830|Shannon Mitchell|@shannon_mitch|https://www.tiktok.com/@shannon_mitch/video/7562893092957719830' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7543668112630058262|Rachel|@rachelsummergreenie._|https://www.tiktok.com/@rachelsummergreenie._/video/7543668112630058262' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7544353160429587734|Random Life UK|@randomlifeuk|https://www.tiktok.com/@randomlifeuk/video/7544353160429587734' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7567328998158585110|Winging Ma Life|@wingingmalife|https://www.tiktok.com/@wingingmalife/video/7567328998158585110' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7566245669250387222|By Latticia|@bylatticia|https://www.tiktok.com/@bylatticia/video/7566245669250387222' %}
+{% assign default_videos = default_videos | push: 'https://www.tiktok.com/embed/v2/7575168979711397142|Hannah Styles|@hannahh.styless|https://www.tiktok.com/@hannahh.styless/video/7575168979711397142' %}
+
+{% comment %} Build video data from settings or use defaults {% endcomment %}
+{% assign video_data = '' | split: '' %}
+
+{% for i in (1..6) %}
+  {% assign url_key = 'video_' | append: i %}
+  {% assign name_key = 'video_' | append: i | append: '_name' %}
+  {% assign handle_key = 'video_' | append: i | append: '_handle' %}
+  
+  {% assign video_url = section.settings[url_key] %}
+  {% assign video_name = section.settings[name_key] %}
+  {% assign video_handle = section.settings[handle_key] %}
+  
+  {% if video_url != blank and video_url contains 'tiktok.com' %}
+    {% assign video_item = video_url | append: '|' | append: video_name | append: '|' | append: video_handle | append: '|' | append: video_url %}
+    {% assign video_data = video_data | push: video_item %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} If no custom videos set, use defaults {% endcomment %}
+{% if video_data.size == 0 %}
+  {% assign video_data = default_videos %}
+{% endif %}
+
+<section class="lumelle-tiktok">
+  <div class="lumelle-tiktok__container">
+    <p class="lumelle-tiktok__eyebrow">{{ section.settings.eyebrow | default: 'As seen on TikTok' }}</p>
+    <h2 class="lumelle-tiktok__title">{{ section.settings.title | default: 'Creators using Lumelle' }}</h2>
+    <p class="lumelle-tiktok__description">{{ section.settings.description | default: 'Swipe to watch a few of our favourite videos.' }}</p>
+    
+    <div class="lumelle-tiktok__carousel-wrapper">
+      <div class="lumelle-tiktok__carousel" id="tiktok-carousel">
+        {% for video_item in video_data %}
+          {% assign video_parts = video_item | split: '|' %}
+          {% assign video_url = video_parts[0] %}
+          {% assign video_name = video_parts[1] %}
+          {% assign video_handle = video_parts[2] %}
+          {% assign video_link = video_parts[3] %}
+          
+          <div class="lumelle-tiktok__card">
+            <div class="lumelle-tiktok__video-wrapper">
+              <iframe
+                src="{{ video_url }}?embed_source=lite&lang=en"
+                title="{{ video_name }} TikTok embed"
+                allow="encrypted-media; fullscreen; clipboard-write"
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="lumelle-tiktok__card-info">
+              <p class="lumelle-tiktok__card-name">{{ video_name }} &bull; {{ video_handle }}</p>
+              <div class="lumelle-tiktok__card-handle">
+                <a href="{{ video_link }}" target="_blank" rel="noreferrer">
+                  Watch on TikTok
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="lumelle-tiktok__dots" id="tiktok-dots">
+      {% for video_item in video_data %}
+        <button class="{% if forloop.index0 == 0 %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to TikTok slide {{ forloop.index }}"></button>
+      {% endfor %}
+    </div>
+    
+    <a href="https://www.tiktok.com/@lumelleuk" target="_blank" class="lumelle-tiktok__link">
+      <span>&#127925;</span>
+      <span>{{ section.settings.link_text | default: 'Watch more on TikTok' }}</span>
+    </a>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var carousel = document.getElementById('tiktok-carousel');
+    var dots = document.querySelectorAll('.lumelle-tiktok__dots button');
+    
+    if (!carousel) return;
+    
+    var isDown = false;
+    var startX;
+    var scrollLeft;
+    
+    // Mouse drag functionality
+    carousel.addEventListener('mousedown', function(e) {
+      isDown = true;
+      carousel.style.cursor = 'grabbing';
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+    
+    carousel.addEventListener('mouseleave', function() {
+      isDown = false;
+      carousel.style.cursor = 'grab';
+    });
+    
+    carousel.addEventListener('mouseup', function() {
+      isDown = false;
+      carousel.style.cursor = 'grab';
+    });
+    
+    carousel.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - carousel.offsetLeft;
+      var walk = (x - startX) * 2;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+    
+    // Scroll snap and dot sync
+    carousel.addEventListener('scroll', function() {
+      var cards = carousel.querySelectorAll('.lumelle-tiktok__card');
+      if (!cards.length) return;
+      
+      var scrollCenter = carousel.scrollLeft + carousel.offsetWidth / 2;
+      var closestIndex = 0;
+      var closestDistance = Infinity;
+      
+      cards.forEach(function(card, index) {
+        var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        var distance = Math.abs(cardCenter - scrollCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+      
+      dots.forEach(function(dot, index) {
+        dot.classList.toggle('active', index === closestIndex);
+      });
+    });
+    
+    // Dot click navigation
+    dots.forEach(function(dot, index) {
+      dot.addEventListener('click', function() {
+        var cards = carousel.querySelectorAll('.lumelle-tiktok__card');
+        if (!cards[index]) return;
+        
+        var card = cards[index];
+        var offset = card.offsetLeft - (carousel.offsetWidth - card.offsetWidth) / 2;
+        carousel.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle TikTok",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "As seen on TikTok"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Creators using Lumelle"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Swipe to watch a few of our favourite videos."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Watch more on TikTok"
+    },
+    {
+      "type": "header",
+      "content": "TikTok Videos",
+      "info": "Enter TikTok embed URLs. Get the embed URL from a TikTok video: Share → Embed → Copy URL. Leave empty to use default videos."
+    },
+    {
+      "type": "text",
+      "id": "video_1",
+      "label": "Video 1 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_1_name",
+      "label": "Video 1 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_1_handle",
+      "label": "Video 1 Handle",
+      "placeholder": "@username"
+    },
+    {
+      "type": "text",
+      "id": "video_2",
+      "label": "Video 2 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_2_name",
+      "label": "Video 2 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_2_handle",
+      "label": "Video 2 Handle",
+      "placeholder": "@username"
+    },
+    {
+      "type": "text",
+      "id": "video_3",
+      "label": "Video 3 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_3_name",
+      "label": "Video 3 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_3_handle",
+      "label": "Video 3 Handle",
+      "placeholder": "@username"
+    },
+    {
+      "type": "text",
+      "id": "video_4",
+      "label": "Video 4 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_4_name",
+      "label": "Video 4 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_4_handle",
+      "label": "Video 4 Handle",
+      "placeholder": "@username"
+    },
+    {
+      "type": "text",
+      "id": "video_5",
+      "label": "Video 5 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_5_name",
+      "label": "Video 5 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_5_handle",
+      "label": "Video 5 Handle",
+      "placeholder": "@username"
+    },
+    {
+      "type": "text",
+      "id": "video_6",
+      "label": "Video 6 URL",
+      "placeholder": "https://www.tiktok.com/embed/v2/..."
+    },
+    {
+      "type": "text",
+      "id": "video_6_name",
+      "label": "Video 6 Name",
+      "placeholder": "Creator Name"
+    },
+    {
+      "type": "text",
+      "id": "video_6_handle",
+      "label": "Video 6 Handle",
+      "placeholder": "@username"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle TikTok"
+    }
+  ]
+}
+{% endschema %}

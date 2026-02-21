@@ -1,0 +1,30 @@
+#react-footer footer {
+  padding-top: 44px !important;
+  padding-bottom: 44px !important;
+}
+
+#react-footer footer .text-2xl {
+  font-size: 1.25rem !important;
+}
+
+#react-footer footer .h-12 {
+  height: 44px !important;
+  width: 44px !important;
+}
+
+#react-footer footer .py-14 {
+  padding-top: 2.75rem !important;
+  padding-bottom: 2.75rem !important;
+}
+
+@media screen and (max-width: 749px) {
+  #react-footer footer {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+  
+  #react-footer footer .py-14 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}

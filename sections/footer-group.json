@@ -1,0 +1,12 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "lumelle-react-footer": {
+      "type": "lumelle-react-footer"
+    }
+  },
+  "order": [
+    "lumelle-react-footer"
+  ]
+}

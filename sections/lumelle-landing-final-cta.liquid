@@ -1,0 +1,163 @@
+{% comment %}
+  Lumelle Final CTA Section - React version
+{% endcomment %}
+
+<div id="react-cta"></div>
+
+{%- style -%}
+.lumelle-final-cta {
+    background: linear-gradient(135deg, #F9D8D0 0%, #FCEBE3 45%, #FDE7DA 100%);
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .lumelle-final-cta__container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .lumelle-final-cta__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: #55362A;
+    margin: 0 0 16px;
+    line-height: 1.2;
+  }
+
+  .lumelle-final-cta__subtitle {
+    font-size: 20px;
+    color: #55362A;
+    opacity: 0.8;
+    margin: 0 0 32px;
+  }
+
+  .lumelle-final-cta__button {
+    display: inline-block;
+    background: #55362A;
+    color: #FFFFFF;
+    padding: 18px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .lumelle-final-cta__button:hover {
+    background: #3d2a1f;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(85, 54, 42, 0.3);
+  }
+
+  .lumelle-final-cta__features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .lumelle-final-cta__feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #55362A;
+  }
+
+  .lumelle-final-cta__feature-icon {
+    width: 20px;
+    height: 20px;
+    background: #55362A;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .lumelle-final-cta {
+      padding: 60px 16px;
+    }
+
+    .lumelle-final-cta__title {
+      font-size: 32px;
+    }
+
+    .lumelle-final-cta__features {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+{%- endstyle -%}
+
+<section class="lumelle-final-cta">
+  <div class="lumelle-final-cta__container">
+    <h2 class="lumelle-final-cta__title">
+      {{ section.settings.title | default: 'Ready to protect your style?' }}
+    </h2>
+    <p class="lumelle-final-cta__subtitle">
+      {{ section.settings.subtitle | default: 'Join thousands who keep their hair flawless every shower.' }}
+    </p>
+    <a href="{{ section.settings.link | default: '/collections/all' }}" class="lumelle-final-cta__button">
+      {{ section.settings.button | default: 'Shop Now' }}
+    </a>
+    
+    <div class="lumelle-final-cta__features">
+      <div class="lumelle-final-cta__feature">
+        <span class="lumelle-final-cta__feature-icon">✓</span>
+        <span>Free shipping over £20</span>
+      </div>
+      <div class="lumelle-final-cta__feature">
+        <span class="lumelle-final-cta__feature-icon">✓</span>
+        <span>30-day returns</span>
+      </div>
+      <div class="lumelle-final-cta__feature">
+        <span class="lumelle-final-cta__feature-icon">✓</span>
+        <span>Ships in 48 hours</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumelle Final CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready to protect your style?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Join thousands who keep their hair flawless every shower."
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle Final CTA"
+    }
+  ]
+}
+{% endschema %}

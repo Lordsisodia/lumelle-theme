@@ -1,0 +1,386 @@
+{% comment %} Lumelle Hero Section {% endcomment %}
+{%- style -%}
+  .lumelle-hero {
+    position: relative;
+    min-height: 70vh;
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(253,212,220,0.1) 50%, rgba(253,212,220,0.25) 100%);
+    overflow: hidden;
+  }
+  
+  @media (min-width: 768px) {
+    .lumelle-hero {
+      min-height: 76vh;
+    }
+  }
+  
+  .lumelle-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  
+  .lumelle-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    brightness: 0.95;
+  }
+  
+  .lumelle-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    z-index: 1;
+  }
+  
+  @media (max-width: 1023px) {
+    .lumelle-hero {
+      min-height: auto;
+    }
+    .lumelle-hero__overlay {
+      background: linear-gradient(180deg, rgba(247,239,232,0.5) 0%, rgba(247,239,232,0.3) 32%, rgba(247,239,232,0.12) 55%, transparent 100%);
+      backdrop-filter: blur(1px);
+    }
+  }
+  
+  .lumelle-hero__content {
+    position: relative;
+    z-index: 10;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+    .lumelle-hero__content {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .lumelle-hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+  
+  .lumelle-hero__text {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+  }
+  
+  @media (min-width: 768px) {
+    .lumelle-hero__text {
+      max-width: 672px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .lumelle-hero__text {
+      max-width: none;
+      margin: 0;
+      text-align: left;
+      padding: 0;
+    }
+  }
+  
+  .lumelle-hero__trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    min-width: 300px;
+    justify-content: center;
+  }
+  
+  @media (min-width: 1024px) {
+    .lumelle-hero__trust-badge {
+      justify-content: flex-start;
+    }
+  }
+  
+  .lumelle-hero__avatars {
+    display: flex;
+    margin-left: -0.375rem;
+  }
+  
+  .lumelle-hero__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    margin-left: -6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .lumelle-hero__avatar:first-child {
+    margin-left: 0;
+  }
+  
+  .lumelle-hero__trust-text {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(85,54,42,0.8);
+    white-space: nowrap;
+    padding-left: 0.25rem;
+  }
+  
+  .lumelle-hero__headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #55362A;
+    margin-top: 1rem;
+    white-space: pre-line;
+  }
+  
+  @media (min-width: 640px) {
+    .lumelle-hero__headline {
+      font-size: 2.25rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .lumelle-hero__headline {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .lumelle-hero__headline {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .lumelle-hero__headline {
+      font-size: 3.75rem;
+    }
+  }
+  
+  .lumelle-hero__subhead {
+    font-size: 1rem;
+    color: rgba(85,54,42,0.8);
+    margin-top: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .lumelle-hero__subhead {
+      font-size: 1.125rem;
+    }
+  }
+  
+  .lumelle-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #55362A;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.15s ease;
+    text-decoration: none;
+    margin-top: 1.5rem;
+  }
+  
+  .lumelle-hero__cta:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
+  
+  .lumelle-hero__stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+    align-items: center;
+  }
+  
+  .lumelle-hero__star {
+    width: 16px;
+    height: 16px;
+    color: #f59e0b;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.9));
+  }
+  
+  .lumelle-hero__rating {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #55362A;
+    margin-left: 0.5rem;
+  }
+  
+  .lumelle-hero__product-card {
+    display: none;
+    max-width: 520px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 2.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  }
+  
+  @media (min-width: 1024px) {
+    .lumelle-hero__product-card {
+      display: block;
+    }
+  }
+  
+  .lumelle-hero__product-image {
+    border-radius: 3rem;
+    background: rgba(253,212,220,0.15);
+    overflow: hidden;
+  }
+  
+  .lumelle-hero__product-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+{%- endstyle -%}
+
+<section class="lumelle-hero">
+  <div id="react-hero"></div>
+  <div class="lumelle-hero__bg">
+    {%- if section.settings.background_image != blank -%}
+      <img 
+        src="{{ section.settings.background_image | image_url: width: 2400 }}"
+        srcset="{{ section.settings.background_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.background_image | image_url: width: 1920 }} 1920w,
+                {{ section.settings.background_image | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt=""
+        loading="eager"
+        decoding="async"
+      >
+    {%- endif -%}
+    <div class="lumelle-hero__overlay"></div>
+  </div>
+  
+  <div class="lumelle-hero__content">
+    <div class="lumelle-hero__grid">
+      <div class="lumelle-hero__text">
+        <div class="lumelle-hero__trust-badge">
+          <div class="lumelle-hero__avatars">
+            <img src="{{ 'avatar-shannon.jpg' | asset_url }}" alt="" class="lumelle-hero__avatar" loading="lazy">
+            <img src="{{ 'avatar-rachel.jpg' | asset_url }}" alt="" class="lumelle-hero__avatar" loading="lazy">
+            <img src="{{ 'avatar-jade.jpg' | asset_url }}" alt="" class="lumelle-hero__avatar" loading="lazy">
+          </div>
+          <span class="lumelle-hero__trust-text">{{ section.settings.trust_text | default: 'Trusted by 10k+ users' }}</span>
+        </div>
+        
+        <h1 class="lumelle-hero__headline">{{ section.settings.headline | default: 'Creator-grade shower caps that keep silk presses flawless' }}</h1>
+        
+        <p class="lumelle-hero__subhead">{{ section.settings.subheadline | default: 'The luxury shower cap that protects your hairstyle, wash after wash.' }}</p>
+        
+        <a href="{{ section.settings.cta_link | default: '/products/shower-cap' }}" class="lumelle-hero__cta">
+          {{ section.settings.cta_text | default: 'Shop Now' }}
+        </a>
+        
+        <div class="lumelle-hero__stars">
+          {% for i in (1..5) %}
+            <svg class="lumelle-hero__star" viewBox="0 0 24 24" fill="currentColor" stroke="white" stroke-width="1">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          {% endfor %}
+          <span class="lumelle-hero__rating">4.8 (100+)</span>
+        </div>
+      </div>
+      
+      <div class="lumelle-hero__product">
+        <div class="lumelle-hero__product-card">
+          <div class="lumelle-hero__product-image">
+            {%- if section.settings.product_image != blank -%}
+              <img 
+                src="{{ section.settings.product_image | image_url: width: 900 }}"
+                alt="Lumelle shower cap"
+                loading="eager"
+                decoding="async"
+              >
+            {%- else -%}
+              <div style="padding: 3rem; text-align: center; color: #55362A;">
+                Product Image
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumelle Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Creator-grade shower caps that keep silk presses flawless"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "The luxury shower cap that protects your hairstyle, wash after wash."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Link"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust Badge Text",
+      "default": "Trusted by 10k+ users"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle Hero"
+    }
+  ]
+}
+{% endschema %}
