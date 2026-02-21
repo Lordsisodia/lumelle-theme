@@ -1,19 +1,19 @@
 {
   "sections": {
     "hero": {
-      "type": "lumelle-hero",
+      "type": "lumelle-react-hero",
       "settings": {}
     },
     "trust_bar": {
-      "type": "lumelle-landing-trust-bar",
+      "type": "lumelle-react-trust-bar",
       "settings": {}
     },
     "product_spotlight": {
-      "type": "lumelle-product-spotlight",
+      "type": "lumelle-react-product-spotlight",
       "settings": {}
     },
     "reviews": {
-      "type": "lumelle-landing-reviews",
+      "type": "lumelle-react-reviews",
       "settings": {}
     },
     "tiktok": {
@@ -21,19 +21,19 @@
       "settings": {}
     },
     "bundle_cards": {
-      "type": "lumelle-bundle-cards",
-      "settings": {}
-    },
-    "final_cta": {
-      "type": "lumelle-landing-final-cta",
-      "settings": {}
-    },
-    "email_capture": {
-      "type": "lumelle-landing-email-capture",
+      "type": "lumelle-react-bundle-cards",
       "settings": {}
     },
     "faq": {
-      "type": "lumelle-landing-faq",
+      "type": "lumelle-react-faq",
+      "settings": {}
+    },
+    "final_cta": {
+      "type": "lumelle-react-cta",
+      "settings": {}
+    },
+    "email_capture": {
+      "type": "lumelle-react-email",
       "settings": {}
     },
     "footer": {
@@ -48,9 +48,9 @@
     "reviews",
     "tiktok",
     "bundle_cards",
-    "email_capture",
     "faq",
     "final_cta",
+    "email_capture",
     "footer"
   ]
 }
