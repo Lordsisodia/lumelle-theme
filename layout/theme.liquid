@@ -27,14 +27,42 @@
         theme: {
           extend: {
             colors: {
+              // Legacy brand colors
               'semantic-legacy-brand-blush': '#FDD4DC',
               'semantic-legacy-brand-cocoa': '#55362A',
               'semantic-legacy-brand-peach': '#FBC7B2',
+              
+              // Text colors
               'semantic-text-primary': '#55362A',
+              'semantic-text-muted': '#8B7355',
+              
+              // Accent colors
               'semantic-accent-cta': '#55362A',
+              
+              // Brand colors (used extensively in components)
+              'brand-porcelain': '#F8F6F4',
+              'brand-peach': '#FBC7B2',
+              'brand-blush': '#FDD4DC',
+              
+              // Background colors
+              'semantic-bg-subtle': '#FAF9F7',
+              'semantic-bg-secondary': '#55362A',
+              'semantic-bg-tertiary': '#F0EBE6',
+              'semantic-bg-surface': '#FFFFFF',
+              'semantic-bg-canvas': '#F8F6F4',
+              'semantic-bg-hero-gradient': 'linear-gradient(180deg, #FAF9F7 0%, #FFFFFF 100%)',
+              
+              // Border colors
+              'semantic-border-accent': '#FDD4DC',
+              'semantic-border-subtle': '#E8E4DF',
+            },
+            boxShadow: {
+              'soft': '0 4px 12px -2px rgba(85, 54, 42, 0.08), 0 2px 6px -2px rgba(85, 54, 42, 0.04)',
+              'soft-lg': '0 12px 24px -8px rgba(85, 54, 42, 0.12), 0 4px 12px -4px rgba(85, 54, 42, 0.06)',
             },
             fontFamily: {
               'heading': ['Playfair Display', 'Georgia', 'serif'],
+              'body': ['Inter', 'system-ui', 'sans-serif'],
             }
           }
         }
@@ -67,28 +95,28 @@
     <!-- Image URLs for React components - must load before bundle -->
     <script>
       window.LUMELLE_IMAGES = {
-        'page9-image.webp': '{{ "page9-image.webp" | asset_url }}',
-        'hero-desktop.webp': '{{ "hero-desktop.webp" | asset_url }}',
-        'hero-main-960.webp': '{{ "hero-main-960.webp" | asset_url }}',
-        'product-main.webp': '{{ "product-main.webp" | asset_url }}',
-        'product-feature-02.webp': '{{ "product-feature-02.webp" | asset_url }}',
-        'product-feature-03.webp': '{{ "product-feature-03.webp" | asset_url }}',
-        'product-feature-04.webp': '{{ "product-feature-04.webp" | asset_url }}',
-        'product-feature-05.webp': '{{ "product-feature-05.webp" | asset_url }}',
-        'product-feature-06.webp': '{{ "product-feature-06.webp" | asset_url }}',
-        'product-feature-07.webp': '{{ "product-feature-07.webp" | asset_url }}',
-        'steam-shield-new.webp': '{{ "steam-shield-new.webp" | asset_url }}',
-        'photo-for-page-3v2.webp': '{{ "photo-for-page-3v2.webp" | asset_url }}',
-        'curler-1.webp': '{{ "curler-1.webp" | asset_url }}',
-        'curler-3.webp': '{{ "curler-3.webp" | asset_url }}',
-        'curler-5.webp': '{{ "curler-5.webp" | asset_url }}',
-        'curler-6.webp': '{{ "curler-6.webp" | asset_url }}',
-        'towel-hero.webp': '{{ "towel-hero.webp" | asset_url }}',
-        'avatar-shannon.jpg': '{{ "avatar-shannon.jpg" | asset_url }}',
-        'avatar-rachel.jpg': '{{ "avatar-rachel.jpg" | asset_url }}',
-        'avatar-randomlife.jpg': '{{ "avatar-randomlife.jpg" | asset_url }}',
-        'avatar-jade.jpg': '{{ "avatar-jade.jpg" | asset_url }}',
-        'avatar-maya.jpg': '{{ "avatar-maya.jpg" | asset_url }}',
+        'page9-image.webp': '{{ "uploads/luminele/page9-image.webp" | asset_url }}',
+        'hero-desktop.webp': '{{ "uploads/luminele/hero-desktop.webp" | asset_url }}',
+        'hero-main-960.webp': '{{ "uploads/luminele/hero-main-960.webp" | asset_url }}',
+        'product-main.webp': '{{ "uploads/luminele/product-main.webp" | asset_url }}',
+        'product-feature-02.webp': '{{ "uploads/luminele/product-feature-02.webp" | asset_url }}',
+        'product-feature-03.webp': '{{ "uploads/luminele/product-feature-03.webp" | asset_url }}',
+        'product-feature-04.webp': '{{ "uploads/luminele/product-feature-04.webp" | asset_url }}',
+        'product-feature-05.webp': '{{ "uploads/luminele/product-feature-05.webp" | asset_url }}',
+        'product-feature-06.webp': '{{ "uploads/luminele/product-feature-06.webp" | asset_url }}',
+        'product-feature-07.webp': '{{ "uploads/luminele/product-feature-07.webp" | asset_url }}',
+        'steam-shield-new.webp': '{{ "uploads/luminele/steam-shield-new.webp" | asset_url }}',
+        'photo-for-page-3v2.webp': '{{ "uploads/luminele/photo-for-page-3v2.webp" | asset_url }}',
+        'curler-1.webp': '{{ "uploads/curler/1.webp" | asset_url }}',
+        'curler-3.webp': '{{ "uploads/curler/3.webp" | asset_url }}',
+        'curler-5.webp': '{{ "uploads/curler/5.webp" | asset_url }}',
+        'curler-6.webp': '{{ "uploads/curler/6.webp" | asset_url }}',
+        'towel-hero.webp': '{{ "uploads/towel/Hero.webp" | asset_url }}',
+        'avatar-shannon.jpg': '{{ "images/avatar-shannon.jpg" | asset_url }}',
+        'avatar-rachel.jpg': '{{ "images/avatar-rachel.jpg" | asset_url }}',
+        'avatar-randomlife.jpg': '{{ "images/avatar-randomlife.jpg" | asset_url }}',
+        'avatar-jade.jpg': '{{ "images/avatar-jade.jpg" | asset_url }}',
+        'avatar-maya.jpg': '{{ "images/avatar-maya.jpg" | asset_url }}',
       };
     </script>
     <link rel="stylesheet" href="{{ 'lumelle-footer-override.css' | asset_url }}">

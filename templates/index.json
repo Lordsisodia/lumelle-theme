@@ -8,68 +8,29 @@
       "type": "lumelle-landing-trust-bar",
       "settings": {}
     },
-    "benefits": {
-      "type": "lumelle-landing-benefits",
-      "settings": {
-        "eyebrow": "Why you'll love it",
-        "title": "Effortless to put on, frizz-free when you take it off",
-        "description": "Your small daily luxury — designed to seal out steam and keep styles smooth.",
-        "benefit_1_title": "Waterproof",
-        "benefit_1_text": "Keeps your style dry in the shower",
-        "benefit_2_title": "Satin-lined",
-        "benefit_2_text": "Soft satin prevents friction and breakage",
-        "benefit_3_title": "Reusable",
-        "benefit_3_text": "Wipe clean and use again and again",
-        "benefit_4_title": "Eco-friendly",
-        "benefit_4_text": "Better for the planet than disposable caps"
-      }
+    "product_spotlight": {
+      "type": "lumelle-product-spotlight",
+      "settings": {}
     },
     "reviews": {
       "type": "lumelle-landing-reviews",
-      "settings": {
-        "title": "Loved by thousands",
-        "subtitle": "Join 1000+ happy customers",
-        "review_1": "Best shower cap I've ever used! Keeps my silk press completely dry.",
-        "author_1": "Sarah M.",
-        "review_2": "Game changer for my curly hair routine. No more frizz!",
-        "author_2": "Michelle K.",
-        "review_3": "Finally a shower cap that actually works. Worth every penny.",
-        "author_3": "Jessica R.",
-        "review_4": "Love the satin lining - so gentle on my hair.",
-        "author_4": "Amanda L.",
-        "review_5": "Reusable and easy to clean. Much better for the environment.",
-        "author_5": "Rachel T.",
-        "review_6": "Perfect fit, stays in place, and keeps my braids protected.",
-        "author_6": "Kylie P."
-      }
+      "settings": {}
     },
     "tiktok": {
       "type": "lumelle-landing-tiktok",
-      "settings": {
-        "eyebrow": "As seen on TikTok",
-        "title": "Creators using Lumelle",
-        "description": "Swipe to watch a few of our favourite videos.",
-        "link_text": "Watch more on TikTok"
-      }
+      "settings": {}
+    },
+    "bundle_cards": {
+      "type": "lumelle-bundle-cards",
+      "settings": {}
     },
     "final_cta": {
       "type": "lumelle-landing-final-cta",
-      "settings": {
-        "title": "Ready to protect your style?",
-        "subtitle": "Join thousands who keep their hair flawless every shower.",
-        "button": "Shop Now",
-        "link": "shopify://collections/all"
-      }
+      "settings": {}
     },
     "email_capture": {
       "type": "lumelle-landing-email-capture",
-      "settings": {
-        "title": "Get 10% off your first order",
-        "subtitle": "Join for exclusive creator tutorials, drops, and early access.",
-        "placeholder": "Enter your email",
-        "button": "Unlock 10% Off",
-        "trust": "Secure signup. No spam, unsubscribe anytime."
-      }
+      "settings": {}
     },
     "faq": {
       "type": "lumelle-landing-faq",
@@ -83,9 +44,10 @@
   "order": [
     "hero",
     "trust_bar",
-    "benefits",
+    "product_spotlight",
     "reviews",
     "tiktok",
+    "bundle_cards",
     "final_cta",
     "email_capture",
     "faq",
