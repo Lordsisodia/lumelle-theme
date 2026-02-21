@@ -51,10 +51,14 @@
               'semantic-bg-surface': '#FFFFFF',
               'semantic-bg-canvas': '#F8F6F4',
               'semantic-bg-hero-gradient': 'linear-gradient(180deg, #FAF9F7 0%, #FFFFFF 100%)',
+              'semantic-bg-cream': '#FDF8F6',
               
               // Border colors
               'semantic-border-accent': '#FDD4DC',
               'semantic-border-subtle': '#E8E4DF',
+              
+              // Legacy brand blush (with opacity support)
+              'semantic-legacy-brand-blush': '#FDD4DC',
             },
             boxShadow: {
               'soft': '0 4px 12px -2px rgba(85, 54, 42, 0.08), 0 2px 6px -2px rgba(85, 54, 42, 0.04)',
@@ -63,10 +67,80 @@
             fontFamily: {
               'heading': ['Playfair Display', 'Georgia', 'serif'],
               'body': ['Inter', 'system-ui', 'sans-serif'],
+            },
+            fontSize: {
+              'xs': ['12px', { lineHeight: '1.5' }],
+              'sm': ['14px', { lineHeight: '1.5' }],
+              'base': ['16px', { lineHeight: '1.6' }],
+              'lg': ['18px', { lineHeight: '1.6' }],
+              'xl': ['20px', { lineHeight: '1.5' }],
+              '2xl': ['24px', { lineHeight: '1.4' }],
+              '3xl': ['30px', { lineHeight: '1.3' }],
+              '4xl': ['36px', { lineHeight: '1.2' }],
+              '5xl': ['42px', { lineHeight: '1.2' }],
             }
           }
         }
       }
+    </script>
+    
+    <style>
+      /* Scrolling marquee for TrustBar */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      
+      /* Flashing announcement bar for header */
+      .announcement-bar[data-flashing] .announcement-bar__message {
+        animation: flash-text 3s infinite;
+      }
+      @keyframes flash-text {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+      
+      /* Footer fixes */
+      .shopify-section-footer {
+        margin-top: 0 !important;
+      }
+      
+      /* Ensure React sections don't have double spacing */
+      #react-hero, #react-trust-bar, #react-benefits, #react-product-spotlight, #react-reviews, #react-tiktok, #react-bundle-cards, #react-cta, #react-faq, #react-footer {
+        min-height: 1px;
+      }
+    </style>
+    
+    <script>
+      // Make announcement bar flash between messages
+      document.addEventListener('DOMContentLoaded', function() {
+        var messages = [
+          'Buy 2, save 10% • Shop now',
+          'Free shipping on orders over £20',
+          '30-day money-back guarantee'
+        ];
+        
+        var bar = document.querySelector('.announcement-bar');
+        if (!bar) return;
+        
+        bar.setAttribute('data-flashing', 'true');
+        
+        var msgEl = bar.querySelector('.announcement-bar__message');
+        if (!msgEl) return;
+        
+        var currentIndex = 0;
+        
+        function updateMessage() {
+          msgEl.innerHTML = '<span>' + messages[currentIndex] + '</span>';
+          currentIndex = (currentIndex + 1) % messages.length;
+        }
+        
+        // Initial message
+        updateMessage();
+        
+        // Change every 3 seconds
+        setInterval(updateMessage, 3000);
+      });
     </script>
 
     <title>

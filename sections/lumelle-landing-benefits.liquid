@@ -1,153 +1,20 @@
 {% comment %}
   Lumelle Benefits Section - React version
+  Pink background for "Why you'll love it" section
 {% endcomment %}
 
-<div id="react-benefits"></div>
-
 {%- style -%}
-.lumelle-benefits {
-    background: #FDD4DC;
-    padding: 80px 20px;
-  }
-
-  .lumelle-benefits__container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .lumelle-benefits__header {
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
-  .lumelle-benefits__eyebrow {
-    font-size: 14px;
-    font-weight: 600;
-    color: #55362A;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
-
-  .lumelle-benefits__title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 42px;
-    font-weight: 600;
-    color: #55362A;
-    margin: 0 0 16px;
-    line-height: 1.2;
-  }
-
-  .lumelle-benefits__description {
-    font-size: 18px;
-    color: #55362A;
-    opacity: 0.8;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .lumelle-benefits__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-  }
-
-  .lumelle-benefits__card {
-    background: #FFFFFF;
-    padding: 30px 24px;
-    border-radius: 16px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .lumelle-benefits__card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(85, 54, 42, 0.15);
-  }
-
-  .lumelle-benefits__card-icon {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #FBC7B2 0%, #FDD4DC 100%);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 28px;
-  }
-
-  .lumelle-benefits__card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #55362A;
-    margin: 0 0 8px;
-  }
-
-  .lumelle-benefits__card-text {
-    font-size: 14px;
-    color: #55362A;
-    opacity: 0.7;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  @media (max-width: 1024px) {
-    .lumelle-benefits__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .lumelle-benefits__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .lumelle-benefits__title {
-      font-size: 32px;
-    }
-  }
+.lumelle-benefits-section {
+  background: #FDD4DC;
+}
+.lumelle-benefits-section > div {
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
 {%- endstyle -%}
 
-<section class="lumelle-benefits">
-  <div class="lumelle-benefits__container">
-    <div class="lumelle-benefits__header">
-      <p class="lumelle-benefits__eyebrow">{{ section.settings.eyebrow | default: "Why you'll love it" }}</p>
-      <h2 class="lumelle-benefits__title">{{ section.settings.title | default: 'Effortless to put on, frizz-free when you take it off' }}</h2>
-      <p class="lumelle-benefits__description">{{ section.settings.description | default: 'Your small daily luxury — designed to seal out steam and keep styles smooth.' }}</p>
-    </div>
-    
-    <div class="lumelle-benefits__grid">
-      {% for i in (1..4) %}
-        <div class="lumelle-benefits__card">
-          <div class="lumelle-benefits__card-icon">
-            {% case i %}
-              {% when 1 %}💧
-              {% when 2 %}✨
-              {% when 3 %}🌙
-              {% when 4 %}♻️
-            {% endcase %}
-          </div>
-          <h3 class="lumelle-benefits__card-title">
-            {% case i %}
-              {% when 1 %}{{ section.settings.benefit_1_title | default: 'Waterproof' }}
-              {% when 2 %}{{ section.settings.benefit_2_title | default: 'Satin-lined' }}
-              {% when 3 %}{{ section.settings.benefit_3_title | default: 'Reusable' }}
-              {% when 4 %}{{ section.settings.benefit_4_title | default: 'Eco-friendly' }}
-            {% endcase %}
-          </h3>
-          <p class="lumelle-benefits__card-text">
-            {% case i %}
-              {% when 1 %}{{ section.settings.benefit_1_text | default: 'Keeps your style dry in the shower' }}
-              {% when 2 %}{{ section.settings.benefit_2_text | default: 'Soft satin prevents friction and breakage' }}
-              {% when 3 %}{{ section.settings.benefit_3_text | default: 'Wipe clean and use again and again' }}
-              {% when 4 %}{{ section.settings.benefit_4_text | default: 'Better for the planet than disposable caps' }}
-            {% endcase %}
-          </p>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
+<section class="lumelle-benefits-section">
+  <div id="react-benefits"></div>
 </section>
 
 {% schema %}

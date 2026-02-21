@@ -1,143 +1,16 @@
 {% comment %}
   Lumelle FAQ Section - Matches React FaqSectionShop component
-  Updated: 2026-02-20
 {% endcomment %}
 
-<div id="react-faq"></div>
-
 {%- style -%}
-  .lumelle-faq {
-    background: #FFFFFF;
-    padding: 80px 20px;
-  }
-
-  .lumelle-faq__container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .lumelle-faq__header {
-    text-align: center;
-    margin-bottom: 50px;
-  }
-
-  .lumelle-faq__eyebrow {
-    font-size: 14px;
-    font-weight: 600;
-    color: #55362A;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
-
-  .lumelle-faq__title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 42px;
-    font-weight: 600;
-    color: #55362A;
-    margin: 0;
-  }
-
-  .lumelle-faq__items {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .lumelle-faq__item {
-    border: 1px solid #FDD4DC;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .lumelle-faq__question {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 20px 24px;
-    text-align: left;
-    font-size: 16px;
-    font-weight: 600;
-    color: #55362A;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.2s ease;
-  }
-
-  .lumelle-faq__question:hover {
-    background: #FDF8F6;
-  }
-
-  .lumelle-faq__icon {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-  }
-
-  .lumelle-faq__item.active .lumelle-faq__icon {
-    transform: rotate(45deg);
-  }
-
-  .lumelle-faq__answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-  }
-
-  .lumelle-faq__item.active .lumelle-faq__answer {
-    max-height: 200px;
-    padding: 0 24px 20px;
-  }
-
-  .lumelle-faq__answer-text {
-    font-size: 15px;
-    color: #55362A;
-    opacity: 0.8;
-    line-height: 1.6;
-    margin: 0;
-  }
+.lumelle-faq-section {
+  background: #FFFFFF;
+  padding: 80px 20px;
+}
 {%- endstyle -%}
 
-<section class="lumelle-faq">
-  <div class="lumelle-faq__container">
-    <div class="lumelle-faq__header">
-      <p class="lumelle-faq__eyebrow">{{ section.settings.eyebrow | default: 'FAQ' }}</p>
-      <h2 class="lumelle-faq__title">{{ section.settings.title | default: 'Frequently Asked Questions' }}</h2>
-    </div>
-    
-    <div class="lumelle-faq__items">
-      {% for i in (1..6) %}
-        <div class="lumelle-faq__item">
-          <button class="lumelle-faq__question" onclick="this.parentElement.classList.toggle('active')">
-            <span>
-              {% case i %}
-                {% when 1 %}{{ section.settings.q_1 | default: 'How do I use the shower cap?' }}
-                {% when 2 %}{{ section.settings.q_2 | default: 'Will it fit my head size?' }}
-                {% when 3 %}{{ section.settings.q_3 | default: 'How do I clean it?' }}
-                {% when 4 %}{{ section.settings.q_4 | default: 'Is it suitable for all hair types?' }}
-                {% when 5 %}{{ section.settings.q_5 | default: "What's your return policy?" }}
-                {% when 6 %}{{ section.settings.q_6 | default: 'How long will shipping take?' }}
-              {% endcase %}
-            </span>
-            <span class="lumelle-faq__icon">+</span>
-          </button>
-          <div class="lumelle-faq__answer">
-            <p class="lumelle-faq__answer-text">
-              {% case i %}
-                {% when 1 %}{{ section.settings.a_1 | default: 'Simply place your hair inside the cap, tucking all strands inside. The elastic band creates a secure seal around your forehead to keep steam out.' }}
-                {% when 2 %}{{ section.settings.a_2 | default: "Yes! The adjustable elastic band fits most head sizes comfortably. It's designed to create a snug seal without being too tight." }}
-                {% when 3 %}{{ section.settings.a_3 | default: "Wipe the inside with a damp cloth and mild soap. Leave it open to air dry completely before storing. It's reusable many times!" }}
-                {% when 4 %}{{ section.settings.a_4 | default: "Absolutely! It's perfect for curly hair, braids, weaves, silk presses, and any styled hair. The satin lining protects all hair types." }}
-                {% when 5 %}{{ section.settings.a_5 | default: "We offer a 30-day money-back guarantee. If you're not completely satisfied, contact us for a full refund." }}
-                {% when 6 %}{{ section.settings.a_6 | default: 'Free shipping on orders over £20. UK orders typically arrive within 2-3 business days.' }}
-              {% endcase %}
-            </p>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
+<section class="lumelle-faq-section">
+  <div id="react-faq"></div>
 </section>
 
 {% schema %}

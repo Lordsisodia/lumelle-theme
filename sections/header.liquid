@@ -156,7 +156,9 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <div class="header__heading-logo-wrapper">
+                <img src="{{ 'lumelle-logo.svg' | asset_url }}" alt="Lumelle" class="header__heading-logo" width="90" height="90" />
+              </div>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -196,7 +198,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <span class="h2">Lumelle</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
