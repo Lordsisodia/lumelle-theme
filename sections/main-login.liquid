@@ -12,99 +12,284 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .lumelle-login-wrapper {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 48px 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(85, 54, 42, 0.1);
+  }
+
+  .lumelle-login-logo {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .lumelle-login-logo svg {
+    width: 120px;
+    height: auto;
+  }
+
+  .lumelle-login-wrapper h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #55362A;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 8px;
+  }
+
+  .lumelle-login-wrapper .login-subtitle {
+    text-align: center;
+    color: #887466;
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .lumelle-login-wrapper .form__message {
+    text-align: center;
+    color: #55362A;
+    padding: 12px 16px;
+    background: #FEF6F3;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .lumelle-login-wrapper .form__message--error {
+    background: #FEF3F3;
+    color: #C53030;
+  }
+
+  .lumelle-login-wrapper .field {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lumelle-login-wrapper .field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #55362A;
+    margin-bottom: 8px;
+  }
+
+  .lumelle-login-wrapper .field input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #E8E0DB;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #FCFAF9;
+    transition: all 0.2s ease;
+  }
+
+  .lumelle-login-wrapper .field input::placeholder {
+    color: #B8A99A;
+  }
+
+  .lumelle-login-wrapper .field input:focus {
+    outline: none;
+    border-color: #F9A58A;
+    box-shadow: 0 0 0 4px rgba(249, 165, 138, 0.12);
+    background: #fff;
+  }
+
+  .lumelle-login-wrapper .field--error input {
+    border-color: #E53E3E;
+  }
+
+  .lumelle-login-wrapper .field-error {
+    font-size: 12px;
+    color: #E53E3E;
+    margin-top: 6px;
+  }
+
+  .lumelle-login-wrapper button {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #55362A 0%, #6B4735 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+  }
+
+  .lumelle-login-wrapper button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(85, 54, 42, 0.25);
+  }
+
+  .lumelle-login-wrapper button:active {
+    transform: translateY(0);
+  }
+
+  .lumelle-login-wrapper .forgot-password {
+    text-align: right;
+    margin-top: -12px;
+    margin-bottom: 24px;
+  }
+
+  .lumelle-login-wrapper .forgot-password a {
+    color: #887466;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .lumelle-login-wrapper .forgot-password a:hover {
+    color: #F9A58A;
+  }
+
+  .lumelle-login-wrapper .alternate-links {
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #F0E6E0;
+  }
+
+  .lumelle-login-wrapper .alternate-links p {
+    color: #887466;
+    font-size: 13px;
+    margin: 0 0 12px;
+  }
+
+  .lumelle-login-wrapper .alternate-links a {
+    display: inline-block;
+    color: #55362A;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 24px;
+    border: 1.5px solid #E8E0DB;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .lumelle-login-wrapper .alternate-links a:hover {
+    border-color: #F9A58A;
+    background: #FEF6F3;
+    color: #55362A;
+  }
+
+  .lumelle-login-wrapper hr {
+    border: none;
+    border-top: 1px solid #F0E6E0;
+    margin: 28px 0;
+  }
+
+  .lumelle-login-wrapper h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #55362A;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .lumelle-login-wrapper .guest-button button {
+    background: transparent;
+    color: #55362A;
+    border: 1.5px solid #E8E0DB;
+  }
+
+  .lumelle-login-wrapper .guest-button button:hover {
+    background: #FEF6F3;
+    border-color: #F9A58A;
+  }
+
+  .shop-login-separator {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+  }
+
+  .shop-login-separator::before,
+  .shop-login-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E8E0DB;
+  }
+
+  .shop-login-separator span {
+    padding: 0 16px;
+    color: #887466;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 {%- endstyle -%}
 
 {%- if section.settings.enable_shop_login_button == false -%}
   {%- assign hide_shop_login_button = true -%}
 {%- endif -%}
 
-<div class="customer login section-{{ section.id }}-padding">
-  <h1 id="recover" tabindex="-1">
-    {{ 'customer.recover_password.title' | t }}
-  </h1>
-  <div>
-    <p>
-      {{ 'customer.recover_password.subtext' | t }}
-    </p>
+{%- assign recover_success = false -%}
+{%- form 'recover_customer_password' -%}
+  {%- if form.posted_successfully? -%}
+    {%- assign recover_success = true -%}
+  {%- endif -%}
+{%- endform -%}
 
-    {%- form 'recover_customer_password' -%}
-      {% assign recover_success = form.posted_successfully? %}
-      <div class="field">
-        <input
-          type="email"
-          value=""
-          name="email"
-          id="RecoverEmail"
-          autocorrect="off"
-          autocapitalize="off"
-          autocomplete="email"
-          {% if form.errors %}
-            aria-invalid="true"
-            aria-describedby="RecoverEmail-email-error"
-            autofocus
-          {% endif %}
-          placeholder="{{ 'customer.login_page.email' | t }}"
-        >
-        <label for="RecoverEmail">
-          {{ 'customer.login_page.email' | t }}
-        </label>
-      </div>
-      {%- if form.errors -%}
-        <small id="RecoverEmail-email-error" class="form__message">
-          <span class="svg-wrapper">
-            {{- 'icon-error.svg' | inline_asset_content -}}
-          </span>
-          {{ form.errors.messages.form }}
-        </small>
-      {%- endif -%}
+<div class="lumelle-login-wrapper">
+  {%- if recover_success -%}
+    <div class="lumelle-login-logo">
+      <svg viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 24.5L16 7.5H20L28 24.5H24L22.5 19H13.5L12 24.5H8ZM14.5 15.5H21.5L18 8.5L14.5 15.5Z" fill="#55362A"/>
+        <path d="M32 24.5V7.5H40V24.5H32ZM36 4C34.8954 4 34 4.89543 34 6C34 7.10457 34.8954 8 36 8C37.1046 8 38 7.10457 38 6C38 4.89543 37.1046 4 36 4Z" fill="#55362A"/>
+        <path d="M44 24.5V7.5H56C58.2091 7.5 60 9.29086 60 11.5C60 13.2091 58.7614 14.6702 57.1667 15.25L59 24.5H54.6667L53 16H50V24.5H44ZM56 11.5C56 10.9477 55.5523 10.5 55 10.5H50V14H55C55.5523 14 56 13.5523 56 13V11.5Z" fill="#55362A"/>
+        <path d="M64 24.5V7.5H70V24.5H64Z" fill="#55362A"/>
+        <path d="M74 24.5L76.5 17H79.5L82 24.5H88L83.5 7.5H77L72.5 24.5H74ZM78 13.5L79.5 9L81 13.5H78Z" fill="#55362A"/>
+        <path d="M92 24.5V7.5H104C106.209 7.5 108 9.29086 108 11.5C108 13.2091 106.761 14.6702 105.167 15.25L107 24.5H102.667L101 16H98V24.5H92ZM104 11.5C104 10.9477 103.552 10.5 103 10.5H98V14H103C103.552 14 104 13.5523 104 13V11.5Z" fill="#55362A"/>
+        <path d="M112 24.5V7.5H118V24.5H112Z" fill="#F9A58A"/>
+      </svg>
+    </div>
 
-      <button>
-        {{ 'customer.login_page.submit' | t }}
-      </button>
+    <h1>{{ 'customer.recover_password.success' | t }}</h1>
+    <p class="login-subtitle">{{ 'customer.recover_password.success' | t }}</p>
 
-      <a href="#login">
-        {{ 'customer.login_page.cancel' | t }}
-      </a>
-    {%- endform -%}
-  </div>
+    <div class="alternate-links">
+      <a href="{{ routes.account_login_url }}">{{ 'customer.login_page.sign_in' | t }}</a>
+    </div>
+  {%- else -%}
+    <div class="lumelle-login-logo">
+      <svg viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 24.5L16 7.5H20L28 24.5H24L22.5 19H13.5L12 24.5H8ZM14.5 15.5H21.5L18 8.5L14.5 15.5Z" fill="#55362A"/>
+        <path d="M32 24.5V7.5H40V24.5H32ZM36 4C34.8954 4 34 4.89543 34 6C34 7.10457 34.8954 8 36 8C37.1046 8 38 7.10457 38 6C38 4.89543 37.1046 4 36 4Z" fill="#55362A"/>
+        <path d="M44 24.5V7.5H56C58.2091 7.5 60 9.29086 60 11.5C60 13.2091 58.7614 14.6702 57.1667 15.25L59 24.5H54.6667L53 16H50V24.5H44ZM56 11.5C56 10.9477 55.5523 10.5 55 10.5H50V14H55C55.5523 14 56 13.5523 56 13V11.5Z" fill="#55362A"/>
+        <path d="M64 24.5V7.5H70V24.5H64Z" fill="#55362A"/>
+        <path d="M74 24.5L76.5 17H79.5L82 24.5H88L83.5 7.5H77L72.5 24.5H74ZM78 13.5L79.5 9L81 13.5H78Z" fill="#55362A"/>
+        <path d="M92 24.5V7.5H104C106.209 7.5 108 9.29086 108 11.5C108 13.2091 106.761 14.6702 105.167 15.25L107 24.5H102.667L101 16H98V24.5H92ZM104 11.5C104 10.9477 103.552 10.5 103 10.5H98V14H103C103.552 14 104 13.5523 104 13V11.5Z" fill="#55362A"/>
+        <path d="M112 24.5V7.5H118V24.5H112Z" fill="#F9A58A"/>
+      </svg>
+    </div>
 
-  <h1 id="login" tabindex="-1">
-    {{ 'customer.login_page.title' | t }}
-  </h1>
-  <div>
-    {%- if recover_success == true -%}
-      <h3 class="form__message" tabindex="-1" autofocus>
-        <span class="svg-wrapper">
-          {{- 'icon-success.svg' | inline_asset_content -}}
-        </span>
-        {{ 'customer.recover_password.success' | t }}
-      </h3>
-    {%- endif -%}
+    <h1 id="login" tabindex="-1">{{ 'customer.login_page.title' | t }}</h1>
+    <p class="login-subtitle">{{ 'customer.login_page.subtext' | t }}</p>
+
     {%- form 'customer_login', novalidate: 'novalidate' -%}
       {%- if form.errors -%}
-        <h2 class="form__message" tabindex="-1" autofocus>
-          <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
-          <span class="svg-wrapper">
-            {{- 'icon-error.svg' | inline_asset_content -}}
-          </span>
-          {{ 'templates.contact.form.error_heading' | t }}
-        </h2>
-        {{ form.errors | default_errors }}
+        <div class="form__message form__message--error">
+          {{ 'templates.contact.form.error_heading' | t }} — {{ form.errors.messages['form'] }}
+        </div>
       {%- endif -%}
 
       {%- if shop.features.login_with_shop_classic_customer_accounts? -%}
-        <section name="sign-in-with-shop-provider">
-          {{ shop | login_button: hide_button: hide_shop_login_button }}
-
-          {%- unless hide_shop_login_button -%}
-            <p>
-              {{ 'customer.login_page.alternate_provider_separator' | t }}
-            </p>
-          {%- endunless -%}
-        </section>
+        {{ shop | login_button: hide_button: hide_shop_login_button }}
+        {%- unless hide_shop_login_button -%}
+          <div class="shop-login-separator"><span>or</span></div>
+        {%- endunless -%}
       {%- endif -%}
 
       <div class="field">
+        <label for="CustomerEmail">{{ 'customer.login_page.email' | t }}</label>
         <input
           type="email"
           name="customer[email]"
@@ -112,62 +297,114 @@
           autocomplete="email"
           autocorrect="off"
           autocapitalize="off"
-          {% if form.errors contains 'form' %}
+          placeholder="you@example.com"
+          {% if form.errors contains 'email' %}
             aria-invalid="true"
           {% endif %}
-          placeholder="{{ 'customer.login_page.email' | t }}"
         >
-        <label for="CustomerEmail">
-          {{ 'customer.login_page.email' | t }}
-        </label>
+        {%- if form.errors contains 'email' -%}
+          <p class="field-error">{{ form.errors.messages['email'] }}</p>
+        {%- endif -%}
       </div>
 
-      {%- if form.password_needed -%}
+      <div class="field">
+        <label for="CustomerPassword">{{ 'customer.login_page.password' | t }}</label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="CustomerPassword"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          {% if form.errors contains 'password' %}
+            aria-invalid="true"
+          {% endif %}
+        >
+        {%- if form.errors contains 'password' -%}
+          <p class="field-error">{{ form.errors.messages['password'] }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="forgot-password">
+        <a href="#recover">{{ 'customer.login_page.forgot_password' | t }}</a>
+      </div>
+
+      <button type="submit">{{ 'customer.login_page.sign_in' | t }}</button>
+
+      <div class="alternate-links">
+        <p>{{ 'customer.login_page.alternate_provider_separator' | t }}</p>
+        <a href="{{ routes.account_register_url }}">{{ 'customer.login_page.create_account' | t }}</a>
+      </div>
+    {%- endform -%}
+
+    <div id="recover" style="display:none;">
+      <h1>{{ 'customer.recover_password.title' | t }}</h1>
+      <p class="login-subtitle">{{ 'customer.recover_password.subtext' | t }}</p>
+
+      {%- form 'recover_customer_password' -%}
         <div class="field">
+          <label for="RecoverEmail">{{ 'customer.login_page.email' | t }}</label>
           <input
-            type="password"
-            value=""
-            name="customer[password]"
-            id="CustomerPassword"
-            autocomplete="current-password"
-            {% if form.errors contains 'form' %}
-              aria-invalid="true"
-            {% endif %}
-            placeholder="{{ 'customer.login_page.password' | t }}"
+            type="email"
+            name="email"
+            id="RecoverEmail"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            placeholder="you@example.com"
           >
-          <label for="CustomerPassword">
-            {{ 'customer.login_page.password' | t }}
-          </label>
         </div>
 
-        <a href="#recover">
-          {{ 'customer.login_page.forgot_password' | t }}
-        </a>
-      {%- endif -%}
+        <button type="submit">{{ 'customer.login_page.submit' | t }}</button>
 
-      <button>
-        {{ 'customer.login_page.sign_in' | t }}
-      </button>
-
-      <a href="{{ routes.account_register_url }}">
-        {{ 'customer.login_page.create_account' | t }}
-      </a>
-    {%- endform -%}
-  </div>
+        <div class="alternate-links">
+          <a href="#login">{{ 'customer.login_page.cancel' | t }}</a>
+        </div>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
 
   {%- if shop.checkout.guest_login -%}
-    <div>
-      <hr>
-      <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
-
+    <hr>
+    <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+    <div class="guest-button">
       {%- form 'guest_login' -%}
-        <button>
-          {{ 'customer.login_page.guest_continue' | t }}
-        </button>
+        <button type="submit">{{ 'customer.login_page.guest_continue' | t }}</button>
       {%- endform -%}
     </div>
   {%- endif -%}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const forgotLink = document.querySelector('.forgot-password a');
+    const recoverSection = document.getElementById('recover');
+    const loginForm = document.querySelector('.lumelle-login-wrapper > form');
+    const loginTitle = document.querySelector('.lumelle-login-wrapper > h1');
+    const loginSubtitle = document.querySelector('.lumelle-login-wrapper > .login-subtitle');
+
+    if (forgotLink && recoverSection) {
+      forgotLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        if (loginTitle) loginTitle.style.display = 'none';
+        if (loginSubtitle) loginSubtitle.style.display = 'none';
+        recoverSection.style.display = 'block';
+        recoverSection.querySelector('input').focus();
+      });
+    }
+
+    const cancelLink = recoverSection ? recoverSection.querySelector('a[href="#login"]') : null;
+    if (cancelLink && recoverSection) {
+      cancelLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        recoverSection.style.display = 'none';
+        loginForm.style.display = 'block';
+        if (loginTitle) loginTitle.style.display = 'block';
+        if (loginSubtitle) loginSubtitle.style.display = 'block';
+      });
+    }
+  });
+</script>
 
 {% schema %}
 {
