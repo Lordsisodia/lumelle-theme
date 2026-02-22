@@ -73,23 +73,23 @@
         "color_scheme": "scheme-1"
       }
     },
-    "product_howto": {
-      "type": "lumelle-product-howto",
-      "settings": {}
+    "pdp_gallery": {
+      "type": "lumelle-react-pdp-gallery"
     },
-    "product_features": {
-      "type": "lumelle-product-features",
-      "settings": {}
+    "pdp_essentials": {
+      "type": "lumelle-react-pdp-essentials"
     },
-    "product_email_capture": {
-      "type": "lumelle-landing-email-capture",
-      "settings": {
-        "title": "Get 10% off your first order",
-        "subtitle": "Join for exclusive creator tutorials, drops, and early access.",
-        "placeholder": "Enter your email",
-        "button": "Unlock 10% Off",
-        "trust": "Secure signup. No spam, unsubscribe anytime."
-      }
+    "pdp_howto": {
+      "type": "lumelle-react-pdp-howto"
+    },
+    "pdp_faq": {
+      "type": "lumelle-react-pdp-faq"
+    },
+    "pdp_reviews": {
+      "type": "lumelle-react-pdp-reviews"
+    },
+    "trust_badges": {
+      "type": "lumelle-react-trust-bar"
     },
     "related-products": {
       "type": "related-products",
@@ -110,9 +110,12 @@
   },
   "order": [
     "main",
-    "product_howto",
-    "product_features",
-    "product_email_capture",
+    "pdp_gallery",
+    "pdp_essentials",
+    "pdp_howto",
+    "pdp_faq",
+    "pdp_reviews",
+    "trust_badges",
     "related-products"
   ]
 }
