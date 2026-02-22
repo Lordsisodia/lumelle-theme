@@ -73,6 +73,9 @@
         "color_scheme": "scheme-1"
       }
     },
+    "add_to_cart": {
+      "type": "lumelle-react-add-to-cart"
+    },
     "pdp_gallery": {
       "type": "lumelle-react-pdp-gallery"
     },
@@ -110,6 +113,7 @@
   },
   "order": [
     "main",
+    "add_to_cart",
     "pdp_gallery",
     "pdp_essentials",
     "pdp_howto",
