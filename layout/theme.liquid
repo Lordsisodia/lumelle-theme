@@ -85,6 +85,19 @@
     </script>
     
     <style>
+      /* Hide Shopify default header - we use React drawer instead */
+      .shopify-section-header {
+        display: none !important;
+      }
+
+      /* React Drawer Toggle - hamburger menu */
+      #react-drawer-toggle {
+        position: fixed !important;
+        top: 16px !important;
+        left: 16px !important;
+        z-index: 9999 !important;
+      }
+
       /* Scrolling marquee for TrustBar */
       @keyframes marquee {
         0% { transform: translateX(0); }
@@ -163,9 +176,6 @@
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
 
-    <!-- Lumelle React Embed Bundle -->
-    <script src="{{ 'lumelle-bundle.js' | asset_url }}" defer="defer"></script>
-
     <!-- Image URLs for React components - must load before bundle -->
     <script>
       window.LUMELLE_IMAGES = {
@@ -218,7 +228,11 @@
         '/images/hero.jpg': '{{ "images/hero.jpg" | asset_url }}',
       };
     </script>
+
+    <!-- Lumelle React Embed Bundle -->
+    <script src="{{ 'lumelle-bundle.js' | asset_url }}" defer="defer"></script>
     <link rel="stylesheet" href="{{ 'lumelle-footer-override.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'lumelle-bundle.css' | asset_url }}">
 
     <script>
       window.lumelleConfig = {
@@ -491,6 +505,12 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <!-- React Drawer Provider - wraps the entire drawer system -->
+    <div id="react-drawer-provider"></div>
+
+    <!-- React Drawer Toggle - hamburger menu button (positioned by CSS) -->
+    <div id="react-drawer-toggle" style="position: fixed; top: 16px; left: 16px; z-index: 9999;"></div>
+
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
