@@ -1,0 +1,30 @@
+{% comment %}
+  React Add to Cart Button
+  Usage: Add variant_id in section settings or pass via data attribute
+{% endcomment %}
+
+<div
+  id="react-add-to-cart"
+  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  data-quantity="1"
+  data-label="Add to Cart"
+></div>
+
+{% schema %}
+{
+  "name": "Add to Cart Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Add to Cart"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Add to Cart Button"
+    }
+  ]
+}
+{% endschema %}
