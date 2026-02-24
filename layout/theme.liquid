@@ -168,7 +168,8 @@
     </script>
 
     <!-- Lumelle React Embed Bundle -->
-    <script src="{{ 'lumelle-bundle.js' | asset_url }}" defer="defer"></script>
+    {% render 'lumelle-data' %}
+    <script src="{{ 'lumelle-bundle.js' | asset_url }}" defer="defer" type="module"></script>
     <link rel="stylesheet" href="{{ 'lumelle-footer-override.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'lumelle-bundle.css' | asset_url }}">
 

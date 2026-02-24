@@ -1,0 +1,218 @@
+{% comment %} Lumelle Home Config Data - Exposed as global $ object for React bundle {% endcomment %}
+<script>
+  window.$ = window.$ || {};
+  
+  // Hero section data
+  $.hero = {
+    headline: "Luxury shower cap that keeps hair frizz-free",
+    subhead: "Satin-lined, waterproof, and creator-tested to protect silk presses, curls, and braids from steam.",
+    ctaLabel: "Shop shower cap",
+    ctaHref: "/product/lumelle-shower-cap",
+    offerChip: "Buy 2, save 10%",
+    secondaryCtaLabel: "Join WhatsApp",
+    secondaryCtaHref: "/creators",
+    image: "/uploads/luminele/product-main.webp",
+    bgImage: "/uploads/luminele/hero-desktop.webp",
+    objectPosition: "center 30%",
+    objectFit: "cover",
+    pill: "Best seller",
+    assurances: [
+      { label: "Free shipping over £20" },
+      { label: "30-day returns" },
+      { label: "Cruelty-free" }
+    ]
+  };
+
+  // Slides/Benefits data
+  $.slides = [
+    {
+      title: "Satin-lined protection",
+      copy: "Our dual-layer design has a waterproof outer and silky-soft satin inside to lock in your style.",
+      image: "/uploads/luminele/product-feature-02.webp",
+      ctaHref: "/product/lumelle-shower-cap",
+      tag: "Waterproof"
+    },
+    {
+      title: "Frizz-free guarantee",
+      copy: "Creator-tested to keep curls, braids, and silk presses intact through steamy showers.",
+      image: "/uploads/luminele/product-feature-03.webp",
+      ctaHref: "/product/lumelle-shower-cap",
+      tag: "Frizz-free"
+    },
+    {
+      title: "Adjustable & stretchy",
+      copy: "Fits all head sizes with a secure, non-slip elastic that won't leave marks.",
+      image: "/uploads/luminele/product-feature-04.webp",
+      ctaHref: "/product/lumelle-shower-cap",
+      tag: "One size"
+    },
+    {
+      title: "Reusable & eco-friendly",
+      copy: "Ditch disposable caps. Wash, dry, and reuse again and again.",
+      image: "/uploads/luminele/product-feature-05.webp",
+      ctaHref: "/product/lumelle-shower-cap",
+      proof: "100+ uses per cap"
+    }
+  ];
+
+  // Social proof data
+  $.socialProof = {
+    rating: 4.8,
+    count: 2500,
+    tagline: "Loved by 2500+ happy customers",
+    trustCountLabel: "2,500+ reviews",
+    trustAvatars: [
+      "/images/avatar-shannon.jpg",
+      "/images/avatar-rachel.jpg",
+      "/images/avatar-jade.jpg",
+      "/images/avatar-maya.jpg"
+    ]
+  };
+
+  // Reviews data
+  $.reviews = [
+    {
+      author: "Shannon M.",
+      stars: 5,
+      title: "Finally a shower cap that works!",
+      body: "I've tried so many shower caps and they all let steam in or slip off. This one actually keeps my curls intact!",
+      image: "/images/avatar-shannon.jpg",
+      date: "2024-01-15",
+      source: "verified"
+    },
+    {
+      author: "Rachel T.",
+      stars: 5,
+      title: "Worth every penny",
+      body: "The satin lining is so luxurious. My silk press lasts twice as long now.",
+      image: "/images/avatar-rachel.jpg",
+      date: "2024-01-10",
+      source: "verified"
+    },
+    {
+      author: "Jade K.",
+      stars: 5,
+      title: "Game changer for textured hair",
+      body: "As someone with 4c hair, finding a shower cap that doesn't ruin my style is hard. This is it!",
+      image: "/images/avatar-jade.jpg",
+      date: "2024-01-08",
+      source: "tiktok"
+    },
+    {
+      author: "Maya R.",
+      stars: 5,
+      title: "No more frizz",
+      body: "I used to dread showering before events. Now my hair stays smooth and I look forward to showering again!",
+      image: "/images/avatar-maya.jpg",
+      date: "2024-01-05",
+      source: "verified"
+    },
+    {
+      author: "Anonymous",
+      stars: 5,
+      title: "Perfect for braids",
+      body: "I have box braids that take hours to do. This shower cap protects them perfectly.",
+      date: "2024-01-02",
+      source: "verified"
+    }
+  ];
+
+  // FAQ data
+  $.faq = [
+    {
+      q: "Will this fit my head size?",
+      a: "Yes! The elastic is fully adjustable and fits head sizes from 21-25 inches."
+    },
+    {
+      q: "Is it truly waterproof?",
+      a: "Yes, the outer layer is made from waterproof polyester that's been tested to keep steam out."
+    },
+    {
+      q: "How do I clean it?",
+      a: "Simply hand wash with mild soap and air dry. It's reusable hundreds of times!"
+    },
+    {
+      q: "Will it leave marks on my hair?",
+      a: "No! The satin lining is gentle and the elastic is smooth, so no creases or impressions."
+    },
+    {
+      q: "What's your return policy?",
+      a: "We offer a 30-day money-back guarantee. If you're not in love with it, return it for a full refund."
+    }
+  ];
+
+  // Product spotlight / PDP teaser
+  $.pdpTeaser = {
+    title: "Lumelle Shower Cap",
+    subtitle: "Creator-loved protection for every style",
+    description: "Dual-layer satin with a waterproof core keeps silk presses, curls, and braids flawless through every steamy shower.",
+    rating: 4.8,
+    reviews: 100,
+    pills: ["No-frizz seal", "Luxury feel", "Reusable + eco"],
+    priceNow: 14.99,
+    priceWas: 19.99,
+    bullets: ["Reusable waterproof", "Satin lined", "Large wide shower cap", "Adjustable"],
+    image: "/uploads/luminele/page9-image.webp",
+    href: "/product/lumelle-shower-cap",
+    ctaLabel: "Shop the cap"
+  };
+
+  $.pdpTeasers = [
+    {
+      title: "Lumelle Shower Cap",
+      subtitle: "Creator-loved protection for every style",
+      description: "Dual-layer satin with a waterproof core keeps silk presses, curls, and braids flawless through every steamy shower.",
+      rating: 4.8,
+      reviews: 100,
+      pills: ["No-frizz seal", "Luxury feel", "Reusable + eco"],
+      priceNow: 14.99,
+      priceWas: 19.99,
+      bullets: ["Reusable waterproof", "Satin lined", "Large wide shower cap", "Adjustable"],
+      image: "/uploads/luminele/page9-image.webp",
+      href: "/product/lumelle-shower-cap",
+      ctaLabel: "Shop the cap"
+    },
+    {
+      title: "Satin Overnight Heatless Curler Set",
+      subtitle: "Wake up to curls—no heat, no damage",
+      description: "A satin-wrapped rod + bonnet set designed for smooth, bouncy curls overnight—without heat damage.",
+      rating: 4.8,
+      reviews: 50,
+      pills: ["Heatless curls", "Overnight set", "Satin smooth"],
+      priceNow: 16.99,
+      priceWas: 21.99,
+      bullets: ["Satin heatless curling rod", "Luxury satin bonnet", "2× matching satin scrunchies", "Claw clip"],
+      image: "/uploads/curler/1.webp",
+      href: "/product/satin-overnight-curler",
+      ctaLabel: "Shop the curler"
+    },
+    {
+      title: "Hair Towel",
+      subtitle: "Dry hair faster, with less frizz",
+      description: "Ultra-absorbent microfiber towel that cuts drying time in half while reducing frizz and breakage.",
+      rating: 4.8,
+      reviews: 50,
+      pills: ["Quick-dry", "Anti-frizz", "Travel-friendly"],
+      priceNow: 14.99,
+      priceWas: 19.99,
+      bullets: ["Ultra-absorbent microfiber", "XL size with tulip design", "Secure elastic loop", "Frizz-reducing fabric"],
+      image: "/uploads/towel/Hero.webp",
+      href: "/product/lumelle-xl-microfibre-hair-towel",
+      ctaLabel: "Shop the towel"
+    }
+  ];
+
+  // TikToks (placeholder)
+  $.tiktoks = [
+    { url: "https://www.tiktok.com/@lumelle/video/1234567890" },
+    { url: "https://www.tiktok.com/@lumelle/video/1234567891" }
+  ];
+
+  console.log("Lumelle data loaded:", {
+    hero: $.hero ? "✓" : "✗",
+    slides: $.slides ? `✓ (${$.slides.length} items)` : "✗",
+    socialProof: $.socialProof ? "✓" : "✗",
+    reviews: $.reviews ? `✓ (${$.reviews.length} items)` : "✗",
+    faq: $.faq ? `✓ (${$.faq.length} items)` : "✗"
+  });
+</script>
