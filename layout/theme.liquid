@@ -50,7 +50,23 @@
         0%, 100% { opacity: 1; }
         50% { opacity: 0.4; }
       }
-      
+
+      /* Fix ALL announcement bars to brand pink */
+      #react-header > div:first-child,
+      [class*="promo"],
+      .announcement-bar,
+      .utility-bar,
+      [class*="announcement"] {
+        background-color: #FDD4DC !important;
+      }
+
+      /* Also target inline styles */
+      #react-header > div:first-child[style],
+      .announcement-bar[style],
+      .utility-bar[style] {
+        background-color: #FDD4DC !important;
+      }
+
       /* Footer fixes */
       .shopify-section-footer {
         margin-top: 0 !important;
@@ -62,37 +78,6 @@
       }
     </style>
     
-    <script>
-      // Make announcement bar flash between messages
-      document.addEventListener('DOMContentLoaded', function() {
-        var messages = [
-          'Buy 2, save 10% • Shop now',
-          'Free shipping on orders over £20',
-          '30-day money-back guarantee'
-        ];
-        
-        var bar = document.querySelector('.announcement-bar');
-        if (!bar) return;
-        
-        bar.setAttribute('data-flashing', 'true');
-        
-        var msgEl = bar.querySelector('.announcement-bar__message');
-        if (!msgEl) return;
-        
-        var currentIndex = 0;
-        
-        function updateMessage() {
-          msgEl.innerHTML = '<span>' + messages[currentIndex] + '</span>';
-          currentIndex = (currentIndex + 1) % messages.length;
-        }
-        
-        // Initial message
-        updateMessage();
-        
-        // Change every 3 seconds
-        setInterval(updateMessage, 3000);
-      });
-    </script>
 
     <title>
       {{ page_title }}
@@ -171,7 +156,6 @@
     {% render 'lumelle-data' %}
     <script src="{{ 'lumelle-bundle.js' | asset_url }}" defer="defer" type="module"></script>
     <link rel="stylesheet" href="{{ 'lumelle-footer-override.css' | asset_url }}">
-    <link rel="stylesheet" href="{{ 'lumelle-bundle.css' | asset_url }}">
 
     <script>
       window.lumelleConfig = {
@@ -401,6 +385,8 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    <!-- Lumelle bundle CSS - loaded after base.css so our styles take priority -->
+    <link rel="stylesheet" href="{{ 'lumelle-bundle.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
