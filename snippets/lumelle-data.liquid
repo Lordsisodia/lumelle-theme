@@ -207,17 +207,7 @@
     { url: "https://www.tiktok.com/@lumelle/video/1234567890" },
     { url: "https://www.tiktok.com/@lumelle/video/1234567891" }
   ];
-
-  console.log("Lumelle data loaded:", {
-    hero: $.hero ? "✓" : "✗",
-    slides: $.slides ? `✓ (${$.slides.length} items)` : "✗",
-    socialProof: $.socialProof ? "✓" : "✗",
-    reviews: $.reviews ? `✓ (${$.reviews.length} items)` : "✗",
-    faq: $.faq ? `✓ (${$.faq.length} items)` : "✗"
-  });
-</script>
-
-  // Shopify Navigation Data - Connect menus to Shopify admin
+// Shopify Navigation Data - Connect menus to Shopify admin
   $.navigation = {
     mainMenu: [
       {%- for link in linklists.main-menu.links %}
@@ -272,3 +262,13 @@
     footer: $.navigation.footer ? `✓ (${$.navigation.footer.length} items)` : "✗",
     drawer: $.navigation.drawer ? `✓ (${$.navigation.drawer.length} items)` : "✗"
   });
+
+  console.log("Lumelle data loaded:", {
+    hero: $.hero ? "✓" : "✗",
+    slides: $.slides ? `✓ (${$.slides.length} items)` : "✗",
+    socialProof: $.socialProof ? "✓" : "✗",
+    reviews: $.reviews ? `✓ (${$.reviews.length} items)` : "✗",
+    faq: $.faq ? `✓ (${$.faq.length} items)` : "✗",
+    navigation: $.navigation ? `✓ (${$.navigation.mainMenu?.length || 0} menu items)` : "✗"
+  });
+</script>
