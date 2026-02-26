@@ -1,0 +1,134 @@
+{% comment %}
+  Lumelle Navigation Sync
+  Injects Shopify menu data into React drawer/footer components
+  Runs after React bundle mounts to replace hardcoded navigation
+{% endcomment %}
+<script>
+(function() {
+  // Wait for DOM and navigation data to be ready
+  function initNavigation() {
+    if (!window.$ || !window.$.navigation) {
+      console.warn('Lumelle: Navigation data not available');
+      return;
+    }
+
+    const nav = window.$.navigation;
+    console.log('Lumelle: Syncing navigation menus...', {
+      mainMenu: nav.mainMenu?.length || 0,
+      footer: nav.footer?.length || 0,
+      drawer: nav.drawer?.length || 0
+    });
+
+    // Update drawer navigation if drawer is mounted
+    function updateDrawerNav() {
+      const drawer = document.querySelector('#react-drawer-content, [data-drawer-content], [data-mobile-nav]');
+      if (!drawer) return false;
+
+      // Find all navigation links in drawer
+      const links = drawer.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        // Match and update based on Shopify menu data
+        nav.drawer?.forEach(item => {
+          if (href && (href.includes(item.title.toLowerCase().replace(/\s+/g, '-')) || 
+              href === item.url || 
+              link.textContent.trim() === item.title)) {
+            link.setAttribute('href', item.url);
+            if (item.active) {
+              link.classList.add('active', 'current');
+            }
+          }
+        });
+      });
+      
+      return true;
+    }
+
+    // Update footer navigation
+    function updateFooterNav() {
+      const footer = document.querySelector('footer, #react-footer, [data-footer]');
+      if (!footer) return false;
+
+      const links = footer.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        nav.footer?.forEach(item => {
+          if (href && (link.textContent.trim() === item.title || 
+              href.includes(item.title.toLowerCase().replace(/\s+/g, '-')))) {
+            link.setAttribute('href', item.url);
+            if (item.active) {
+              link.classList.add('active');
+            }
+          }
+        });
+      });
+      
+      return true;
+    }
+
+    // Update header navigation
+    function updateHeaderNav() {
+      const header = document.querySelector('#react-header, header, [data-header]');
+      if (!header) return false;
+
+      const links = header.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        nav.mainMenu?.forEach(item => {
+          if (href && (link.textContent.trim() === item.title || 
+              href.includes(item.title.toLowerCase().replace(/\s+/g, '-')))) {
+            link.setAttribute('href', item.url);
+            if (item.active) {
+              link.classList.add('active');
+            }
+          }
+        });
+      });
+      
+      return true;
+    }
+
+    // Try immediate update
+    const results = {
+      drawer: updateDrawerNav(),
+      footer: updateFooterNav(),
+      header: updateHeaderNav()
+    };
+
+    // Also observe for dynamic drawer opening
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        updateDrawerNav();
+        updateFooterNav();
+        updateHeaderNav();
+      });
+    });
+
+    // Observe the body for added nodes (drawer might be mounted dynamically)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // Re-run on drawer open
+    if (window.lumelleOpenMenu) {
+      const originalOpen = window.lumelleOpenMenu;
+      window.lumelleOpenMenu = function() {
+        originalOpen();
+        setTimeout(() => {
+          updateDrawerNav();
+        }, 100);
+      };
+    }
+
+    console.log('Lumelle: Navigation sync complete', results);
+  }
+
+  // Run on DOM ready or after slight delay for React hydration
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initNavigation, 200));
+  } else {
+    setTimeout(initNavigation, 200);
+  }
+})();
+</script>

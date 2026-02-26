@@ -216,3 +216,59 @@
     faq: $.faq ? `✓ (${$.faq.length} items)` : "✗"
   });
 </script>
+
+  // Shopify Navigation Data - Connect menus to Shopify admin
+  $.navigation = {
+    mainMenu: [
+      {%- for link in linklists.main-menu.links %}
+      {
+        title: {{ link.title | json }},
+        url: {{ link.url | json }},
+        active: {{ link.active | json }},
+        childActive: {{ link.child_active | json }}{% if link.links.size > 0 %},
+        children: [
+          {%- for child in link.links %}
+          {
+            title: {{ child.title | json }},
+            url: {{ child.url | json }},
+            active: {{ child.active | json }}
+          }{%- unless forloop.last %},{% endunless %}
+          {%- endfor %}
+        ]{% endif %}
+      }{%- unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ],
+    footer: [
+      {%- for link in linklists.footer.links %}
+      {
+        title: {{ link.title | json }},
+        url: {{ link.url | json }},
+        active: {{ link.active | json }}
+      }{%- unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ],
+    // Additional menus for drawer
+    drawer: [
+      {%- for link in linklists.main-menu.links %}
+      {
+        title: {{ link.title | json }},
+        url: {{ link.url | json }},
+        active: {{ link.active | json }}{% if link.links.size > 0 %},
+        children: [
+          {%- for child in link.links %}
+          {
+            title: {{ child.title | json }},
+            url: {{ child.url | json }}
+          }{%- unless forloop.last %},{% endunless %}
+          {%- endfor %}
+        ]{% endif %}
+      }{%- unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  };
+
+  console.log("Navigation data loaded:", {
+    mainMenu: $.navigation.mainMenu ? `✓ (${$.navigation.mainMenu.length} items)` : "✗",
+    footer: $.navigation.footer ? `✓ (${$.navigation.footer.length} items)` : "✗",
+    drawer: $.navigation.drawer ? `✓ (${$.navigation.drawer.length} items)` : "✗"
+  });
