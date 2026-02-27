@@ -1,0 +1,87 @@
+/* Lumelle PDP Layout - Container widths and padding matching original app */
+
+/* Hero section - gallery + price block */
+.lumelle-pdp-gallery-section,
+.lumelle-pdp-price-section {
+  max-width: 72rem; /* max-w-6xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem; /* px-5 */
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .lumelle-pdp-gallery-section,
+  .lumelle-pdp-price-section {
+    padding-left: 1.5rem; /* md:px-6 */
+    padding-right: 1.5rem;
+  }
+}
+
+/* HowTo/Features/Essentials sections */
+.lumelle-pdp-howto-section,
+.lumelle-pdp-features-section,
+.lumelle-pdp-essentials-section,
+.lumelle-pdp-tiktok-section,
+.lumelle-pdp-faq-section {
+  max-width: 72rem; /* max-w-6xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .lumelle-pdp-howto-section,
+  .lumelle-pdp-features-section,
+  .lumelle-pdp-essentials-section,
+  .lumelle-pdp-tiktok-section,
+  .lumelle-pdp-faq-section {
+    padding-left: 1.5rem; /* md:px-6 */
+    padding-right: 1.5rem;
+  }
+}
+
+/* Reviews section - full width with internal padding */
+.lumelle-pdp-reviews-section {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .lumelle-pdp-reviews-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Bottom CTA - narrower container */
+.lumelle-pdp-bottom-cta-section {
+  max-width: 56rem; /* max-w-4xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .lumelle-pdp-bottom-cta-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Add padding at top of "Your Sign to Try This" section */
+#react-pdp-features,
+[data-section-id="details"] {
+  padding-top: 3rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  #react-pdp-features,
+  [data-section-id="details"] {
+    padding-top: 4rem;
+    margin-top: 2rem;
+  }
+}

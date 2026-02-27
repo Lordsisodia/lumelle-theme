@@ -1,6 +1,17 @@
+{% comment %} Updated: 2026-02-27-0118-V2 - 17 reviews {% endcomment %}
 {% comment %} Lumelle Home Config Data - Exposed as global $ object for React bundle {% endcomment %}
 <script>
   window.$ = window.$ || {};
+
+  // Current product context (exposed by Shopify Liquid)
+  {% if product %}
+  $.currentProduct = {
+    handle: {{ product.handle | json }},
+    title: {{ product.title | json }},
+    price: {{ product.price | json }},
+    available: {{ product.available | json }}
+  };
+  {% endif %}
   
   // Hero section data
   $.hero = {
@@ -72,72 +83,126 @@
   // Reviews data
   $.reviews = [
     {
-      author: "Shannon M.",
+      author: "Amelia",
       stars: 5,
-      title: "Finally a shower cap that works!",
-      body: "I've tried so many shower caps and they all let steam in or slip off. This one actually keeps my curls intact!",
-      image: "/images/avatar-shannon.jpg",
-      date: "2024-01-15",
-      source: "verified"
+      title: "Zero frizz",
+      body: "Finally a cap that actually works. I've tried so many shower caps and they all let steam through. This one is completely waterproof—the satin lining keeps my hair bone dry even in my sauna-like bathroom. My silk presses have been lasting 3-4 days instead of just one."
     },
     {
-      author: "Rachel T.",
+      author: "Beth",
       stars: 5,
-      title: "Worth every penny",
-      body: "The satin lining is so luxurious. My silk press lasts twice as long now.",
-      image: "/images/avatar-rachel.jpg",
-      date: "2024-01-10",
-      source: "verified"
+      title: "So comfy",
+      body: "No marks on my forehead and looks cute. The elastic is gentle but secure, which is huge for me. Most caps leave deep indentations on my forehead, but this one doesn't. I actually don't mind wearing it around the house before my shower."
     },
     {
-      author: "Jade K.",
+      author: "Cara",
       stars: 5,
-      title: "Game changer for textured hair",
-      body: "As someone with 4c hair, finding a shower cap that doesn't ruin my style is hard. This is it!",
-      image: "/images/avatar-jade.jpg",
-      date: "2024-01-08",
-      source: "tiktok"
+      title: "Worth it",
+      body: "Saved my blowout more than once. I gym in the mornings and used to have to restyle my hair completely after showering. Now I just pop this on and my style stays intact. It's already paid for itself in saved salon visits."
     },
     {
-      author: "Maya R.",
+      author: "Danielle",
       stars: 5,
-      title: "No more frizz",
-      body: "I used to dread showering before events. Now my hair stays smooth and I look forward to showering again!",
-      image: "/images/avatar-maya.jpg",
-      date: "2024-01-05",
-      source: "verified"
+      title: "Blowout saver",
+      body: "Stayed smooth after a long, steamy shower. I was skeptical about the waterproof claim, but it genuinely blocks all moisture. The satin interior feels luxurious against my hair. My stylist asked what I've been doing differently because my hair is so much healthier."
     },
     {
-      author: "Anonymous",
+      author: "Ella",
+      stars: 4.5,
+      title: "Soft band",
+      body: "No dents and super gentle on edges. As someone with delicate edges, finding a shower cap that doesn't cause breakage has been a struggle. The wide band on this cap is perfect. It stays in place without being too tight, which is rare to find."
+    },
+    {
+      author: "Fiona",
       stars: 5,
-      title: "Perfect for braids",
-      body: "I have box braids that take hours to do. This shower cap protects them perfectly.",
-      date: "2024-01-02",
-      source: "verified"
+      title: "Looks luxe",
+      body: "Finally a cap I'm not embarrassed to wear. The quality is obvious—it doesn't look like those cheap plastic ones from the drugstore. The pink color is adorable and the satin lining makes it feel premium. I even got compliments on it at the gym!"
+    },
+    {
+      author: "Grace",
+      stars: 5,
+      title: "Curl friendly",
+      body: "Fits over braids without tugging. I have thick box braids and most shower caps are too small. This one has plenty of room to accommodate my hairstyle comfortably. The waterproof layer is legit—my scalp and hair stay completely dry."
+    },
+    {
+      author: "Hana",
+      stars: 4.8,
+      title: "Travel staple",
+      body: "Packs flat and keeps styles intact on trips. I travel for work constantly and this cap has been a game-changer. It takes up zero space in my luggage and protects my hair regardless of the hotel shower situation. Cannot recommend enough for frequent travelers."
+    },
+    {
+      author: "Isla",
+      stars: 5,
+      title: "Steam proof",
+      body: "Tested in a sauna shower—no puffiness. My bathroom gets insanely steamy and I've never found a cap that could handle it until now. The waterproof layer actually works. My hair stays completely dry and frizz-free every single time."
+    },
+    {
+      author: "Jade",
+      stars: 4.9,
+      title: "Satin smooth",
+      body: "Interior feels like a silk pillowcase. The satin lining is what sets this apart—it's gentle on my hair and doesn't cause any friction or breakage. My hair feels just as smooth when I take it off as it did before I put it on."
+    },
+    {
+      author: "Kara",
+      stars: 5,
+      title: "Stretch fit",
+      body: "Roomy enough for rollers and still sealed. I sometimes set my hair in large rollers and most caps can't accommodate them. This one stretches to fit but still creates a perfect seal around the edges. The waterproof protection is impressive."
+    },
+    {
+      author: "Lena",
+      stars: 5,
+      title: "Worth the upgrade",
+      body: "Feels premium compared to plastic caps. Yes, it costs more than cheap shower caps, but the quality difference is massive. The materials are better, the construction is solid, and it actually works. I've had mine for 3 months and it still looks brand new."
+    },
+    {
+      author: "Mara",
+      stars: 4.7,
+      title: "Holds up",
+      body: "Using daily for weeks—still perfect. I was worried about durability given the price, but this cap is built to last. The elastic hasn't stretched out and the waterproof layer is still effective. Best investment I've made for my hair care routine."
+    },
+    {
+      author: "Nia",
+      stars: 5,
+      title: "Edge-safe",
+      body: "No rubbing on baby hairs. My baby hairs are super fragile and most shower caps cause breakage around my hairline. This one is gentle enough that I don't have any issues. Finally found a shower cap that protects my edges while keeping my hair dry."
+    },
+    {
+      author: "Opal",
+      stars: 5,
+      title: "Great gift",
+      body: "Bought for my mom—she loves it. Got this as a gift for my mom who has curly hair and struggles with frizz. She's been using it every day and says it's the best shower cap she's ever owned. She's already asked me to buy her a second one as a backup!"
+    },
+    {
+      author: "Priya",
+      stars: 4.8,
+      title: "Cute design",
+      body: "Functional and actually stylish. I love that I don't have to hide this cap when someone walks into the bathroom. It looks like a luxury accessory, not something I need to be embarrassed about. The fact that it actually works makes it even better."
+    },
+    {
+      author: "Quinn",
+      stars: 5,
+      title: "Frizz free",
+      body: "Hair stays shiny even on wash day. I use this cap every time I wash my hair, and the difference in my hair health is noticeable. Less frizz, more shine, and my styles last so much longer. My hairdresser commented on how healthy my ends look now."
     }
   ];
 
   // FAQ data
   $.faq = [
     {
-      q: "Will this fit my head size?",
-      a: "Yes! The elastic is fully adjustable and fits head sizes from 21-25 inches."
+      q: "Will it fit my hair?",
+      a: "Customer review · 5★: I've never bothered with shower caps as I have super long hair that goes past my butt so my hair would always get wet and wouldn't fit. This shower cap is perfect – my hair stays bone dry, it fits with plenty of room and the band fits snug around the head. 10/10 worth the price!"
     },
     {
-      q: "Is it truly waterproof?",
-      a: "Yes, the outer layer is made from waterproof polyester that's been tested to keep steam out."
+      q: "Is it fully waterproof?",
+      a: "Yes, the durable waterproof outer shell shields hair from moisture and humidity."
     },
     {
-      q: "How do I clean it?",
-      a: "Simply hand wash with mild soap and air dry. It's reusable hundreds of times!"
+      q: "How do I wash it?",
+      a: "Hand wash the shower cap in lukewarm water with mild soap, gently clean the satin lining, rinse well, and air-dry only. Avoid machine washing, tumble drying, or heat to keep the waterproof layer and satin in good condition."
     },
     {
-      q: "Will it leave marks on my hair?",
-      a: "No! The satin lining is gentle and the elastic is smooth, so no creases or impressions."
-    },
-    {
-      q: "What's your return policy?",
-      a: "We offer a 30-day money-back guarantee. If you're not in love with it, return it for a full refund."
+      q: "What's the return policy?",
+      a: "30-day Luxe Guarantee with easy exchanges or returns."
     }
   ];
 
@@ -207,6 +272,259 @@
     { url: "https://www.tiktok.com/@lumelle/video/1234567890" },
     { url: "https://www.tiktok.com/@lumelle/video/1234567891" }
   ];
+  // PDP (Product Detail Page) Content - Shower Cap
+  $.pdp = $.pdp || {};
+  $.pdp['shower-cap'] = {
+    handle: 'lumelle-shower-cap',
+    defaultTitle: 'Lumelle Shower Cap',
+    defaultSubtitle: 'Luxury protection that keeps every style flawless through every shower. Waterproof satin shields your blowouts, curls, and braids from steam and humidity.',
+    price: 14.99,
+    compareAtPrice: 19.99,
+    badge: 'Buy 2, save 5%',
+    bottomCtaChips: ['Waterproof satin', '30-day returns'],
+    ratingValue: 4.8,
+    ratingCountLabel: '100+',
+
+    // Feature Callouts - "Your Sign to Try This" section
+    featureCallouts: {
+      mediaSrc: 'video://https://www.tiktok.com/embed/v2/7567328998158585110',
+      mediaAlt: 'Lumelle cap TikTok demo',
+      mediaLabel: 'Watch it in action',
+      mediaNote: 'Creator-tested frizz defense',
+      heading: {
+        eyebrow: "Why you'll love it",
+        title: 'Effortless to put on, frizz-free when you take it off',
+        description: 'Your small daily luxury that keeps styles smooth, comfy, and camera-ready.',
+        alignment: 'left'
+      }
+    },
+
+    // How to steps
+    how: [
+      { title: 'Steam-proof shine', body: 'Your silk press stays mirror-smooth and frizz-free through every shower. Advanced seal technology locks out steam that ruins expensive blowouts. Step out with the same flawless style you stepped in with.' },
+      { title: 'Room for every style', body: 'Extra-large capacity comfortably houses curls, braids, locs, and protective styles. No more squishing or cramming - your hair maintains its shape and volume. Gentle fit protects edges and prevents the creasing that ruins your look.' },
+      { title: 'Ready again tomorrow', body: 'Premium materials wipe clean effortlessly - no special care required. Quick-dry design means it is fresh and ready for your next shower. One investment replaces hundreds of disposable caps.' }
+    ],
+
+    // Reasons - "Bestseller Happy Hair Days" section
+    reasons: [
+      { title: 'Best seller', desc: 'Trusted by thousands of customers who refuse to shower without it. Creator-tested and approved for keeping silk presses, curls, and braids flawless. Your styles stay camera-ready from wash day to wash day.' },
+      { title: 'Happier hair days', desc: 'Advanced steam-blocking core creates an impenetrable barrier against moisture. Stop frizz before it starts - your smooth styles last through busy weeks. Wake up to the same sleek hair you went to bed with.' },
+      { title: 'Less breakage', desc: 'Satin-soft band glides on without tugging, pulling, or snagging delicate strands. Roomy shape eliminates tension that causes breakage and stress on edges. Protect your hair investment with every single shower.' },
+      { title: 'Stays fresh', desc: 'Premium dual-layer construction wipes clean in seconds after each use. Quick air-dry design means it is ready for your next shower. Built to last 100+ uses - a sustainable upgrade from flimsy disposables.' }
+    ],
+
+    // Essentials - "Materials, care & fit" section
+    essentials: [
+      { title: 'Reusable waterproof', body: 'Dual-layer construction with waterproof TPU core blocks every drop of moisture. Comfort-fit elastic band creates a secure seal that keeps steam out completely. Say goodbye to soggy edges and ruined blowouts.' },
+      { title: 'Satin lined', body: 'Luxuriously smooth satin interior glides over hair without snagging or pulling. Blocks humidity to prevent frizz and maintain sleek, polished styles. Reduces friction that causes breakage, keeping hair healthier wash after wash.' },
+      { title: 'Large wide shower cap', body: 'Generous, roomy silhouette designed for all hair types and lengths. Comfortably accommodates curls, coils, braids, and protective styles. Even fits bum-length hair with room to spare - verified by customer reviews.' },
+      { title: 'Adjustable', body: 'Stretch comfort band expands to 24+ inches for a customized, secure fit. No-crease design means no dented edges or flattened styles. Stays comfortably in place during every shower, every single day.' }
+    ],
+
+    // FAQ Questions
+    qa: [
+      { q: 'Will it fit my hair?', a: "Customer review 5 stars: I have super long hair that goes past my butt so my hair would always get wet and would not fit. This shower cap is perfect - my hair stays bone dry, it fits with plenty of room and the band fits snug around the head. 10/10 worth the price!" },
+      { q: 'Is it fully waterproof?', a: 'Yes, the durable waterproof outer shell shields hair from moisture and humidity.' },
+      { q: 'How do I wash it?', a: 'Hand wash the shower cap in lukewarm water with mild soap, gently clean the satin lining, rinse well, and air-dry only. Avoid machine washing, tumble drying, or heat to keep the waterproof layer and satin in good condition.' },
+      { q: "What's the return policy?", a: '30-day Luxe Guarantee with easy exchanges or returns.' }
+    ],
+
+    // TikTok Videos
+    featuredTikTokHeading: {
+      eyebrow: 'Creator in action',
+      title: 'Watch the cap stay flawless',
+      description: 'See how creators keep their silk press perfect after every shower.',
+      alignment: 'center'
+    },
+    featuredTikToks: [
+      { name: 'Shannon Mitchell', handle: '@shannon_mitch', embedUrl: 'https://www.tiktok.com/embed/v2/7562893092957719830', videoUrl: 'https://www.tiktok.com/@shannon_mitch/video/7562893092957719830' },
+      { name: 'Rachel', handle: '@rachelsummergreenie._', embedUrl: 'https://www.tiktok.com/embed/v2/7543668112630058262', videoUrl: 'https://www.tiktok.com/@rachelsummergreenie._/video/7543668112630058262' },
+      { name: 'Random Life UK', handle: '@randomlifeuk', embedUrl: 'https://www.tiktok.com/embed/v2/7544353160429587734', videoUrl: 'https://www.tiktok.com/@randomlifeuk/video/7544353160429587734' },
+      { name: 'Winging Ma Life', handle: '@wingingmalife', embedUrl: 'https://www.tiktok.com/embed/v2/7567328998158585110', videoUrl: 'https://www.tiktok.com/@wingingmalife/video/7567328998158585110' },
+      { name: 'By Latticia', handle: '@bylatticia', embedUrl: 'https://www.tiktok.com/embed/v2/7566245669250387222', videoUrl: 'https://www.tiktok.com/@bylatticia/video/7566245669250387222' },
+      { name: 'Hannah Styles', handle: '@hannahh.styless', embedUrl: 'https://www.tiktok.com/embed/v2/7575168979711397142', videoUrl: 'https://www.tiktok.com/@hannahh.styless/video/7575168979711397142' }
+    ]
+  };
+
+  $.pdp['satin-overnight-curler'] = {
+    handle: 'satin-overnight-curler',
+    defaultTitle: 'Satin Overnight Heatless Curler Set',
+    defaultSubtitle: 'Wake up to salon-worthy curls without heat, damage, or effort. Soft satin design works while you sleep — for healthy, beautiful hair every morning.',
+    price: 16.99,
+    compareAtPrice: 21.99,
+    badge: '20% off',
+    bottomCtaChips: ['Heatless curls', '30-day returns'],
+    ratingValue: 4.8,
+    ratingCountLabel: '50+',
+
+    // Gallery images
+    gallery: [
+      '/uploads/curler/1.webp',
+      '/uploads/curler/2.webp',
+      '/uploads/curler/3.webp',
+      '/uploads/curler/4.webp',
+      '/uploads/curler/5.webp',
+      '/uploads/curler/6.webp',
+      '/uploads/curler/7.webp',
+      '/uploads/curler/8.webp',
+      'video://https://www.tiktok.com/embed/v2/7576640339788746006'
+    ],
+
+    // Feature Callouts - "Your Sign to Try This" section
+    featureCallouts: {
+      mediaSrc: 'video://https://www.tiktok.com/embed/v2/7576640339788746006',
+      mediaAlt: 'Satin overnight curler demo',
+      mediaLabel: 'Heatless overnight curls',
+      mediaNote: 'Soft satin set that stays comfy all night',
+      heading: {
+        eyebrow: "How you'll use it",
+        title: 'Wrap it once, wake up flawless curls',
+        description: "You'll get effortless, frizz-free curls that last, with a comfy design that keeps your hair healthier every time you use it.",
+        alignment: 'left'
+      }
+    },
+
+    // How to steps
+    how: [
+      { title: 'Heatless, healthy curls', body: 'Transform your hair while you sleep — no hot tools required. Wake up to soft, effortless curls every morning. Zero heat means zero damage to your strands. Preserve your natural moisture and strength. Perfect for damaged, color-treated, or fragile hair.' },
+      { title: 'Frizz defense built in', body: 'Smooth, shiny curls are yours — no serums needed. Premium satin reduces friction that causes frizz. Helps seal the cuticle for mirror-like shine. Protects against breakage and split ends. Maintains curl definition throughout the day.' },
+      { title: 'Sleep-easy design', body: 'Comfort meets convenience for the ultimate beauty sleep. Lightweight and flexible — you will forget you are wearing it. Soft satin feels luxurious against your skin. Quick to wrap in just minutes before bed. Secure fit stays put all night long.' }
+    ],
+
+    // Reasons - "Why you'll love it" section
+    reasons: [
+      { title: 'Wrap with ease', desc: 'Creating heatless curls is simpler than you think. Start with dry or slightly damp hair for best results. Divide hair into two sections and wrap tightly around the satin rod. The soft, flexible design makes wrapping intuitive and quick.' },
+      { title: 'Secure & sleep comfortably', desc: 'Designed for overnight wear so you wake up to gorgeous curls. Fasten ends with the included satin scrunchies — no creases, no tugging. Pop on the luxury bonnet to keep everything perfectly in place. Soft satin feels gentle against your skin and pillow.' },
+      { title: 'Reveal & enjoy', desc: 'The moment you have been waiting for — effortlessly beautiful curls. Gently unwrap to reveal soft, bouncy, heat-free curls. No crunch, no stiffness — just natural movement and shine. Style lasts for days with proper care.' }
+    ],
+
+    // Essentials - "What's included" section
+    essentials: [
+      { title: "What's inside", body: 'Everything you need for salon-worthy curls while you sleep: Satin-wrapped heatless curling rod — soft, flexible, and gentle on hair. Luxury satin bonnet — keeps your wrap secure and protects your style. 2x matching satin scrunchies — secure ends without creasing or pulling. Styling claw clip — section hair effortlessly for perfect wrapping.' },
+      { title: 'Works on all hair types', body: 'Whether your hair is straight, wavy, curly, thick, or fine — this set adapts to you. Flexible rod bends to any hair length or texture. Creates soft waves on straight hair and defined curls on textured hair. Adjustable tension lets you control curl tightness. Satin surface reduces friction for all hair types.' },
+      { title: 'Curls that last for days', body: 'Wake up to curls that stay gorgeous from morning coffee to evening plans. Most customers enjoy defined curls for 2–3 days. Tighter wrapping creates longer-lasting definition. Satin helps preserve curl shape while you sleep. Pair with your favorite styling products for even more hold.' }
+    ],
+
+    // FAQ Questions
+    qa: [
+      { q: 'Will it work for my hair type?', a: 'Yes — the Lumelle Heatless Curler is designed for all hair types. Whether your hair is straight, wavy, thick, or fine, the flexible satin rod shapes smooth, lasting curls without heat damage.' },
+      { q: 'How long do the curls last?', a: 'Most customers enjoy beautiful curls all day, and many say theirs last up to 2–3 days. Smaller sections and tighter wrapping can help your curls stay defined even longer.' },
+      { q: 'Is it comfortable to sleep in?', a: 'Absolutely. Our satin-wrapped rod and lightweight bonnet are designed for soft, overnight comfort, so you wake up with curls — not discomfort.' },
+      { q: 'Does it help with frizz?', a: 'Yes. Satin naturally reduces friction, leaving your hair smoother, shinier, and noticeably frizz-free after styling.' },
+      { q: 'Will it damage my hair?', a: 'Not at all. Our heatless system avoids the breakage and dryness caused by hot tools, keeping your hair healthier with every use.' },
+      { q: 'Do I use it on wet or dry hair?', a: 'For the best results, use on dry or slightly damp hair. Damp hair creates a stronger curl, while dry hair gives softer, looser waves.' },
+      { q: 'How long do I leave it in?', a: 'Leave it in overnight or for at least a few hours. The longer it sets, the more defined your curls will be.' }
+    ],
+
+    // TikTok Videos
+    featuredTikTokHeading: {
+      eyebrow: undefined,
+      title: 'Watch How These Curls Came Out Flawless',
+      description: "See How Long Creators' Curls Last and How Effortlessly Gorgeous They Look.",
+      alignment: 'center'
+    },
+    featuredTikToks: [
+      { name: 'Lumelle UK', handle: '@lumelleuk', embedUrl: 'https://www.tiktok.com/embed/v2/7576640339788746006', videoUrl: 'https://www.tiktok.com/@lumelleuk/video/7576640339788746006' },
+      { name: 'Louaira', handle: '@louaira', embedUrl: 'https://www.tiktok.com/embed/v2/7581520947211980054', videoUrl: 'https://www.tiktok.com/@louaira/video/7581520947211980054' },
+      { name: 'Hannah H. Styless', handle: '@hannahh.styless', embedUrl: 'https://www.tiktok.com/embed/v2/7582990745552948502', videoUrl: 'https://www.tiktok.com/@hannahh.styless/video/7582990745552948502' },
+      { name: 'Lumelle UK Tutorial', handle: '@lumelleuk', embedUrl: 'https://www.tiktok.com/embed/v2/7581498853610769667', videoUrl: 'https://www.tiktok.com/@lumelleuk/video/7581498853610769667' }
+    ]
+  };
+
+  $.pdp['lumelle-xl-microfibre-hair-towel'] = {
+    handle: 'lumelle-xl-microfibre-hair-towel',
+    defaultTitle: 'XL Microfibre Hair Towel',
+    defaultSubtitle: 'Cut your drying time in half and step out with smoother, shinier hair, no heat, no frizz, no waiting around',
+    price: 14.99,
+    compareAtPrice: 19.99,
+    badge: '25% off',
+    bottomCtaChips: ['Dries in 15 minutes', '30-day guarantee'],
+    ratingValue: 4.8,
+    ratingCountLabel: '50+',
+
+    // Gallery images
+    gallery: [
+      '/uploads/towel/Hero.webp',
+      '/uploads/towel/Artboard 1.webp',
+      '/uploads/towel/Artboard 2.webp',
+      '/uploads/towel/Artboard 3.webp',
+      '/uploads/towel/Artboard 4.webp',
+      '/uploads/towel/Artboard 5.webp',
+      '/uploads/towel/Artboard 6.webp',
+      '/uploads/towel/Artboard 7.webp'
+    ],
+
+    // Feature Callouts - "Your Sign to Try This" section
+    featureCallouts: {
+      mediaSrc: 'video://https://www.tiktok.com/embed/v2/7598568400620752150',
+      mediaAlt: 'Lumelle microfibre hair towel demo',
+      mediaLabel: 'Quick-dry microfiber',
+      mediaNote: 'Ultra-absorbent with secure elastic loop',
+      heading: {
+        eyebrow: "Why you'll love it",
+        title: 'Cut drying time in half, keep frizz at bay',
+        description: 'Ultra-absorbent microfiber that works while you get ready, for smoother, healthier-looking hair.',
+        alignment: 'left'
+      }
+    },
+
+    // How to steps
+    how: [
+      { title: 'Easy positioning', body: 'Bend forward and drape the towel over wet hair, button resting at the nape of your neck. The lightweight design feels barely there, so you can start your routine without the usual neck strain. Perfect placement every time, no awkward adjusting or slipping as you move.' },
+      { title: 'Gentle wrapping', body: 'Twist the towel around your hair, working smoothly from forehead to ends. Ultra-soft microfiber glides over strands, no rubbing or friction that causes frizz and breakage. Your curls, coils, and waves keep their natural pattern while drying beautifully.' },
+      { title: 'Secure fit', body: 'Flip back up and fasten the elastic loop around the button with one easy motion. Stays locked in place through makeup, skincare, and whatever your morning brings. No slipping, no readjusting, just hands-free drying while you conquer your to-do list.' },
+      { title: 'Effortless drying', body: 'Let the advanced microfiber work its magic while you get ready, remove when hair feels damp. Cuts drying time in half, so you spend less time with wet hair and more time living. Step out with smoother, shinier hair that feels healthier from the very first use.' }
+    ],
+
+    // Reasons - "Why you'll love it" section
+    reasons: [
+      { title: 'Hands-free routine', desc: 'Button and elastic loop closure keeps the towel secure without holding it. Free up your hands for skincare, makeup, or getting dressed. Move freely while your hair dries, no more balancing acts.' },
+      { title: 'Stays put', desc: 'Designed to stay firmly in place through every movement and bend. No slipping or readjusting, it works as hard as you do. Comfortable fit that never tugs, pulls, or causes headaches.' },
+      { title: 'Faster, healthier hair', desc: 'Ultra-absorbent microfiber cuts drying time by half compared to cotton. Smooth fabric reduces frizz and protects your natural curl pattern. Less heat styling means stronger, healthier hair over time.' }
+    ],
+
+    // Essentials - "Materials, care & fit" section
+    essentials: [
+      { title: 'Absorbs in seconds', body: 'Advanced microfiber technology draws moisture away from hair 3x faster than cotton. Cuts drying time dramatically, so you spend less time with wet hair and more time living. Gentle on color-treated and delicate strands, no rubbing or tugging required.' },
+      { title: 'Room for all hair', body: 'Extra-large dimensions swallow long, curly, and voluminous hair completely. Fits everything from fine pixie cuts to thick, bum-length waves and protective styles. Elegant tulip design wraps generously around braids, extensions, and natural textures.' },
+      { title: 'Stays securely', body: 'Built-in elastic loop and button closure lock the towel firmly in place. Hands-free design lets you do skincare, makeup, or get dressed while hair dries. Comfortable, non-slip fit moves with you, walk, bend, and multitask freely.' },
+      { title: 'Smooth, frizz-free', body: 'Silky microfiber glides over cuticles instead of roughing them up like cotton. Blocks the friction that causes frizz, flyaways, and mid-day pouf. Keeps your natural curl pattern intact, hair feels softer and more manageable.' }
+    ],
+
+    // FAQ Questions
+    qa: [
+      { q: 'Will it fit my hair type?', a: "Customer review 5 stars: I have very long, thick hair and this is the first towel that actually fits and stays put. It's so soft, absorbs water quickly, and doesn't feel heavy on my head like regular towels do. My hair dries so much faster and with way less frizz. Absolutely love it!" },
+      { q: 'How do I wash it?', a: 'Machine wash on a gentle cycle with like colors, then tumble dry low or air dry. To keep your towel at peak absorbency, avoid fabric softeners and bleach, as these can coat the fibers and reduce their moisture-wicking ability over time.' },
+      { q: 'How long does it take to dry hair?', a: 'Most customers find their hair goes from wet to damp-dry in 15 to 30 minutes, depending on hair thickness and length. The ultra-absorbent microfiber wicks away excess moisture quickly, cutting your air-dry time significantly while helping reduce frizz and breakage compared to rough cotton towels.' },
+      { q: "What's the return policy?", a: '30-day Luxe Guarantee with easy exchanges or returns.' }
+    ],
+
+    // TikTok Videos
+    featuredTikTokHeading: {
+      eyebrow: 'See it in action',
+      title: 'Faster drying, healthier hair',
+      description: 'Watch how the microfiber towel reduces drying time without the frizz.',
+      alignment: 'center'
+    },
+    featuredTikToks: [
+      { name: 'Lumelle UK', handle: '@lumelleuk', embedUrl: 'https://www.tiktok.com/embed/v2/7598568400620752150', videoUrl: 'https://www.tiktok.com/@lumelleuk/video/7598568400620752150' },
+      { name: 'Lumelle UK', handle: '@lumelleuk', embedUrl: 'https://www.tiktok.com/embed/v2/7598189844778454294', videoUrl: 'https://www.tiktok.com/@lumelleuk/video/7598189844778454294' },
+      { name: 'Lumelle UK', handle: '@lumelleuk', embedUrl: 'https://www.tiktok.com/embed/v2/7599626307323907331', videoUrl: 'https://www.tiktok.com/@lumelleuk/video/7599626307323907331' }
+    ],
+
+    // Reviews for towel
+    reviews: [
+      { author: 'Amelia', stars: 5, title: 'Game changer for my hair routine', body: "This towel has completely transformed my wash days. It absorbs so much water that my hair goes from soaking wet to damp in just 15 minutes. No more dripping water everywhere while I do my skincare. My hair feels softer and I have way less frizz than with regular towels." },
+      { author: 'r**y', stars: 5, title: 'Super soft', body: "Very useful, such great material leaves my hair sooo soft and silky, unlike a regular towel. Doesn't slip and keeps all ur hair in place !!!" },
+      { author: 'W**p', stars: 5, title: 'Better than my current towel', body: "So much better than my current towel! It's super soft and keeps my hair frizz free. It goes really well with my satin shower cap x" },
+      { author: 'K**n', stars: 5, title: 'Total must-have', body: "Love this hair towel!! It's super soft, lightweight, and so much better than using a regular towel. It dries my hair faster without frizz and stays in place perfectly. Total must-have for my hair routine!!!" },
+      { author: 'S**i', stars: 5, title: 'Genuinely XL', body: "Absolutely love this hair towel. Super soft, genuinely XL (fits all my hair), and dries so much faster without frizz or pulling. Way better than a normal towel. I won't use anything else now!" },
+      { author: 'j**t', stars: 5, title: 'Best hair towel ever', body: "This is literally the best hair towel I've ever owned. I keep repurchasing this brand. It's such a great design, fits all my hair (long hair) in and not too loose or tight, super easy to use, very absorbent. Feels a bit more comfortable than traditional towel wraps and is lightweight on my head." },
+      { author: 'S**x', stars: 5, title: 'Stays on while sleeping', body: "Best towel I've used it manages to cover all my hair and stays on even while sleeping! Dries the hair quickly too mine usually takes quite long to dry! LOVE" }
+    ]
+  };
+
 // Shopify Navigation Data - Connect menus to Shopify admin
   $.navigation = {
     mainMenu: [
@@ -269,6 +587,7 @@
     socialProof: $.socialProof ? "✓" : "✗",
     reviews: $.reviews ? `✓ (${$.reviews.length} items)` : "✗",
     faq: $.faq ? `✓ (${$.faq.length} items)` : "✗",
+    pdp: $.pdp ? `✓ (${Object.keys($.pdp).length} products)` : "✗",
     navigation: $.navigation ? `✓ (${$.navigation.mainMenu?.length || 0} menu items)` : "✗"
   });
 </script>

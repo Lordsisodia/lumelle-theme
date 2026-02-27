@@ -27,24 +27,24 @@
     "pdp_bottom_cta": {
       "type": "lumelle-react-pdp-bottom-cta"
     },
-    "trust_badges": {
-      "type": "lumelle-react-trust-bar"
-    },
     "related-products": {
       "type": "related-products"
+    },
+    "pdp_mobile_cta": {
+      "type": "lumelle-react-pdp-mobile-cta"
     }
   },
   "order": [
     "pdp_gallery",
     "pdp_price",
     "pdp_howto",
-    "pdp_features",
     "pdp_reviews",
+    "pdp_features",
     "pdp_essentials",
     "pdp_tiktok",
     "pdp_faq",
     "pdp_bottom_cta",
-    "trust_badges",
-    "related-products"
+    "related-products",
+    "pdp_mobile_cta"
   ]
 }
