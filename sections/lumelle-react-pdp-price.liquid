@@ -1,6 +1,10 @@
 {% comment %} Lumelle PDP Price React Mount Point {% endcomment %}
 
-<div id="react-pdp-price" class="lumelle-pdp-price-section" data-handle="{{ product.handle }}" data-product="{{ product | json | escape }}"></div>
+<div id="react-pdp-price" 
+     class="lumelle-pdp-price-section" 
+     data-handle="{{ product.handle }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}" 
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-product="{{ product | json | escape }}"></div>
 
 {% schema %}
 {
