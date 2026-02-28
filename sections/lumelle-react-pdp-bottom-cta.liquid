@@ -1,6 +1,10 @@
 {% comment %} Lumelle PDP Bottom CTA React Mount Point {% endcomment %}
 
-<div id="react-pdp-bottom-cta" class="lumelle-pdp-bottom-cta-section" data-handle="{{ product.handle }}" data-product="{{ product | json | escape }}"></div>
+<div id="react-pdp-bottom-cta" 
+     class="lumelle-pdp-bottom-cta-section" 
+     data-handle="{{ product.handle }}" 
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-product="{{ product | json | escape }}"></div>
 
 {% schema %}
 {
