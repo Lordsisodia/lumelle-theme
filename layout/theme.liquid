@@ -421,7 +421,26 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-  </head>
+  <style>
+/* Hide cart tab in drawer - make it menu-only */
+[data-tab="cart"],
+#drawer-panel-cart,
+button[role="tab"][data-tab="cart"] {
+    display: none !important;
+}
+
+/* Hide tab list when only menu is visible */
+.lumelle-drawer [role="tablist"],
+[role="tablist"] {
+    display: none !important;
+}
+
+/* Make drawer panel full height without tab switching */
+#drawer-panel-menu {
+    height: 100% !important;
+}
+</style>
+</head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <!-- React Drawer Provider -->
