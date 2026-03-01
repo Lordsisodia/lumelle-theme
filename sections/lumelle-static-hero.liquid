@@ -4,7 +4,7 @@
   
   Elements:
   - Background gradient + image with overlay
-  - Trust bar with avatars and tagline
+  - Trust bar with avatars and tagline (glassmorphism pill)
   - Headline (Playfair Display)
   - Subhead
   - CTA button
@@ -12,8 +12,19 @@
   - Product image card (desktop only)
 {% endcomment %}
 
+{%- comment -%} Cloudinary fallback URLs {%- endcomment -%}
+{% assign cloudinary_base = 'https://res.cloudinary.com/dbowtimdn/image/upload/lumelle' %}
+{% assign default_desktop_bg = cloudinary_base | append: '/luminele/hero-desktop.webp' %}
+{% assign default_mobile_bg = cloudinary_base | append: '/luminele/hero-main-960.webp' %}
+{% assign default_product_img = cloudinary_base | append: '/luminele/product-main.webp' %}
+{% assign avatar_1_url = cloudinary_base | append: '/images/avatar-shannon.jpg' %}
+{% assign avatar_2_url = cloudinary_base | append: '/images/avatar-rachel.jpg' %}
+{% assign avatar_3_url = cloudinary_base | append: '/images/avatar-randomlife.jpg' %}
+{% assign avatar_4_url = cloudinary_base | append: '/images/avatar-jade.jpg' %}
+{% assign avatar_5_url = cloudinary_base | append: '/images/avatar-maya.jpg' %}
+
 <section 
-  class="relative min-h-[70vh] overflow-hidden bg-[#fde4d833] md:min-h-[76vh]"
+  class="lumelle-static-hero relative min-h-[70vh] overflow-hidden bg-[#fde4d833] md:min-h-[76vh]"
   data-section-id="{{ section.id }}"
   data-section-type="lumelle-static-hero"
 >
@@ -31,6 +42,16 @@
                   {{ section.settings.background_image | image_url: width: 1920 }} 1920w,
                   {{ section.settings.background_image | image_url: width: 2400 }} 2400w"
           sizes="100vw"
+          alt=""
+          class="h-full w-full brightness-95 object-cover object-right"
+          width="2400"
+          height="1350"
+          loading="eager"
+          decoding="async"
+        >
+      {%- else -%}
+        <img
+          src="{{ default_desktop_bg }}"
           alt=""
           class="h-full w-full brightness-95 object-cover object-right"
           width="2400"
@@ -70,6 +91,17 @@
           loading="eager"
           decoding="async"
         >
+      {%- else -%}
+        <img
+          src="{{ default_mobile_bg }}"
+          alt=""
+          class="h-full w-full brightness-95 object-cover scale-[1.08]"
+          style="object-position: {{ section.settings.image_position | default: 'center center' }};"
+          width="960"
+          height="1080"
+          loading="eager"
+          decoding="async"
+        >
       {%- endif -%}
       {%- comment -%} Mobile gradient overlay {%- endcomment -%}
       <div 
@@ -88,60 +120,50 @@
           {%- comment -%} Text Content Column {%- endcomment -%}
           <div class="mx-auto w-full max-w-xl p-5 text-center md:max-w-2xl lg:mx-0 lg:p-0 lg:text-left">
             
-            {%- comment -%} Trust Bar {%- endcomment -%}
+            {%- comment -%} Trust Bar - Glassmorphism Pill {%- endcomment -%}
             <div class="inline-flex flex-nowrap items-center gap-3 rounded-full bg-white/30 px-6 py-2 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)] ring-1 ring-white/50 min-w-[300px] justify-center lg:justify-start">
               {%- comment -%} Avatars {%- endcomment -%}
               <div class="flex -space-x-1.5 flex-shrink-0 pl-1">
-                {%- if section.settings.avatar_1 != blank -%}
-                  <img
-                    src="{{ section.settings.avatar_1 | image_url: width: 56 }}"
-                    alt="Customer"
-                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
-                    loading="lazy"
-                    width="28"
-                    height="28"
-                  >
-                {%- endif -%}
-                {%- if section.settings.avatar_2 != blank -%}
-                  <img
-                    src="{{ section.settings.avatar_2 | image_url: width: 56 }}"
-                    alt="Customer"
-                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
-                    loading="lazy"
-                    width="28"
-                    height="28"
-                  >
-                {%- endif -%}
-                {%- if section.settings.avatar_3 != blank -%}
-                  <img
-                    src="{{ section.settings.avatar_3 | image_url: width: 56 }}"
-                    alt="Customer"
-                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
-                    loading="lazy"
-                    width="28"
-                    height="28"
-                  >
-                {%- endif -%}
-                {%- if section.settings.avatar_4 != blank -%}
-                  <img
-                    src="{{ section.settings.avatar_4 | image_url: width: 56 }}"
-                    alt="Customer"
-                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
-                    loading="lazy"
-                    width="28"
-                    height="28"
-                  >
-                {%- endif -%}
-                {%- if section.settings.avatar_5 != blank -%}
-                  <img
-                    src="{{ section.settings.avatar_5 | image_url: width: 56 }}"
-                    alt="Customer"
-                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
-                    loading="lazy"
-                    width="28"
-                    height="28"
-                  >
-                {%- endif -%}
+                <img
+                  src="{%- if section.settings.avatar_1 != blank -%}{{ section.settings.avatar_1 | image_url: width: 56 }}{%- else -%}{{ avatar_1_url }}{%- endif -%}"
+                  alt="Customer"
+                  class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                >
+                <img
+                  src="{%- if section.settings.avatar_2 != blank -%}{{ section.settings.avatar_2 | image_url: width: 56 }}{%- else -%}{{ avatar_2_url }}{%- endif -%}"
+                  alt="Customer"
+                  class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                >
+                <img
+                  src="{%- if section.settings.avatar_3 != blank -%}{{ section.settings.avatar_3 | image_url: width: 56 }}{%- else -%}{{ avatar_3_url }}{%- endif -%}"
+                  alt="Customer"
+                  class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                >
+                <img
+                  src="{%- if section.settings.avatar_4 != blank -%}{{ section.settings.avatar_4 | image_url: width: 56 }}{%- else -%}{{ avatar_4_url }}{%- endif -%}"
+                  alt="Customer"
+                  class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                >
+                <img
+                  src="{%- if section.settings.avatar_5 != blank -%}{{ section.settings.avatar_5 | image_url: width: 56 }}{%- else -%}{{ avatar_5_url }}{%- endif -%}"
+                  alt="Customer"
+                  class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                  loading="lazy"
+                  width="28"
+                  height="28"
+                >
               </div>
               {%- comment -%} Trust Text {%- endcomment -%}
               <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#55362A]/80 whitespace-nowrap pl-1">
@@ -149,8 +171,8 @@
               </span>
             </div>
             
-            {%- comment -%} Headline {%- endcomment -%}
-            <h1 class="mt-4 whitespace-pre-line font-heading text-3xl font-bold leading-tight text-[#55362A] sm:text-4xl md:text-5xl lg:text-6xl">
+            {%- comment -%} Headline - Playfair Display {%- endcomment -%}
+            <h1 class="mt-4 whitespace-pre-line font-heading text-3xl font-bold leading-tight text-[#55362A] sm:text-4xl md:text-5xl lg:text-6xl" style="font-family: 'Playfair Display', serif;">
               {{ section.settings.headline | default: 'Luxury shower cap that keeps hair frizz-free' }}
             </h1>
             
@@ -205,9 +227,15 @@
                     decoding="async"
                   >
                 {%- else -%}
-                  <div class="p-12 text-center text-[#55362A]">
-                    Product Image
-                  </div>
+                  <img
+                    src="{{ default_product_img }}"
+                    alt="{{ section.settings.product_image_alt | default: 'Lumelle shower cap' }}"
+                    class="h-auto w-full object-contain"
+                    width="900"
+                    height="900"
+                    loading="eager"
+                    decoding="async"
+                  >
                 {%- endif -%}
               </div>
             </div>
@@ -218,6 +246,13 @@
     </div>
   </div>
 </section>
+
+<style>
+  /* Ensure font-heading uses Playfair Display */
+  .lumelle-static-hero .font-heading {
+    font-family: 'Playfair Display', serif !important;
+  }
+</style>
 
 {% schema %}
 {
@@ -233,13 +268,13 @@
       "type": "image_picker",
       "id": "background_image",
       "label": "Desktop Background Image",
-      "info": "Recommended: 2400x1350px. Used for desktop view (1024px+)"
+      "info": "Recommended: 2400x1350px. Falls back to Cloudinary default if not set."
     },
     {
       "type": "image_picker",
       "id": "mobile_background_image",
       "label": "Mobile Background Image",
-      "info": "Recommended: 960x1080px. Falls back to desktop image if not set."
+      "info": "Recommended: 960x1080px. Falls back to desktop image or Cloudinary default."
     },
     {
       "type": "select",
@@ -266,27 +301,32 @@
     {
       "type": "image_picker",
       "id": "avatar_1",
-      "label": "Avatar 1"
+      "label": "Avatar 1",
+      "info": "Falls back to Cloudinary default"
     },
     {
       "type": "image_picker",
       "id": "avatar_2",
-      "label": "Avatar 2"
+      "label": "Avatar 2",
+      "info": "Falls back to Cloudinary default"
     },
     {
       "type": "image_picker",
       "id": "avatar_3",
-      "label": "Avatar 3"
+      "label": "Avatar 3",
+      "info": "Falls back to Cloudinary default"
     },
     {
       "type": "image_picker",
       "id": "avatar_4",
-      "label": "Avatar 4"
+      "label": "Avatar 4",
+      "info": "Falls back to Cloudinary default"
     },
     {
       "type": "image_picker",
       "id": "avatar_5",
-      "label": "Avatar 5"
+      "label": "Avatar 5",
+      "info": "Falls back to Cloudinary default"
     },
     {
       "type": "header",
@@ -338,7 +378,7 @@
       "type": "image_picker",
       "id": "product_image",
       "label": "Product Image",
-      "info": "Displayed in card on desktop only"
+      "info": "Displayed in card on desktop only. Falls back to Cloudinary default."
     },
     {
       "type": "text",
