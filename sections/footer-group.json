@@ -2,17 +2,12 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "lumelle-react-footer": {
-      "type": "lumelle-react-footer",
-      "disabled": false
-    },
     "lumelle-liquid-footer": {
       "type": "lumelle-liquid-footer",
       "disabled": false
     }
   },
   "order": [
-    "lumelle-react-footer",
     "lumelle-liquid-footer"
   ]
 }
