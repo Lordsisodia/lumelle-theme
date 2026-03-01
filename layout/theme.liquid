@@ -480,6 +480,25 @@ button[role="tab"][data-tab="cart"] {
 #drawer-panel-menu {
     height: 100% !important;
 }
+
+
+/* Hero Desktop Background Fix - Force show on large screens */
+@media (min-width: 1024px) {
+    #react-hero .absolute.inset-0.hidden.lg\:block,
+    #react-hero div.absolute.inset-0.hidden,
+    .lumelle-hero-section .hidden.lg\:block {
+        display: block !important;
+    }
+}
+
+/* Hero Desktop Background Fix - Hide on mobile */
+@media (max-width: 1023px) {
+    #react-hero .absolute.inset-0.hidden.lg\:block,
+    #react-hero div.absolute.inset-0.hidden,
+    .lumelle-hero-section .hidden.lg\:block {
+        display: none !important;
+    }
+}
 </style>
 </head>
 
