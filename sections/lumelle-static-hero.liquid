@@ -1,0 +1,356 @@
+{% comment %}
+  Lumelle Static Hero Section
+  Pixel-for-pixel match of React HeroShop component
+  
+  Elements:
+  - Background gradient + image with overlay
+  - Trust bar with avatars and tagline
+  - Headline (Playfair Display)
+  - Subhead
+  - CTA button
+  - Star rating
+  - Product image card (desktop only)
+{% endcomment %}
+
+<section 
+  class="relative min-h-[70vh] overflow-hidden bg-[#fde4d833] md:min-h-[76vh]"
+  data-section-id="{{ section.id }}"
+  data-section-type="lumelle-static-hero"
+>
+  {%- comment -%} Background Layer {%- endcomment -%}
+  <div class="absolute inset-0">
+    {%- comment -%} Base gradient {%- endcomment -%}
+    <div class="absolute inset-0 bg-gradient-to-b from-white via-[#fde4d8]/10 to-[#fde4d8]/25"></div>
+    
+    {%- comment -%} Desktop background image (lg:block) {%- endcomment -%}
+    <div class="absolute inset-0 hidden lg:block">
+      {%- if section.settings.background_image != blank -%}
+        <img
+          src="{{ section.settings.background_image | image_url: width: 2400 }}"
+          srcset="{{ section.settings.background_image | image_url: width: 1200 }} 1200w,
+                  {{ section.settings.background_image | image_url: width: 1920 }} 1920w,
+                  {{ section.settings.background_image | image_url: width: 2400 }} 2400w"
+          sizes="100vw"
+          alt=""
+          class="h-full w-full brightness-95 object-cover object-right"
+          width="2400"
+          height="1350"
+          loading="eager"
+          decoding="async"
+        >
+      {%- endif -%}
+      {%- comment -%} Desktop gradient overlay {%- endcomment -%}
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/80 via-white/40 to-transparent"></div>
+    </div>
+    
+    {%- comment -%} Mobile background image (lg:hidden) {%- endcomment -%}
+    <div class="absolute inset-0 lg:hidden">
+      {%- if section.settings.mobile_background_image != blank -%}
+        <img
+          src="{{ section.settings.mobile_background_image | image_url: width: 960 }}"
+          srcset="{{ section.settings.mobile_background_image | image_url: width: 640 }} 640w,
+                  {{ section.settings.mobile_background_image | image_url: width: 960 }} 960w"
+          sizes="100vw"
+          alt=""
+          class="h-full w-full brightness-95 object-cover scale-[1.08]"
+          style="object-position: {{ section.settings.image_position | default: 'center center' }};"
+          width="960"
+          height="1080"
+          loading="eager"
+          decoding="async"
+        >
+      {%- elsif section.settings.background_image != blank -%}
+        <img
+          src="{{ section.settings.background_image | image_url: width: 960 }}"
+          alt=""
+          class="h-full w-full brightness-95 object-cover scale-[1.08]"
+          style="object-position: {{ section.settings.image_position | default: 'center center' }};"
+          width="960"
+          height="1080"
+          loading="eager"
+          decoding="async"
+        >
+      {%- endif -%}
+      {%- comment -%} Mobile gradient overlay {%- endcomment -%}
+      <div 
+        class="absolute inset-0 pointer-events-none md:backdrop-blur-[1px]"
+        style="background-image: linear-gradient(180deg, rgba(247,239,232,0.5) 0%, rgba(247,239,232,0.3) 32%, rgba(247,239,232,0.12) 55%, rgba(247,239,232,0) 78%);"
+      ></div>
+    </div>
+  </div>
+  
+  {%- comment -%} Content Layer {%- endcomment -%}
+  <div class="absolute inset-0 z-10">
+    <div class="mx-auto flex h-full max-w-6xl items-center px-4 pb-[3.5rem] pt-[3.5rem] md:px-6">
+      <div class="w-full">
+        <div class="mx-auto grid w-full max-w-5xl items-center gap-10 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+          
+          {%- comment -%} Text Content Column {%- endcomment -%}
+          <div class="mx-auto w-full max-w-xl p-5 text-center md:max-w-2xl lg:mx-0 lg:p-0 lg:text-left">
+            
+            {%- comment -%} Trust Bar {%- endcomment -%}
+            <div class="inline-flex flex-nowrap items-center gap-3 rounded-full bg-white/30 px-6 py-2 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)] ring-1 ring-white/50 min-w-[300px] justify-center lg:justify-start">
+              {%- comment -%} Avatars {%- endcomment -%}
+              <div class="flex -space-x-1.5 flex-shrink-0 pl-1">
+                {%- if section.settings.avatar_1 != blank -%}
+                  <img
+                    src="{{ section.settings.avatar_1 | image_url: width: 56 }}"
+                    alt="Customer"
+                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                    loading="lazy"
+                    width="28"
+                    height="28"
+                  >
+                {%- endif -%}
+                {%- if section.settings.avatar_2 != blank -%}
+                  <img
+                    src="{{ section.settings.avatar_2 | image_url: width: 56 }}"
+                    alt="Customer"
+                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                    loading="lazy"
+                    width="28"
+                    height="28"
+                  >
+                {%- endif -%}
+                {%- if section.settings.avatar_3 != blank -%}
+                  <img
+                    src="{{ section.settings.avatar_3 | image_url: width: 56 }}"
+                    alt="Customer"
+                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                    loading="lazy"
+                    width="28"
+                    height="28"
+                  >
+                {%- endif -%}
+                {%- if section.settings.avatar_4 != blank -%}
+                  <img
+                    src="{{ section.settings.avatar_4 | image_url: width: 56 }}"
+                    alt="Customer"
+                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                    loading="lazy"
+                    width="28"
+                    height="28"
+                  >
+                {%- endif -%}
+                {%- if section.settings.avatar_5 != blank -%}
+                  <img
+                    src="{{ section.settings.avatar_5 | image_url: width: 56 }}"
+                    alt="Customer"
+                    class="h-7 w-7 rounded-full border-2 border-white object-cover shadow-sm"
+                    loading="lazy"
+                    width="28"
+                    height="28"
+                  >
+                {%- endif -%}
+              </div>
+              {%- comment -%} Trust Text {%- endcomment -%}
+              <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#55362A]/80 whitespace-nowrap pl-1">
+                {{ section.settings.trust_text | default: 'Trusted by 10k users' }}
+              </span>
+            </div>
+            
+            {%- comment -%} Headline {%- endcomment -%}
+            <h1 class="mt-4 whitespace-pre-line font-heading text-3xl font-bold leading-tight text-[#55362A] sm:text-4xl md:text-5xl lg:text-6xl">
+              {{ section.settings.headline | default: 'Luxury shower cap that keeps hair frizz-free' }}
+            </h1>
+            
+            {%- comment -%} Subhead {%- endcomment -%}
+            <p class="mt-4 text-base text-[#55362A]/80 sm:text-lg">
+              {{ section.settings.subheadline | default: 'Satin-lined, waterproof, and creator-tested to protect silk presses, curls, and braids from steam.' }}
+            </p>
+            
+            {%- comment -%} CTA Button {%- endcomment -%}
+            <div class="mt-6 flex justify-center lg:justify-start">
+              <a
+                href="{{ section.settings.cta_link | default: '/products/shower-cap' }}"
+                data-click-id="hero-cta"
+                class="inline-flex items-center justify-center rounded-full px-7 py-3 text-base font-semibold shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition hover:-translate-y-0.5 bg-[#55362A] text-white"
+              >
+                {{ section.settings.cta_text | default: 'Shop shower cap' }}
+              </a>
+            </div>
+            
+            {%- comment -%} Star Rating {%- endcomment -%}
+            <div class="mt-3 flex items-center justify-center gap-1.5 lg:justify-start">
+              {%- for i in (1..5) -%}
+                <svg 
+                  class="h-4 w-4 text-amber-500 drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor" 
+                  stroke="white" 
+                  stroke-width="1"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {%- endfor -%}
+              <span class="ml-2 text-sm font-semibold text-[#55362A]">
+                {{ section.settings.rating_text | default: '4.8 (100)' }}
+              </span>
+            </div>
+            
+          </div>
+          
+          {%- comment -%} Product Image Column (Desktop Only) {%- endcomment -%}
+          <div class="hidden lg:flex lg:justify-center">
+            <div class="w-full max-w-[520px] rounded-[2.75rem] border border-white/60 bg-white/75 p-6 shadow-[0_2px_15px_rgba(0,0,0,0.08)] backdrop-blur-md">
+              <div class="overflow-hidden rounded-3xl bg-[#fde4d8]/15">
+                {%- if section.settings.product_image != blank -%}
+                  <img
+                    src="{{ section.settings.product_image | image_url: width: 900 }}"
+                    alt="{{ section.settings.product_image_alt | default: 'Lumelle shower cap' }}"
+                    class="h-auto w-full object-contain"
+                    width="900"
+                    height="900"
+                    loading="eager"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <div class="p-12 text-center text-[#55362A]">
+                    Product Image
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lumelle Static Hero",
+  "tag": "section",
+  "class": "section-lumelle-static-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Desktop Background Image",
+      "info": "Recommended: 2400x1350px. Used for desktop view (1024px+)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image",
+      "info": "Recommended: 960x1080px. Falls back to desktop image if not set."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Mobile Image Position",
+      "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center 30%", "label": "30% from top" },
+        { "value": "center bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Trust Bar"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust Bar Text",
+      "default": "Trusted by 10k users"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Avatar 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_4",
+      "label": "Avatar 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_5",
+      "label": "Avatar 5"
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Luxury shower cap that keeps hair frizz-free"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Satin-lined, waterproof, and creator-tested to protect silk presses, curls, and braids from steam."
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Shop shower cap"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "4.8 (100)",
+      "info": "Displayed next to star icons"
+    },
+    {
+      "type": "header",
+      "content": "Product Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image",
+      "info": "Displayed in card on desktop only"
+    },
+    {
+      "type": "text",
+      "id": "product_image_alt",
+      "label": "Product Image Alt Text",
+      "default": "Lumelle shower cap"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle Static Hero"
+    }
+  ]
+}
+{% endschema %}
