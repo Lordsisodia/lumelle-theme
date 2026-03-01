@@ -186,7 +186,10 @@
               <a
                 href="{{ section.settings.cta_link | default: '/products/lumelle-shower-cap' }}"
                 data-click-id="hero-cta"
-                class="inline-flex items-center justify-center rounded-full px-7 py-3 text-base font-semibold shadow-[0_20px_60px_rgba(251,199,178,0.35)] transition hover:-translate-y-0.5 !bg-[#55362A] text-white hover:!bg-[#6B4A3C]"
+                class="inline-flex items-center justify-center rounded-full px-7 py-3 text-base font-semibold shadow-[0_20px_60px_rgba(251,199,178,0.35)] transition hover:-translate-y-0.5 text-white lumelle-hero-cta"
+                style="background-color: #55362A;"
+                onmouseover="this.style.backgroundColor='#6B4A3C'"
+                onmouseout="this.style.backgroundColor='#55362A'"
               >
                 {{ section.settings.cta_text | default: 'Shop shower cap' }}
               </a>
@@ -251,6 +254,14 @@
   /* Ensure font-heading uses Playfair Display */
   .lumelle-static-hero .font-heading {
     font-family: 'Playfair Display', serif !important;
+  }
+
+  /* CTA Button - guaranteed brown background */
+  .lumelle-hero-cta {
+    background-color: #55362A !important;
+  }
+  .lumelle-hero-cta:hover {
+    background-color: #6B4A3C !important;
   }
 </style>
 
