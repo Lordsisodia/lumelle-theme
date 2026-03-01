@@ -498,6 +498,31 @@ button[role="tab"][data-tab="cart"] {
     .lumelle-hero-section .hidden.lg\:block {
         display: none !important;
     }
+
+
+/* Hero Centering Fix - Center the background image on desktop */
+@media (min-width: 1024px) {
+    #react-hero img.object-right,
+    #react-hero .absolute.inset-0 img {
+        object-position: center !important;
+        object-fit: cover !important;
+    }
+}
+
+/* Hero Section Content Centering Fix */
+#react-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#react-hero > div {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
 }
 </style>
 </head>
