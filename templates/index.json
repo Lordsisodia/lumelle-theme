@@ -17,7 +17,7 @@
       "settings": {}
     },
     "tiktok": {
-      "type": "lumelle-react-tiktok",
+      "type": "lumelle-landing-tiktok",
       "settings": {}
     },
     "bundle_cards": {
@@ -37,7 +37,7 @@
       "settings": {}
     },
     "footer": {
-      "type": "lumelle-react-footer",
+      "type": "lumelle-liquid-footer",
       "settings": {}
     }
   },
