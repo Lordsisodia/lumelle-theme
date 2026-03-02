@@ -1,0 +1,407 @@
+{% comment %}
+  Lumelle PDP Mobile Sticky CTA - Native Liquid
+  Converted from React SectionsMap.tsx MobileStickyCta component (lines 11-55)
+  Pixel-perfect match with React styling
+  
+  Features:
+  - Fixed sticky bar at bottom of viewport on mobile
+  - Shows when hero section scrolls out of view
+  - Hides when near footer (bottom 300px)
+  - Dismiss button (X icon)
+  - Price display
+  - Add to Cart button with ShoppingBag icon
+  - Buy Now button with Zap icon
+  - Only visible on mobile (hidden on sm and above)
+{% endcomment %}
+
+<section id="pdp-mobile-cta-{{ section.id }}" class="lumelle-pdp-mobile-cta" data-section-id="{{ section.id }}" aria-hidden="true">
+  <div class="pdp-mobile-cta-inner">
+    {%- comment -%} Dismiss Button {%- endcomment -%}
+    <button
+      type="button"
+      class="pdp-mobile-cta-dismiss"
+      onclick="dismissMobileCta()"
+      aria-label="Dismiss"
+    >
+      <svg class="pdp-dismiss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    {%- comment -%} Price Display {%- endcomment -%}
+    <div class="pdp-mobile-cta-price">
+      <span class="pdp-mobile-cta-eyebrow">{{ section.settings.eyebrow | default: 'Ready to try?' }}</span>
+      <span class="pdp-mobile-cta-price-value" id="pdp-mobile-price-{{ section.id }}">
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+        {{ current_variant.price | money }}
+      </span>
+    </div>
+
+    {%- comment -%} Add to Cart Button {%- endcomment -%}
+    <button
+      type="button"
+      class="pdp-mobile-atc-btn"
+      id="pdp-mobile-atc-{{ section.id }}"
+      onclick="handleMobileAddToCart()"
+    >
+      <svg class="pdp-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="pdp-mobile-atc-text">Add to Cart</span>
+    </button>
+
+    {%- comment -%} Buy Now Button (Zap icon) {%- endcomment -%}
+    <button
+      type="button"
+      class="pdp-mobile-buy-btn"
+      id="pdp-mobile-buy-{{ section.id }}"
+      onclick="handleMobileBuyNow()"
+      aria-label="Buy now"
+    >
+      <svg class="pdp-zap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  /* Lumelle PDP Mobile Sticky CTA - Pixel Perfect Native Liquid */
+  :root {
+    --lumelle-cocoa: #55362A;
+    --lumelle-blush: #FDD4DC;
+    --lumelle-peach: #FBC7B2;
+    --lumelle-blush-rgb: 253, 212, 220;
+    --lumelle-cocoa-rgb: 85, 54, 42;
+    --lumelle-peach-rgb: 251, 199, 178;
+  }
+
+  .lumelle-pdp-mobile-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    border-top: 1px solid rgba(var(--lumelle-peach-rgb), 0.3);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  }
+
+  .lumelle-pdp-mobile-cta.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lumelle-pdp-mobile-cta.hidden {
+    display: none !important;
+  }
+
+  /* Hide on tablet/desktop */
+  @media (min-width: 640px) {
+    .lumelle-pdp-mobile-cta {
+      display: none !important;
+    }
+  }
+
+  .pdp-mobile-cta-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Dismiss Button */
+  .pdp-mobile-cta-dismiss {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.625rem;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(var(--lumelle-cocoa-rgb), 0.5);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .pdp-mobile-cta-dismiss:hover {
+    background: rgba(var(--lumelle-blush-rgb), 0.3);
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-dismiss-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  /* Price Section */
+  .pdp-mobile-cta-price {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .pdp-mobile-cta-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(var(--lumelle-cocoa-rgb), 0.5);
+  }
+
+  .pdp-mobile-cta-price-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--lumelle-cocoa);
+  }
+
+  /* Add to Cart Button */
+  .pdp-mobile-atc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background: var(--lumelle-peach);
+    padding: 0.75rem 1.25rem;
+    min-height: 44px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+
+  .pdp-mobile-atc-btn:active {
+    transform: scale(0.95);
+  }
+
+  .pdp-mobile-atc-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .pdp-mobile-atc-btn.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .pdp-cart-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  /* Buy Now Button */
+  .pdp-mobile-buy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--lumelle-cocoa);
+    padding: 0.75rem;
+    min-height: 44px;
+    min-width: 44px;
+    color: white;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+
+  .pdp-mobile-buy-btn:active {
+    transform: scale(0.95);
+  }
+
+  .pdp-mobile-buy-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .pdp-zap-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+</style>
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    const variantId = {{ product.selected_or_first_available_variant.id }};
+    const variantPrice = {{ product.selected_or_first_available_variant.price }};
+    let currentQty = 1;
+    let isAdding = false;
+    let isDismissed = false;
+    
+    const mobileCta = document.getElementById('pdp-mobile-cta-' + sectionId);
+    
+    // Listen for quantity changes from other components
+    document.addEventListener('lumelle:quantity-change', function(e) {
+      if (e.detail && typeof e.detail.quantity === 'number') {
+        currentQty = e.detail.quantity;
+      }
+    });
+
+    // Scroll visibility logic - matches React component exactly
+    function handleScroll() {
+      if (isDismissed) return;
+      
+      const hero = document.getElementById('pdp-hero');
+      if (!hero || !mobileCta) return;
+
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      // Show when hero section has scrolled mostly out of view
+      const shouldShow = heroBottom < 100;
+
+      // Hide when near the footer (bottom 300px of the page)
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      const nearFooter = scrollPosition > pageHeight - 300;
+
+      const isVisible = shouldShow && !nearFooter;
+      
+      if (isVisible) {
+        mobileCta.classList.add('visible');
+        mobileCta.setAttribute('aria-hidden', 'false');
+      } else {
+        mobileCta.classList.remove('visible');
+        mobileCta.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    // Dismiss function
+    window.dismissMobileCta = function() {
+      isDismissed = true;
+      mobileCta.classList.remove('visible');
+      mobileCta.classList.add('hidden');
+    };
+
+    // Set button loading state
+    function setButtonLoading(loading) {
+      isAdding = loading;
+      const atcBtn = document.getElementById('pdp-mobile-atc-' + sectionId);
+      const buyBtn = document.getElementById('pdp-mobile-buy-' + sectionId);
+      
+      if (atcBtn) {
+        atcBtn.disabled = loading;
+        if (loading) {
+          atcBtn.querySelector('.pdp-mobile-atc-text').textContent = 'Adding…';
+        } else {
+          atcBtn.querySelector('.pdp-mobile-atc-text').textContent = 'Add to Cart';
+        }
+      }
+      
+      if (buyBtn) {
+        buyBtn.disabled = loading;
+      }
+    }
+
+    // Add to Cart handler
+    window.handleMobileAddToCart = function() {
+      if (isAdding) return;
+      setButtonLoading(true);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: currentQty
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setButtonLoading(false);
+        
+        // Show success feedback
+        const atcBtn = document.getElementById('pdp-mobile-atc-' + sectionId);
+        if (atcBtn) {
+          atcBtn.classList.add('animate-pulse');
+          atcBtn.querySelector('.pdp-mobile-atc-text').textContent = 'Added!';
+          
+          setTimeout(() => {
+            atcBtn.classList.remove('animate-pulse');
+            atcBtn.querySelector('.pdp-mobile-atc-text').textContent = 'Add to Cart';
+          }, 800);
+        }
+        
+        // Trigger cart drawer/refresh
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+        window.dispatchEvent(new CustomEvent('lumelle:open-cart'));
+      })
+      .catch(error => {
+        setButtonLoading(false);
+        console.error('Error adding to cart:', error);
+      });
+    };
+
+    // Buy Now handler
+    window.handleMobileBuyNow = function() {
+      if (isAdding) return;
+      setButtonLoading(true);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: currentQty
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        window.location.href = '/checkout';
+      })
+      .catch(error => {
+        setButtonLoading(false);
+        console.error('Error:', error);
+      });
+    };
+
+    // Initialize scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle PDP Mobile CTA (Native)",
+  "tag": "section",
+  "class": "lumelle-pdp-mobile-cta-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Price eyebrow text",
+      "default": "Ready to try?"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle PDP Mobile CTA (Native)"
+    }
+  ]
+}
+{% endschema %}

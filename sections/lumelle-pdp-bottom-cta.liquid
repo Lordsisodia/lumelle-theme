@@ -1,0 +1,438 @@
+{% comment %}
+  Lumelle PDP Bottom CTA - Native Liquid
+  Converted from React SectionsMap.tsx Bottom CTA section
+  Pixel-perfect match with React styling
+  
+  Features:
+  - Product-specific headings
+  - Add to Cart button
+  - Buy Now button  
+  - Trust chips/badges
+{% endcomment %}
+
+<section id="pdp-bottom-cta" class="lumelle-pdp-bottom-cta" data-section-id="{{ section.id }}">
+  <div class="pdp-bottom-cta-content">
+    {%- comment -%} Heading Section {%- endcomment -%}
+    <div class="pdp-bottom-cta-header">
+      <p class="pdp-bottom-cta-eyebrow">{{ section.settings.eyebrow | default: 'Ready when you are' }}</p>
+      <h3 class="pdp-bottom-cta-title">{{ section.settings.heading | default: section.settings.default_heading }}</h3>
+      <p class="pdp-bottom-cta-subtitle">
+        {{ section.settings.subtitle | default: 'Free returns · Ships in 48h' }}
+        {%- if section.settings.show_rating -%}
+          <span class="pdp-bottom-cta-rating"> · {{ product.rating | default: 4.9 }}★</span>
+        {%- endif -%}
+      </p>
+    </div>
+
+    {%- comment -%} CTA Buttons {%- endcomment -%}
+    <div class="pdp-bottom-cta-buttons">
+      <button
+        type="button"
+        id="pdp-bottom-cta-add-{{ section.id }}"
+        class="pdp-bottom-atc-btn"
+        onclick="handleBottomAddToCart()"
+      >
+        <span class="pdp-bottom-atc-text">Add to Cart</span>
+        <span class="pdp-bottom-atc-loading" style="display: none;">
+          <svg class="pdp-spinner" viewBox="0 0 24 24" fill="none">
+            <circle class="pdp-spinner-track" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="pdp-spinner-head" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+          Adding…
+        </span>
+      </button>
+
+      <button
+        type="button"
+        id="pdp-bottom-cta-buy-{{ section.id }}"
+        class="pdp-bottom-buy-btn"
+        onclick="handleBottomBuyNow()"
+      >
+        <span class="pdp-bottom-buy-text">Buy Now</span>
+        <span class="pdp-bottom-buy-loading" style="display: none;">Processing…</span>
+      </button>
+
+      {%- comment -%} Trust Chips {%- endcomment -%}
+      {% if section.settings.show_chips and section.settings.chips != blank %}
+        <div class="pdp-bottom-cta-chips">
+          {%- assign chips = section.settings.chips | split: ',' -%}
+          {% for chip in chips %}
+            <span class="pdp-bottom-cta-chip">{{ chip | strip }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Lumelle PDP Bottom CTA - Pixel Perfect Native Liquid */
+  :root {
+    --lumelle-cocoa: #55362A;
+    --lumelle-blush: #FDD4DC;
+    --lumelle-peach: #FBC7B2;
+    --lumelle-blush-rgb: 253, 212, 220;
+    --lumelle-cocoa-rgb: 85, 54, 42;
+    --lumelle-peach-rgb: 251, 199, 178;
+  }
+
+  .lumelle-pdp-bottom-cta {
+    border-top: 1px solid rgba(var(--lumelle-blush-rgb), 0.5);
+    background: rgba(var(--lumelle-blush-rgb), 0.1);
+    padding: 2.5rem 0;
+  }
+
+  .pdp-bottom-cta-content {
+    max-width: 56rem; /* max-w-4xl */
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .pdp-bottom-cta-content {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  /* Header Section */
+  .pdp-bottom-cta-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pdp-bottom-cta-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(var(--lumelle-cocoa-rgb), 0.6);
+    margin: 0;
+  }
+
+  .pdp-bottom-cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--lumelle-cocoa);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .pdp-bottom-cta-title {
+      font-size: 1.75rem; /* text-[28px] */
+    }
+  }
+
+  .pdp-bottom-cta-subtitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(var(--lumelle-cocoa-rgb), 0.65);
+    margin: 0;
+  }
+
+  .pdp-bottom-cta-rating {
+    color: rgba(var(--lumelle-cocoa-rgb), 0.65);
+  }
+
+  /* Buttons Container */
+  .pdp-bottom-cta-buttons {
+    width: 100%;
+    max-width: 32rem; /* max-w-lg */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Add to Cart Button */
+  .pdp-bottom-atc-btn {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--lumelle-peach);
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .pdp-bottom-atc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(var(--lumelle-peach-rgb), 0.35);
+  }
+
+  .pdp-bottom-atc-btn:active {
+    transform: scale(0.98);
+  }
+
+  .pdp-bottom-atc-btn:focus-visible {
+    outline: none;
+    ring: 2px solid rgba(var(--lumelle-cocoa-rgb), 0.3);
+  }
+
+  .pdp-bottom-atc-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .pdp-bottom-atc-btn.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .pdp-bottom-atc-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pdp-spinner {
+    height: 1rem;
+    width: 1rem;
+    animation: spin 1s linear infinite;
+  }
+
+  .pdp-spinner-track {
+    opacity: 0.25;
+  }
+
+  .pdp-spinner-head {
+    opacity: 0.75;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Buy Now Button */
+  .pdp-bottom-buy-btn {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(var(--lumelle-blush-rgb), 0.7);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .pdp-bottom-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(var(--lumelle-peach-rgb), 0.35);
+  }
+
+  .pdp-bottom-buy-btn:focus-visible {
+    outline: none;
+    ring: 2px solid rgba(var(--lumelle-cocoa-rgb), 0.3);
+  }
+
+  .pdp-bottom-buy-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Trust Chips */
+  .pdp-bottom-cta-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(var(--lumelle-cocoa-rgb), 0.7);
+  }
+
+  .pdp-bottom-cta-chip {
+    border-radius: 9999px;
+    background: white;
+    padding: 0.25rem 0.75rem;
+    box-shadow: 0 20px 60px rgba(var(--lumelle-peach-rgb), 0.35);
+  }
+</style>
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    const variantId = {{ product.selected_or_first_available_variant.id }};
+    let currentQty = 1;
+    let isAdding = false;
+
+    // Listen for quantity changes from other components
+    document.addEventListener('lumelle:quantity-change', function(e) {
+      if (e.detail && typeof e.detail.quantity === 'number') {
+        currentQty = e.detail.quantity;
+      }
+    });
+
+    function setButtonLoading(loading) {
+      isAdding = loading;
+      const atcBtn = document.getElementById('pdp-bottom-cta-add-' + sectionId);
+      const buyBtn = document.getElementById('pdp-bottom-cta-buy-' + sectionId);
+      
+      if (atcBtn) {
+        const textEl = atcBtn.querySelector('.pdp-bottom-atc-text');
+        const loadingEl = atcBtn.querySelector('.pdp-bottom-atc-loading');
+        
+        atcBtn.disabled = loading;
+        if (textEl) textEl.style.display = loading ? 'none' : 'inline';
+        if (loadingEl) loadingEl.style.display = loading ? 'flex' : 'none';
+      }
+      
+      if (buyBtn) {
+        const textEl = buyBtn.querySelector('.pdp-bottom-buy-text');
+        const loadingEl = buyBtn.querySelector('.pdp-bottom-buy-loading');
+        
+        buyBtn.disabled = loading;
+        if (textEl) textEl.style.display = loading ? 'none' : 'inline';
+        if (loadingEl) loadingEl.style.display = loading ? 'inline' : 'none';
+      }
+    }
+
+    window.handleBottomAddToCart = function() {
+      if (isAdding) return;
+      setButtonLoading(true);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: currentQty
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setButtonLoading(false);
+        
+        // Show success feedback
+        const atcBtn = document.getElementById('pdp-bottom-cta-add-' + sectionId);
+        if (atcBtn) {
+          atcBtn.classList.add('animate-pulse');
+          const textEl = atcBtn.querySelector('.pdp-bottom-atc-text');
+          if (textEl) textEl.textContent = 'Added!';
+          
+          setTimeout(() => {
+            atcBtn.classList.remove('animate-pulse');
+            if (textEl) textEl.textContent = 'Add to Cart';
+          }, 800);
+        }
+        
+        // Trigger cart drawer/refresh
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+        window.dispatchEvent(new CustomEvent('lumelle:open-cart'));
+      })
+      .catch(error => {
+        setButtonLoading(false);
+        console.error('Error adding to cart:', error);
+      });
+    };
+
+    window.handleBottomBuyNow = function() {
+      if (isAdding) return;
+      setButtonLoading(true);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: currentQty
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        window.location.href = '/checkout';
+      })
+      .catch(error => {
+        setButtonLoading(false);
+        console.error('Error:', error);
+      });
+    };
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle PDP Bottom CTA (Native)",
+  "tag": "section",
+  "class": "lumelle-pdp-bottom-cta-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Ready when you are"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (leave empty for product-specific default)",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "default_heading",
+      "label": "Default heading",
+      "default": "Shower without the frizz"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Free returns · Ships in 48h"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating in subtitle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chips",
+      "label": "Show trust chips",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "chips",
+      "label": "Trust chips (comma-separated)",
+      "default": "30-day returns, Free shipping, Secure checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle PDP Bottom CTA (Native)"
+    }
+  ]
+}
+{% endschema %}
