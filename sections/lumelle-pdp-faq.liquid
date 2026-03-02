@@ -1,0 +1,401 @@
+{% comment %}
+  Lumelle PDP FAQ Section - Native Liquid
+  Converted from React FaqSectionShop.tsx
+  Pixel-perfect match with React styling
+{% endcomment %}
+
+<style>
+  .pdp-faq-section {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .pdp-faq-section .font-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+</style>
+
+<section
+  id="{{ section.settings.section_id | default: 'faq' }}"
+  class="pdp-faq-section bg-white py-16"
+  data-section-id="{{ section.id }}"
+>
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    {%- comment -%} Section Heading {%- endcomment -%}
+    <div class="{% if section.settings.alignment == 'center' %}text-center{% elsif section.settings.alignment == 'right' %}text-right{% else %}text-left{% endif %}">
+      {% if section.settings.eyebrow != blank %}
+        <span class="inline-flex rounded-full bg-[#FDD4DC]/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#1A1A1A]/70">
+          {{ section.settings.eyebrow }}
+        </span>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <h2 class="font-heading mt-3 text-3xl font-bold text-[#1A1A1A] md:text-4xl">
+          {{ section.settings.title }}
+        </h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p class="{% if section.settings.alignment == 'center' %}mx-auto{% endif %} mt-3 max-w-md text-base leading-relaxed text-[#1A1A1A]/80">
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+    </div>
+
+    {%- comment -%} CTA Button {%- endcomment -%}
+    {% if section.settings.show_cta %}
+      <div class="mt-6 flex justify-center">
+        <a
+          href="{{ section.settings.cta_url }}"
+          target="{% if section.settings.cta_external %}_blank{% else %}_self{% endif %}"
+          rel="{% if section.settings.cta_external %}noreferrer{% endif %}"
+          class="inline-flex items-center justify-center rounded-2xl bg-[#55362A] px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[#55362A]/90"
+        >
+          {% if section.settings.cta_icon == 'whatsapp' %}
+            <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          {% endif %}
+          {{ section.settings.cta_label }}
+        </a>
+      </div>
+    {% endif %}
+
+    {%- comment -%} Search Input {%- endcomment -%}
+    <div class="mt-8 flex justify-center">
+      <div class="w-full max-w-xl">
+        <label for="faq-search-{{ section.id }}" class="sr-only">
+          Search FAQs
+        </label>
+        <div class="relative">
+          <svg
+            class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1A1A1A]/55"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input
+            id="faq-search-{{ section.id }}"
+            type="search"
+            placeholder="Search questions…"
+            class="w-full rounded-full border border-[#FDD4DC]/60 bg-white px-11 py-3 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/45 shadow-[0_4px_12px_rgba(0,0,0,0.08)] focus:outline-none focus:ring-2 focus:ring-[#55362A]/25"
+            autocomplete="off"
+            data-faq-search
+          />
+          <button
+            type="button"
+            aria-label="Clear search"
+            class="absolute right-3 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#FDD4DC]/60 bg-white text-[#1A1A1A] shadow-sm hover:bg-[#F8F5F2]"
+            data-faq-clear
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"/>
+              <path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        </div>
+        <p class="mt-3 text-center text-xs text-[#1A1A1A]/60 hidden" data-faq-results-count></p>
+      </div>
+    </div>
+
+    {%- comment -%} FAQ Items {%- endcomment -%}
+    <div class="mt-8 space-y-4" data-faq-items>
+      {%- for block in section.blocks -%}
+        <div
+          id="{{ section.settings.section_id | default: 'faq' }}-item-{{ forloop.index }}"
+          class="scroll-mt-24 rounded-3xl border bg-white/95 p-5 shadow-sm transition transition-colors duration-200"
+          data-faq-item
+          data-question="{{ block.settings.question | escape | downcase }}"
+          data-answer="{{ block.settings.answer | escape | downcase }}"
+          {{ block.shopify_attributes }}
+        >
+          <button
+            type="button"
+            class="flex w-full items-center justify-between gap-4 text-left"
+            aria-expanded="false"
+            data-faq-toggle
+          >
+            <span class="text-base font-semibold text-[#1A1A1A]">{{ block.settings.question }}</span>
+            <span class="faq-icon flex-shrink-0 transition-transform duration-200">
+              <svg class="h-5 w-5 text-[#1A1A1A]/60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14"/>
+                <path d="M5 12h14"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer mt-3 hidden">
+            {% if block.settings.is_review %}
+              <div class="rounded-2xl bg-[#FDD4DC]/15 p-4">
+                <div class="flex flex-wrap items-center gap-2 text-[#1A1A1A]">
+                  <span class="rounded-full bg-[#FBC7B2]/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1A1A1A]">
+                    Customer review
+                  </span>
+                  <span class="text-sm font-semibold text-[#1A1A1A]">★★★★★</span>
+                </div>
+                <p class="mt-2 text-sm leading-relaxed text-[#1A1A1A]/85">
+                  {{ block.settings.answer }}
+                </p>
+              </div>
+            {% else %}
+              <p class="text-sm leading-relaxed text-[#1A1A1A]/75">{{ block.settings.answer }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {%- endfor -%}
+      
+      {%- comment -%} No Results Message {%- endcomment -%}
+      <p class="rounded-2xl border border-dashed border-[#FBC7B2]/60 bg-white/80 p-4 text-center text-sm text-[#1A1A1A]/70 hidden" data-faq-no-results>
+        No answers matched that search—reset the filter or send us a quick WhatsApp message.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!section) return;
+    
+    const searchInput = section.querySelector('[data-faq-search]');
+    const clearBtn = section.querySelector('[data-faq-clear]');
+    const resultsCount = section.querySelector('[data-faq-results-count]');
+    const noResults = section.querySelector('[data-faq-no-results]');
+    const items = section.querySelectorAll('[data-faq-item]');
+    
+    // Toggle FAQ items
+    items.forEach(item => {
+      const toggle = item.querySelector('[data-faq-toggle]');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.faq-icon svg');
+      
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        
+        // Close all other items
+        items.forEach(otherItem => {
+          if (otherItem !== item) {
+            const otherToggle = otherItem.querySelector('[data-faq-toggle]');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            const otherIcon = otherItem.querySelector('.faq-icon svg');
+            otherToggle.setAttribute('aria-expanded', 'false');
+            otherAnswer.classList.add('hidden');
+            otherItem.classList.remove('border-[#55362A]/30', 'shadow-lg');
+            otherItem.classList.add('border-[#FBC7B2]/40');
+            otherIcon.innerHTML = '<path d="M12 5v14"/><path d="M5 12h14"/>';
+          }
+        });
+        
+        // Toggle current item
+        toggle.setAttribute('aria-expanded', !isOpen);
+        answer.classList.toggle('hidden', isOpen);
+        
+        if (!isOpen) {
+          item.classList.remove('border-[#FBC7B2]/40');
+          item.classList.add('border-[#55362A]/30', 'shadow-lg');
+          icon.innerHTML = '<path d="M5 12h14"/>';
+        } else {
+          item.classList.remove('border-[#55362A]/30', 'shadow-lg');
+          item.classList.add('border-[#FBC7B2]/40');
+          icon.innerHTML = '<path d="M12 5v14"/><path d="M5 12h14"/>';
+        }
+      });
+    });
+    
+    // Search functionality
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const hasQuery = query.length > 0;
+        
+        clearBtn.classList.toggle('hidden', !hasQuery);
+        clearBtn.classList.toggle('flex', hasQuery);
+        
+        let visibleCount = 0;
+        
+        items.forEach(item => {
+          const question = item.dataset.question || '';
+          const answer = item.dataset.answer || '';
+          const matches = question.includes(query) || answer.includes(query);
+          
+          item.classList.toggle('hidden', hasQuery && !matches);
+          if (!hasQuery || matches) visibleCount++;
+        });
+        
+        noResults.classList.toggle('hidden', !hasQuery || visibleCount > 0);
+        
+        if (hasQuery) {
+          resultsCount.classList.remove('hidden');
+          resultsCount.textContent = visibleCount > 0 
+            ? `Showing ${visibleCount} result${visibleCount === 1 ? '' : 's'}.`
+            : '';
+        } else {
+          resultsCount.classList.add('hidden');
+        }
+      });
+      
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+      });
+    }
+    
+    // Open first item by default
+    if (items.length > 0) {
+      const firstToggle = items[0].querySelector('[data-faq-toggle]');
+      if (firstToggle) firstToggle.click();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PDP FAQ Section",
+  "tag": "section",
+  "class": "pdp-faq-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "default": "faq"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Frequently asked"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Answers before you buy"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "If you don't see your question here, reach out to us and we'll help right away."
+    },
+    {
+      "type": "header",
+      "content": "CTA Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Label",
+      "default": "Chat with WhatsApp concierge"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_external",
+      "label": "Open in new tab",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "cta_icon",
+      "label": "CTA Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "whatsapp", "label": "WhatsApp" }
+      ],
+      "default": "whatsapp"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I care for my shower cap?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Simply hand wash with mild soap and water, then hang to dry. Avoid bleach and ironing."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_review",
+          "label": "Style as Customer Review",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP FAQ Section",
+      "settings": {
+        "eyebrow": "Frequently asked",
+        "title": "Answers before you buy",
+        "description": "If you don't see your question here, reach out to us and we'll help right away.",
+        "show_cta": true,
+        "cta_label": "Chat with WhatsApp concierge"
+      },
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Will this fit my head?",
+            "answer": "Yes! Our shower cap features an adjustable satin band that fits most head sizes comfortably. It's designed to accommodate all hair types and volumes."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is it really waterproof?",
+            "answer": "Absolutely. Our moisture-guard lining is 100% waterproof, keeping your hair completely dry even during the steamiest showers."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use it with a silk press?",
+            "answer": "Yes! Our shower cap is specifically designed to protect silk presses, blowouts, and all hairstyles. The soft satin band won't leave marks or dents."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "We dispatch within 48 hours. Standard shipping takes 3-5 business days, with express options available at checkout."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

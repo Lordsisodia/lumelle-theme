@@ -1,0 +1,408 @@
+{% comment %}
+  Lumelle PDP Feature Callouts - Native Liquid
+  Converted from React FeatureCallouts.tsx
+  Pixel-perfect match with React styling
+{% endcomment %}
+
+<style>
+  .pdp-features-section {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .pdp-features-section .font-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+</style>
+
+<section 
+  id="{{ section.settings.section_id }}" 
+  class="pdp-features-section {% if section.settings.variant == 'story' %}relative overflow-hidden py-16{% else %}py-16{% endif %} bg-white"
+  data-section-id="{{ section.id }}"
+>
+  {% if section.settings.variant == 'story' %}
+    {%- comment -%} Story Variant with Background Gradient {%- endcomment -%}
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,214,194,0.45),transparent_42%),radial-gradient(circle_at_80%_0%,rgba(255,232,220,0.55),transparent_38%),linear-gradient(135deg,#fff7f3,#fff)]"></div>
+    
+    <div class="relative mx-auto max-w-6xl px-4 md:px-6">
+      {%- comment -%} Section Heading {%- endcomment -%}
+      <div class="text-center">
+        {% if section.settings.eyebrow != blank %}
+          <span class="inline-flex rounded-full bg-[#FDD4DC]/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#1A1A1A]/70">
+            {{ section.settings.eyebrow }}
+          </span>
+        {% endif %}
+        {% if section.settings.title != blank %}
+          <h2 class="font-heading mt-3 text-3xl font-bold text-[#1A1A1A] md:text-4xl">
+            {{ section.settings.title }}
+          </h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <p class="mx-auto mt-3 max-w-md text-base leading-relaxed text-[#1A1A1A]/80">
+            {{ section.settings.description }}
+          </p>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Two Column Grid {%- endcomment -%}
+      <div class="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start lg:mx-auto lg:max-w-[1100px]">
+        {%- comment -%} Media Column {%- endcomment -%}
+        <div class="rounded-3xl border border-[#FBC7B2]/50 bg-gradient-to-br from-[#FDD4DC]/70 via-white to-[#FBC7B2]/30 p-4 shadow-[0_25px_70px_rgba(0,0,0,0.08)] backdrop-blur-sm lg:h-full lg:max-w-[440px] lg:mx-auto">
+          <div class="overflow-hidden rounded-2xl border border-white/40 bg-white lg:h-full">
+            <div class="relative aspect-[9/16] lg:h-full lg:aspect-auto">
+              {% if section.settings.media_type == 'video' %}
+                <iframe
+                  src="{{ section.settings.video_url }}"
+                  title="Lumelle creator video"
+                  class="absolute inset-0 h-full w-full"
+                  scrolling="no"
+                  frameborder="0"
+                  allow="encrypted-media; fullscreen; clipboard-write"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              {% else %}
+                <img
+                  src="{{ section.settings.image | image_url: width: 800 }}"
+                  alt="{{ section.settings.image_alt | default: 'Lumelle shower cap in use' }}"
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              {% endif %}
+              
+              {%- comment -%} Media Labels {%- endcomment -%}
+              <div class="absolute bottom-3 left-3 rounded-full bg-white/85 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#1A1A1A] shadow-[0_4px_12px_rgba(0,0,0,0.08)] backdrop-blur">
+                {{ section.settings.media_label | default: 'Less breakage' }}
+              </div>
+              <div class="absolute top-3 right-3 inline-flex items-center gap-2 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-[#1A1A1A] shadow-[0_4px_12px_rgba(0,0,0,0.08)] backdrop-blur">
+                <span class="h-2 w-2 rounded-full bg-[#FBC7B2]"></span>
+                {{ section.settings.media_badge | default: 'Safe for silk press' }}
+              </div>
+            </div>
+            <div class="flex items-center justify-between gap-3 border-t border-[#FDD4DC]/50 px-4 py-3 text-sm text-[#1A1A1A]/80">
+              <span class="font-semibold">{{ section.settings.media_note | default: 'Soft satin band prevents pulling' }}</span>
+              <span class="rounded-full bg-[#FBC7B2]/20 px-3 py-1 text-xs font-semibold text-[#1A1A1A]">Creator-tested</span>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Features Column {%- endcomment -%}
+        <div class="relative rounded-3xl border border-[#FBC7B2]/60 bg-white/85 p-5 shadow-[0_22px_60px_rgba(0,0,0,0.08)] sm:p-6 lg:max-w-[540px] lg:mx-auto">
+          <div class="absolute left-6 top-4 bottom-4 w-px bg-gradient-to-b from-[#FBC7B2]/60 via-[#FBC7B2]/30 to-transparent"></div>
+          
+          <div class="flex flex-col gap-4">
+            {%- for block in section.blocks -%}
+              <div
+                class="scroll-mt-24 relative flex gap-4 rounded-2xl border border-[#FBC7B2]/60 bg-gradient-to-br from-[#FFF6F2] via-white to-[#FFE8DC] p-4 shadow-[0_10px_26px_rgba(0,0,0,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(0,0,0,0.1)]"
+                {{ block.shopify_attributes }}
+              >
+                <div class="relative flex-shrink-0">
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#FBC7B2] to-[#FDD4DC] text-base font-extrabold text-[#1A1A1A] shadow-[0_4px_12px_rgba(0,0,0,0.08)] ring-2 ring-white">
+                    {{ forloop.index }}
+                  </span>
+                  {% unless forloop.last %}
+                    <span class="absolute left-1/2 top-10 h-6 w-px -translate-x-1/2 bg-[#FBC7B2]/30"></span>
+                  {% endunless %}
+                </div>
+                
+                <div class="flex flex-1 flex-col gap-2">
+                  <div class="flex items-center gap-3">
+                    {% if block.settings.icon_image %}
+                      <img
+                        src="{{ block.settings.icon_image | image_url: width: 96 }}"
+                        alt=""
+                        class="h-12 w-12 rounded-full border border-white/70 object-cover shadow-[0_4px_12px_rgba(0,0,0,0.08)]"
+                        loading="lazy"
+                      />
+                    {% endif %}
+                    <div class="font-heading text-xl font-extrabold text-[#1A1A1A] leading-tight">{{ block.settings.title }}</div>
+                  </div>
+                  <p class="text-[15px] leading-relaxed text-[#1A1A1A]/90">{{ block.settings.description }}</p>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- comment -%} CTA Row {%- endcomment -%}
+          <div class="mt-6 flex items-center justify-between rounded-2xl border border-[#FBC7B2]/50 bg-white/80 px-4 py-3 text-sm font-semibold text-[#1A1A1A] shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-[#FBC7B2]"></span>
+              {{ section.settings.cta_label | default: 'See it in action' }}
+            </div>
+            <a 
+              href="{{ section.settings.cta_url }}"
+              class="rounded-full bg-[#55362A] px-3 py-1.5 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#55362A]/90"
+            >
+              {{ section.settings.cta_button | default: 'Watch routine' }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    {%- comment -%} Cards Variant {%- endcomment -%}
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      {%- comment -%} Section Heading {%- endcomment -%}
+      <div class="{% if section.settings.alignment == 'center' %}text-center{% elsif section.settings.alignment == 'right' %}text-right{% else %}text-left{% endif %}">
+        {% if section.settings.eyebrow != blank %}
+          <span class="inline-flex rounded-full bg-[#FDD4DC]/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#1A1A1A]/70">
+            {{ section.settings.eyebrow }}
+          </span>
+        {% endif %}
+        {% if section.settings.title != blank %}
+          <h2 class="font-heading mt-3 text-3xl font-bold text-[#1A1A1A] md:text-4xl">
+            {{ section.settings.title }}
+          </h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <p class="{% if section.settings.alignment == 'center' %}mx-auto{% endif %} mt-3 max-w-md text-base leading-relaxed text-[#1A1A1A]/80">
+            {{ section.settings.description }}
+          </p>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Features Grid {%- endcomment -%}
+      <div class="mt-8 rounded-3xl border border-[#FBC7B2]/40 bg-white/90 p-6 shadow-[0_4px_12px_rgba(0,0,0,0.08)] md:p-8">
+        <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+          {%- for block in section.blocks -%}
+            <div 
+              class="rounded-2xl border border-[#FDD4DC]/60 bg-[#FDD4DC]/20 p-5"
+              {{ block.shopify_attributes }}
+            >
+              <div class="flex items-start gap-3">
+                {% if block.settings.icon_image %}
+                  <span class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#FBC7B2]/60 text-[#1A1A1A]">
+                    <img src="{{ block.settings.icon_image | image_url: width: 40 }}" alt="" class="h-5 w-5">
+                  </span>
+                {% else %}
+                  <span class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#FBC7B2]/60 text-[#1A1A1A]">
+                    {% if block.settings.icon == 'droplets' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                    {% elsif block.settings.icon == 'heart' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                    {% elsif block.settings.icon == 'leaf' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                    {% elsif block.settings.icon == 'crown' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                    {% else %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                    {% endif %}
+                  </span>
+                {% endif %}
+                <div>
+                  <div class="font-heading text-lg font-bold text-[#1A1A1A]">{{ block.settings.title }}</div>
+                  <p class="mt-1 text-sm text-[#1A1A1A]/75">{{ block.settings.description }}</p>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "PDP Feature Callouts",
+  "tag": "section",
+  "class": "pdp-features-wrapper",
+  "settings": [
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "Display Variant",
+      "options": [
+        { "value": "cards", "label": "Cards Grid" },
+        { "value": "story", "label": "Story (Video + Features)" }
+      ],
+      "default": "story"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID (for anchor links)"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Features"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Small details, big results"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Thoughtful materials and construction that protect your style and feel great to wear."
+    },
+    {
+      "type": "header",
+      "content": "Media Settings (Story Variant)"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media Type",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video Embed" }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video Embed URL"
+    },
+    {
+      "type": "text",
+      "id": "media_label",
+      "label": "Media Label",
+      "default": "Less breakage"
+    },
+    {
+      "type": "text",
+      "id": "media_badge",
+      "label": "Media Badge",
+      "default": "Safe for silk press"
+    },
+    {
+      "type": "text",
+      "id": "media_note",
+      "label": "Media Note",
+      "default": "Soft satin band prevents pulling"
+    },
+    {
+      "type": "header",
+      "content": "CTA Settings"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Label",
+      "default": "See it in action"
+    },
+    {
+      "type": "text",
+      "id": "cta_button",
+      "label": "CTA Button Text",
+      "default": "Watch routine"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Feature description goes here"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (Cards variant)",
+          "options": [
+            { "value": "droplets", "label": "Water Drop" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "crown", "label": "Crown" }
+          ],
+          "default": "droplets"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom Icon Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Feature Callouts",
+      "settings": {
+        "variant": "story",
+        "eyebrow": "Features",
+        "title": "Small details, big results",
+        "description": "Thoughtful materials and construction that protect your style and feel great to wear."
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Waterproof",
+            "description": "Moisture-guard lining keeps styles intact.",
+            "icon": "droplets"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Comfort fit",
+            "description": "Soft, secure band — no marks.",
+            "icon": "heart"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Reusable",
+            "description": "Durable build that replaces disposables.",
+            "icon": "leaf"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Premium feel",
+            "description": "Luxe materials designed to last.",
+            "icon": "crown"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

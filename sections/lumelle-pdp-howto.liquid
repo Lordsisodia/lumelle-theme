@@ -1,0 +1,219 @@
+{% comment %}
+  Lumelle PDP How-To Section - Native Liquid
+  Converted from React HowToSection.tsx
+  Pixel-perfect match with React styling
+{% endcomment %}
+
+<style>
+  .pdp-howto-section {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .pdp-howto-section .font-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+</style>
+
+<div class="pdp-howto-section" data-section-id="{{ section.id }}">
+  <div class="rounded-3xl border border-[#FBC7B2]/60 bg-white/95 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.06)]">
+    {%- comment -%} Header Badges {%- endcomment -%}
+    <div class="mb-3 flex flex-wrap items-center gap-2">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#FBC7B2]/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1A1A1A]">
+        {{ section.settings.eyebrow | default: 'Your sign to try this' }}
+      </div>
+      {% if section.settings.show_time %}
+      <div class="inline-flex items-center gap-1 rounded-full bg-[#55362A]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#55362A]/80">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>{{ section.settings.total_time | default: '2 min' }}</span>
+      </div>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Steps {%- endcomment -%}
+    <div class="space-y-3">
+      {%- for block in section.blocks -%}
+        {%- assign step_number = forloop.index -%}
+        <div
+          class="scroll-mt-24 flex cursor-pointer gap-3 rounded-2xl border bg-[#FDD4DC]/10 p-3 shadow-[0_8px_18px_rgba(0,0,0,0.04)] transition-all hover:border-[#FBC7B2]"
+          data-step-index="{{ step_number }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- comment -%} Step Number {%- endcomment -%}
+          <span class="mt-0.5 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-extrabold shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-colors bg-[#FBC7B2] text-[#1A1A1A]">
+            {{ step_number }}
+          </span>
+          
+          <div class="flex flex-1 flex-col gap-1.5">
+            {%- comment -%} Step Title Row {%- endcomment -%}
+            <div class="flex flex-wrap items-center gap-2">
+              <p class="text-base font-semibold text-[#1A1A1A]">{{ block.settings.title }}</p>
+              
+              {% if block.settings.difficulty != blank %}
+                {% if block.settings.difficulty == 'easy' %}
+                  <span class="inline-flex items-center rounded-full border border-green-200 bg-green-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-green-800">
+                    Easy
+                  </span>
+                {% elsif block.settings.difficulty == 'medium' %}
+                  <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-800">
+                    Medium
+                  </span>
+                {% endif %}
+              {% endif %}
+              
+              {% if block.settings.time_estimate != blank %}
+                <span class="inline-flex items-center gap-1 text-[11px] font-medium text-[#1A1A1A]/60">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  {{ block.settings.time_estimate }}
+                </span>
+              {% endif %}
+            </div>
+            
+            {%- comment -%} Step Body {%- endcomment -%}
+            <p class="text-[15px] leading-snug text-[#1A1A1A]/85">{{ block.settings.body }}</p>
+
+            {%- comment -%} Pro Tips (Expandable) {%- endcomment -%}
+            {% if block.settings.tip_title != blank %}
+            <div class="mt-2">
+              <details class="group">
+                <summary class="flex cursor-pointer list-none items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#FBC7B2]/90 hover:text-[#FBC7B2] transition">
+                  <svg class="h-3.5 w-3.5 transition-transform group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                  <span class="group-open:hidden">Pro tips</span>
+                  <span class="hidden group-open:inline">Hide tips</span>
+                </summary>
+                <div class="mt-2.5 rounded-xl border border-[#FDD4DC]/40 bg-[#FDD4DC]/5 p-3">
+                  <div class="flex flex-col gap-0.5">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-[#55362A]/80">
+                      {{ block.settings.tip_title }}
+                    </p>
+                    <p class="text-sm leading-snug text-[#1A1A1A]/90">{{ block.settings.tip_content }}</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP How-To Section",
+  "tag": "section",
+  "class": "pdp-howto-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Your sign to try this"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_time",
+      "label": "Show Total Time Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "total_time",
+      "label": "Total Time Estimate",
+      "default": "2 min"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Step title here"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Step Description",
+          "default": "Step description goes here"
+        },
+        {
+          "type": "select",
+          "id": "difficulty",
+          "label": "Difficulty Level",
+          "options": [
+            { "value": "", "label": "None" },
+            { "value": "easy", "label": "Easy" },
+            { "value": "medium", "label": "Medium" }
+          ],
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "time_estimate",
+          "label": "Time Estimate",
+          "default": "30 sec"
+        },
+        {
+          "type": "text",
+          "id": "tip_title",
+          "label": "Pro Tip Title",
+          "default": ""
+        },
+        {
+          "type": "textarea",
+          "id": "tip_content",
+          "label": "Pro Tip Content",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP How-To Section",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Place over hair",
+            "body": "Gather your hair and place the cap over your head, ensuring all hair is tucked inside.",
+            "difficulty": "easy",
+            "time_estimate": "10 sec"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Secure the band",
+            "body": "Adjust the soft satin band for a comfortable, secure fit that won't leave marks.",
+            "difficulty": "easy",
+            "time_estimate": "15 sec",
+            "tip_title": "Pro tip",
+            "tip_content": "For extra hold, tuck the band under your hairline."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Shower confidently",
+            "body": "Enjoy your shower knowing your style is protected from humidity and steam.",
+            "difficulty": "easy",
+            "time_estimate": "Enjoy"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,184 @@
+{% comment %}
+  Lumelle PDP Details Accordion - Native Liquid
+  Converted from React DetailsAccordion.tsx
+  Pixel-perfect match with React styling
+{% endcomment %}
+
+<style>
+  .pdp-details-section {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .pdp-details-section .font-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+</style>
+
+<section 
+  id="{{ section.settings.section_id }}" 
+  class="pdp-details-section bg-white"
+  data-section-id="{{ section.id }}"
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 md:px-6">
+    {% if section.settings.section_id != blank %}
+      <div id="{{ section.settings.section_id }}-heading" class="h-0 scroll-mt-24"></div>
+    {% endif %}
+    
+    {%- comment -%} Section Heading {%- endcomment -%}
+    {% if section.settings.title != blank %}
+      <div class="{% if section.settings.alignment == 'center' %}text-center{% elsif section.settings.alignment == 'right' %}text-right{% else %}text-left{% endif %}">
+        {% if section.settings.eyebrow != blank %}
+          <span class="inline-flex rounded-full bg-[#FDD4DC]/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#1A1A1A]/70">
+            {{ section.settings.eyebrow }}
+          </span>
+        {% endif %}
+        <h2 class="font-heading mt-3 text-3xl font-bold text-[#1A1A1A] md:text-4xl">
+          {{ section.settings.title }}
+        </h2>
+        {% if section.settings.description != blank %}
+          <p class="{% if section.settings.alignment == 'center' %}mx-auto{% endif %} mt-3 max-w-md text-base leading-relaxed text-[#1A1A1A]/80">
+            {{ section.settings.description }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {%- comment -%} Accordion Items {%- endcomment -%}
+    <div class="divide-y divide-[#FDD4DC]/60 rounded-2xl border border-[#FDD4DC]/60 bg-white {% if section.settings.title != blank %}mt-8{% else %}mt-0{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- assign is_open = forloop.index | append: '' | lte: '2' -%}
+        <details
+          class="group scroll-mt-24"
+          {% if forloop.index <= 2 %}open{% endif %}
+          data-accordion-index="{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+        >
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-4 text-[#1A1A1A] hover:bg-[#FDD4DC]/10 transition-colors">
+            <div class="flex items-center gap-3">
+              {% if block.settings.thumbnail %}
+                <img 
+                  src="{{ block.settings.thumbnail | image_url: width: 80 }}" 
+                  alt="{{ block.settings.thumbnail_alt | default: '' }}" 
+                  loading="lazy" 
+                  class="h-10 w-10 rounded-lg border border-[#FDD4DC]/60 object-cover"
+                />
+              {% endif %}
+              <span class="font-semibold">{{ block.settings.title }}</span>
+            </div>
+            <span class="text-[#1A1A1A]/60 transition-transform group-open:rotate-90">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-sm text-[#1A1A1A]/80 whitespace-pre-line">
+            {{ block.settings.content }}
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PDP Details Accordion",
+  "tag": "section",
+  "class": "pdp-details-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID (for anchor links)"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product Details"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Detail Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Materials & Care"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Content",
+          "default": "100% premium satin exterior\nSoft cotton lining\nMachine washable, hang dry\nDo not bleach or iron"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "thumbnail_alt",
+          "label": "Thumbnail Alt Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Details Accordion",
+      "settings": {
+        "title": "Product Details",
+        "alignment": "center"
+      },
+      "blocks": [
+        {
+          "type": "detail",
+          "settings": {
+            "title": "Materials & Care",
+            "content": "100% premium satin exterior\nSoft cotton lining\nMachine washable, hang dry\nDo not bleach or iron"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "title": "Shipping Info",
+            "content": "Free standard shipping on orders over $50\nExpress shipping available\nShips within 48 hours\nTrack your order via email"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "title": "Product Specifications",
+            "content": "One size fits most\nDiameter: 11 inches when flat\nDepth: 3 inches\nWeight: 2.5 oz"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
