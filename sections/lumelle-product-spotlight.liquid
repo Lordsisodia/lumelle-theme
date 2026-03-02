@@ -1,14 +1,190 @@
-{% comment %} Lumelle Product Spotlight Section {% endcomment %}
-<div id="react-product-spotlight"></div>
+{%- comment -%}
+  Lumelle Product Spotlight Section
+  Pixel-perfect conversion from React ProductSpotlightSection.tsx
+{%- endcomment -%}
+
+{%- liquid
+  assign cocoa = '#4A3728'
+  assign accent_cta = '#E8B4B8'
+  assign blush = '#FFF0F3'
+  assign text_primary = '#1A1A1A'
+-%}
+
+<style>
+.lumelle-spotlight{background-color:#fff;padding-top:2.5rem;padding-bottom:2.5rem}
+.lumelle-spotlight__container{max-width:64rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
+@media (min-width:768px){.lumelle-spotlight__container{padding-left:1.5rem;padding-right:1.5rem}}
+.lumelle-spotlight__wrapper{position:relative;overflow:hidden}
+.lumelle-spotlight__slider{display:flex;width:100%;transition:transform 700ms ease}
+.lumelle-spotlight__slide{width:100%;flex:0 0 100%}
+.lumelle-spotlight__card{display:grid;gap:1.5rem;border-radius:2.5rem;border:1px solid rgba(232,180,184,0.4);background-color:rgba(255,255,255,0.95);padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+@media (min-width:768px){.lumelle-spotlight__card{grid-template-columns:0.9fr 1fr}}
+.lumelle-spotlight__image-wrapper{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:1.5rem;background-color:#FFF0F3}
+.lumelle-spotlight__image{height:100%;width:100%;object-fit:cover;object-position:center}
+.lumelle-spotlight__content{display:flex;flex-direction:column;gap:1rem;text-align:left;color:#1A1A1A}
+.lumelle-spotlight__header{display:flex;flex-direction:column;gap:0.5rem}
+.lumelle-spotlight__label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.3em;color:rgba(26,26,26,0.6);margin:0}
+.lumelle-spotlight__title{font-family:var(--font-heading,ui-serif,Georgia,serif);font-size:1.875rem;font-weight:700;line-height:1.375;margin:0}
+@media (min-width:768px){.lumelle-spotlight__title{font-size:2.25rem}}
+.lumelle-spotlight__rating{display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;color:rgba(26,26,26,0.8)}
+.lumelle-spotlight__stars{display:flex;gap:0.125rem}
+.lumelle-spotlight__star{width:18px;height:18px;color:#FBBF24}
+.lumelle-spotlight__star--empty{color:#D1D5DB}
+.lumelle-spotlight__rating-text{font-size:0.875rem;font-weight:600}
+.lumelle-spotlight__description{font-size:1rem;line-height:1.625;color:rgba(26,26,26,0.8);margin:0}
+.lumelle-spotlight__bullets{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.25rem}
+.lumelle-spotlight__bullet{display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:rgba(26,26,26,0.7)}
+.lumelle-spotlight__bullet-dot{width:0.375rem;height:0.375rem;border-radius:9999px;background-color:#E8B4B8;flex-shrink:0}
+.lumelle-spotlight__footer{margin-top:0.75rem;display:flex;flex-direction:column;gap:0.75rem}
+@media (min-width:768px){.lumelle-spotlight__footer{align-items:flex-start}}
+.lumelle-spotlight__price{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.75rem}
+.lumelle-spotlight__price-current{font-size:1.875rem;font-weight:600;color:#1A1A1A}
+.lumelle-spotlight__price-discount{display:flex;align-items:baseline;gap:0.5rem}
+.lumelle-spotlight__price-percent{font-size:1.3125rem;font-weight:600;line-height:1;color:#DC2626}
+.lumelle-spotlight__price-now{font-size:1.875rem;font-weight:600;color:#1A1A1A}
+.lumelle-spotlight__price-was{font-size:0.75rem;font-weight:600;color:rgba(26,26,26,0.6)}
+.lumelle-spotlight__price-was-value{text-decoration:line-through}
+.lumelle-spotlight__button{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;border:2px solid #4A3728;background-color:#fff;padding:0.625rem 1.75rem;font-size:0.875rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#1A1A1A;box-shadow:0 10px 18px rgba(0,0,0,0.1);transition:transform 150ms ease,box-shadow 150ms ease;text-decoration:none;cursor:pointer}
+.lumelle-spotlight__button:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,0.14)}
+.lumelle-spotlight__pagination{margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.lumelle-spotlight__dot{height:0.375rem;border-radius:9999px;transition:all 200ms ease;border:none;padding:0;cursor:pointer;background-color:rgba(74,55,40,0.3);width:0.375rem}
+.lumelle-spotlight__dot:hover{background-color:rgba(74,55,40,0.7)}
+.lumelle-spotlight__dot--active{width:1.5rem;background-color:#4A3728}
+</style>
+
+<section class="lumelle-spotlight" data-sticky-buy-target aria-label="Product Spotlight">
+  <div class="lumelle-spotlight__container">
+    <div class="lumelle-spotlight__wrapper">
+      <div class="lumelle-spotlight__slider" id="lumelle-spotlight-slider-{{ section.id }}" data-slider>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign product = all_products[block.settings.product]
+            assign image = block.settings.image | default: product.featured_image
+            assign title = block.settings.title | default: product.title
+            assign description = block.settings.description | default: product.description | truncatewords: 30
+            assign rating = block.settings.rating | default: 4.9
+            assign reviews = block.settings.reviews | default: 500
+            assign bullet_1 = block.settings.bullet_1
+            assign bullet_2 = block.settings.bullet_2
+            assign bullet_3 = block.settings.bullet_3
+            assign price_now = block.settings.price_now | default: product.price | divided_by: 100.0
+            assign price_was = block.settings.price_was | default: product.compare_at_price | divided_by: 100.0
+            assign cta_label = block.settings.cta_label | default: 'Shop Now'
+            assign cta_url = block.settings.cta_url | default: product.url
+            assign has_discount = false
+            assign discount_percent = 0
+            if price_was > 0 and price_was > price_now
+              assign has_discount = true
+              assign discount_percent = price_now | divided_by: price_was | times: 100
+              assign discount_percent = 100 | minus: discount_percent | round
+            endif
+          -%}
+          <div class="lumelle-spotlight__slide" data-slide-index="{{ forloop.index0 }}" {% unless forloop.first %}aria-hidden="true"{% endunless %} {{ block.shopify_attributes }}>
+            <div class="lumelle-spotlight__card">
+              {%- if image -%}
+                <div class="lumelle-spotlight__image-wrapper">
+                  <img src="{{ image | image_url: width: 800 }}" alt="{{ title | escape }}" class="lumelle-spotlight__image" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async" width="800" height="800">
+                </div>
+              {%- endif -%}
+              <div class="lumelle-spotlight__content">
+                <div class="lumelle-spotlight__header">
+                  <p class="lumelle-spotlight__label">{{ section.settings.label | default: 'Product spotlight' }}</p>
+                  <h2 class="lumelle-spotlight__title">{{ title }}</h2>
+                </div>
+                <div class="lumelle-spotlight__rating">
+                  <div class="lumelle-spotlight__stars" aria-label="Rating: {{ rating }} out of 5 stars">
+                    {%- for i in (1..5) -%}
+                      {%- if rating >= i -%}
+                        <svg class="lumelle-spotlight__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      {%- else -%}
+                        <svg class="lumelle-spotlight__star lumelle-spotlight__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                  <span class="lumelle-spotlight__rating-text">{{ rating }} ({{ reviews }}+ reviews)</span>
+                </div>
+                {%- if description != blank -%}
+                  <p class="lumelle-spotlight__description">{{ description }}</p>
+                {%- endif -%}
+                {%- if bullet_1 != blank or bullet_2 != blank or bullet_3 != blank -%}
+                  <ul class="lumelle-spotlight__bullets">
+                    {%- if bullet_1 != blank -%}<li class="lumelle-spotlight__bullet"><span class="lumelle-spotlight__bullet-dot" aria-hidden="true"></span>{{ bullet_1 }}</li>{%- endif -%}
+                    {%- if bullet_2 != blank -%}<li class="lumelle-spotlight__bullet"><span class="lumelle-spotlight__bullet-dot" aria-hidden="true"></span>{{ bullet_2 }}</li>{%- endif -%}
+                    {%- if bullet_3 != blank -%}<li class="lumelle-spotlight__bullet"><span class="lumelle-spotlight__bullet-dot" aria-hidden="true"></span>{{ bullet_3 }}</li>{%- endif -%}
+                  </ul>
+                {%- endif -%}
+                <div class="lumelle-spotlight__footer">
+                  {%- if has_discount -%}
+                    <div class="lumelle-spotlight__price">
+                      <div class="lumelle-spotlight__price-discount">
+                        <span class="lumelle-spotlight__price-percent">-{{ discount_percent }}%</span>
+                        <span class="lumelle-spotlight__price-now">&pound;{{ price_now | money_without_currency }}</span>
+                      </div>
+                      <div class="lumelle-spotlight__price-was">RRP: <span class="lumelle-spotlight__price-was-value">&pound;{{ price_was | money_without_currency }}</span></div>
+                    </div>
+                  {%- else -%}
+                    <div class="lumelle-spotlight__price">
+                      <span class="lumelle-spotlight__price-current">&pound;{{ price_now | money_without_currency }}</span>
+                    </div>
+                  {%- endif -%}
+                  {%- if cta_url != blank -%}
+                    <a href="{{ cta_url }}" class="lumelle-spotlight__button"{% unless forloop.first %} tabindex="-1"{% endunless %}>{{ cta_label }}</a>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if section.blocks.size > 1 -%}
+        <div class="lumelle-spotlight__pagination" role="tablist" aria-label="Product slides">
+          {%- for block in section.blocks -%}
+            <button type="button" class="lumelle-spotlight__dot{% if forloop.first %} lumelle-spotlight__dot--active{% endif %}" data-slide-index="{{ forloop.index0 }}" aria-label="Show {{ block.settings.title | default: 'product' }}" role="tab"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){var s=document.getElementById('lumelle-spotlight-slider-{{ section.id }}');if(!s||s.dataset.initialized)return;var sl=s.querySelectorAll('.lumelle-spotlight__slide'),d=s.parentElement.querySelectorAll('.lumelle-spotlight__dot'),a=0;function g(i){if(i<0||i>=sl.length)return;s.style.transform='translateX(-'+(i*100)+'%)';for(var j=0;j<sl.length;j++){sl[j].setAttribute('aria-hidden',j!==i);var b=sl[j].querySelector('.lumelle-spotlight__button');if(b)b.tabIndex=j===i?0:-1}for(var k=0;k<d.length;k++){d[k].classList.toggle('lumelle-spotlight__dot--active',k===i)}a=i}for(var m=0;m<d.length;m++){d[m].addEventListener('click',function(e){g(parseInt(e.target.dataset.slideIndex,10))})}s.dataset.initialized='true'})();
+</script>
 
 {% schema %}
 {
   "name": "Lumelle Product Spotlight",
   "tag": "section",
   "class": "section",
+  "settings": [
+    {"type": "text", "id": "label", "label": "Section Label", "default": "Product spotlight"}
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 5,
+      "settings": [
+        {"type": "product", "id": "product", "label": "Product"},
+        {"type": "image_picker", "id": "image", "label": "Custom Image", "info": "Overrides product featured image"},
+        {"type": "text", "id": "title", "label": "Title", "info": "Overrides product title"},
+        {"type": "textarea", "id": "description", "label": "Description", "info": "Overrides product description"},
+        {"type": "range", "id": "rating", "min": 1, "max": 5, "step": 0.1, "default": 4.9, "label": "Rating"},
+        {"type": "number", "id": "reviews", "default": 500, "label": "Number of Reviews"},
+        {"type": "text", "id": "bullet_1", "label": "Bullet Point 1"},
+        {"type": "text", "id": "bullet_2", "label": "Bullet Point 2"},
+        {"type": "text", "id": "bullet_3", "label": "Bullet Point 3"},
+        {"type": "number", "id": "price_now", "label": "Current Price", "info": "Enter value without currency"},
+        {"type": "number", "id": "price_was", "label": "Original Price", "info": "For showing discount"},
+        {"type": "text", "id": "cta_label", "label": "Button Text", "default": "Shop Now"},
+        {"type": "url", "id": "cta_url", "label": "Button Link", "info": "Overrides product URL"}
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Lumelle Product Spotlight"
+      "name": "Lumelle Product Spotlight",
+      "blocks": [{"type": "product", "settings": {"title": "Luxury Beauty Set", "description": "Discover our bestselling collection designed for radiant, healthy-looking skin.", "rating": 4.9, "reviews": 500, "bullet_1": "Suitable for all skin types", "bullet_2": "Vegan & cruelty-free formula", "bullet_3": "Visible results in 2 weeks", "cta_label": "Shop Now"}}]
     }
   ]
 }

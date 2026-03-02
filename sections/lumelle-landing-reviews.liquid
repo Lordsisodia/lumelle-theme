@@ -1,92 +1,858 @@
 {% comment %}
-  Lumelle Reviews Section - React version
-  Background is handled by the React component (bg-semantic-bg-subtle)
+  Lumelle Reviews Section - Native Liquid
+  Pixel-perfect conversion from React ReviewsAutoCarousel.tsx
+  Features: Horizontal scroll carousel, gradient cards, star ratings
 {% endcomment %}
 
-<div id="react-reviews"></div>
+{%- liquid
+  assign section_id = section.settings.section_id | default: 'reviews'
+  assign eyebrow = section.settings.eyebrow | default: 'Loved by thousands'
+  assign title = section.settings.title | default: 'Customer Stories'
+  assign description = section.settings.description | default: 'Real experiences from people who use it every day.'
+  assign show_rating = section.settings.show_rating
+  assign rating_value = section.settings.rating_value | default: 4.8
+  assign review_count = section.settings.review_count | default: 10000
+  assign tagline = section.settings.tagline | default: 'Trusted by 10k users'
+  
+  # Format review count
+  if review_count >= 1000000
+    assign count_label = review_count | divided_by: 100000 | round | divided_by: 10.0 | append: 'M+'
+  elsif review_count >= 10000
+    assign count_label = review_count | divided_by: 1000 | round | append: 'k+'
+  elsif review_count >= 1000
+    assign count_label = review_count | divided_by: 100 | round | divided_by: 10.0 | append: 'k+'
+  else
+    assign count_label = review_count | append: '+'
+  endif
+-%}
+
+{%- style -%}
+/* Section Base */
+.reviews-section-{{ section.id }} {
+  position: relative;
+  overflow: hidden;
+  background-color: {{ section.settings.bg_color }};
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* Background Orbs */
+.reviews-section-{{ section.id }} .bg-orb {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+}
+
+.reviews-section-{{ section.id }} .bg-orb-1 {
+  top: -7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 480px;
+  width: 480px;
+  background-color: rgba(199, 146, 120, 0.25);
+}
+
+.reviews-section-{{ section.id }} .bg-orb-2 {
+  bottom: -8rem;
+  right: -120px;
+  height: 520px;
+  width: 520px;
+  background-color: rgba(251, 199, 178, 0.30);
+}
+
+/* Container */
+.reviews-section-{{ section.id }} .reviews-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 72rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .reviews-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Grid Layout */
+.reviews-section-{{ section.id }} .reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .reviews-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+    gap: 2.5rem;
+  }
+}
+
+/* Heading Column */
+.reviews-section-{{ section.id }} .heading-column {
+  grid-column: span 1;
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .heading-column {
+    grid-column: span 5 / span 5;
+  }
+}
+
+/* Carousel Column */
+.reviews-section-{{ section.id }} .carousel-column {
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .carousel-column {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .carousel-column {
+    grid-column: span 7 / span 7;
+    margin-top: 0;
+    margin-right: -2.5rem;
+  }
+}
+
+/* Desktop Heading (Hidden on Mobile) */
+.reviews-section-{{ section.id }} .desktop-heading {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .desktop-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+  }
+}
+
+/* Eyebrow Pill */
+.reviews-section-{{ section.id }} .eyebrow-pill {
+  display: inline-flex;
+  border-radius: 9999px;
+  background-color: rgba(251, 199, 178, 0.4);
+  padding: 0.25rem 0.75rem;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: rgba(67, 56, 50, 0.7);
+}
+
+/* Title */
+.reviews-section-{{ section.id }} .section-title {
+  font-family: var(--font-heading, ui-serif, Georgia, serif);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: {{ section.settings.text_color }};
+  white-space: pre-line;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .section-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* Description */
+.reviews-section-{{ section.id }} .section-description {
+  max-width: 28rem;
+  font-size: 16px;
+  line-height: 1.625;
+  color: rgba(67, 56, 50, 0.8);
+  font-family: var(--font-body, ui-serif, Georgia, serif);
+}
+
+/* Social Proof Row */
+.reviews-section-{{ section.id }} .social-proof-row {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 14px;
+  color: rgba(67, 56, 50, 0.8);
+}
+
+/* Star Rating Display */
+.reviews-section-{{ section.id }} .star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reviews-section-{{ section.id }} .stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.reviews-section-{{ section.id }} .star {
+  color: #c79278;
+  width: 18px;
+  height: 18px;
+}
+
+.reviews-section-{{ section.id }} .rating-text {
+  font-weight: 600;
+  font-size: 16px;
+  color: {{ section.settings.text_color }};
+}
+
+/* Count Badge */
+.reviews-section-{{ section.id }} .count-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 0.375rem 1rem;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: inset 0 0 0 1px rgba(251, 199, 178, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Tagline Badge */
+.reviews-section-{{ section.id }} .tagline-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 0.375rem 1rem;
+  font-size: 16px;
+  color: rgba(67, 56, 50, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(251, 199, 178, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Mobile Heading (Visible on Mobile) */
+.reviews-section-{{ section.id }} .mobile-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .mobile-heading {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .mobile-heading {
+    display: none;
+  }
+}
+
+/* Carousel Wrapper */
+.reviews-section-{{ section.id }} .carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Carousel Track */
+.reviews-section-{{ section.id }} .carousel-track {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.75rem 1rem 1rem;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1rem;
+  scroll-padding-right: 1rem;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.reviews-section-{{ section.id }} .carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .carousel-track {
+    padding-top: 1.25rem;
+  }
+}
+
+/* Review Card */
+.reviews-section-{{ section.id }} .review-card-wrapper {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 300px;
+}
+
+@media (min-width: 640px) {
+  .reviews-section-{{ section.id }} .review-card-wrapper {
+    width: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .review-card-wrapper {
+    width: 480px;
+  }
+}
+
+/* Card Gradient Border */
+.reviews-section-{{ section.id }} .review-card-border {
+  border-radius: 1rem;
+  background: linear-gradient(to bottom right, rgba(251, 199, 178, 0.5), white, rgba(199, 146, 120, 0.4));
+  padding: 1px;
+  box-shadow: 0 12px 35px rgba(85, 54, 42, 0.08);
+}
+
+/* Card Inner */
+.reviews-section-{{ section.id }} .review-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 380px;
+  overflow: hidden;
+  border-radius: 0.875rem;
+  background-color: white;
+  padding: 1.25rem 1.25rem 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .reviews-section-{{ section.id }} .review-card {
+    height: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section-{{ section.id }} .review-card {
+    height: 320px;
+  }
+}
+
+/* Card Background Ornaments */
+.reviews-section-{{ section.id }} .card-bg-ornament {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 0.875rem;
+  background: radial-gradient(600px circle at 50% 0%, rgba(251, 199, 178, 0.25), transparent 70%);
+}
+
+.reviews-section-{{ section.id }} .card-ring {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 0.875rem;
+  box-shadow: inset 0 0 0 1px rgba(251, 199, 178, 0.3);
+}
+
+.reviews-section-{{ section.id }} .card-bottom-line {
+  pointer-events: none;
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(199, 146, 120, 0.4), transparent);
+}
+
+/* Card Sparkle Icon */
+.reviews-section-{{ section.id }} .sparkle-icon {
+  pointer-events: none;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgba(199, 146, 120, 0.3);
+}
+
+/* Card Star Rating */
+.reviews-section-{{ section.id }} .card-stars {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.reviews-section-{{ section.id }} .card-star {
+  color: #c79278;
+  width: 14px;
+  height: 14px;
+}
+
+/* Card Body */
+.reviews-section-{{ section.id }} .card-body {
+  position: relative;
+  margin-top: 1rem;
+  flex: 1;
+}
+
+.reviews-section-{{ section.id }} .card-body-text {
+  font-size: 16px;
+  line-height: 1.625;
+  text-align: center;
+  color: {{ section.settings.text_color }};
+  font-weight: 500;
+}
+
+/* Card Author */
+.reviews-section-{{ section.id }} .card-author {
+  position: relative;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.reviews-section-{{ section.id }} .author-avatar {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom right, #c79278, rgba(199, 146, 120, 0.7));
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section-{{ section.id }} .author-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: {{ section.settings.text_color }};
+}
+
+/* Carousel Fade Edges */
+.reviews-section-{{ section.id }} .carousel-fade-left {
+  pointer-events: none;
+  position: absolute;
+  inset-y: 0;
+  left: 0;
+  width: 2rem;
+  background: linear-gradient(to right, {{ section.settings.bg_color }}, rgba(245, 232, 224, 0.7), transparent);
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .carousel-fade-left {
+    width: 4rem;
+  }
+}
+
+.reviews-section-{{ section.id }} .carousel-fade-right {
+  pointer-events: none;
+  position: absolute;
+  inset-y: 0;
+  right: 0;
+  width: 2rem;
+  background: linear-gradient(to left, {{ section.settings.bg_color }}, rgba(245, 232, 224, 0.7), transparent);
+}
+
+@media (min-width: 768px) {
+  .reviews-section-{{ section.id }} .carousel-fade-right {
+    width: 4rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-section-{{ section.id }} .carousel-track {
+    scroll-behavior: auto;
+  }
+}
+{%- endstyle -%}
+
+<section 
+  id="{{ section_id }}" 
+  class="reviews-section-{{ section.id }}"
+  aria-label="Customer reviews"
+>
+  <!-- Background Orbs -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+  <div class="reviews-container">
+    <div class="reviews-grid">
+      <!-- Heading Column -->
+      <div class="heading-column">
+        <!-- Mobile Heading (centered) -->
+        <div class="mobile-heading">
+          {%- if eyebrow != blank -%}
+            <span class="eyebrow-pill">{{ eyebrow }}</span>
+          {%- endif -%}
+          
+          {%- if title != blank -%}
+            <h2 class="section-title">{{ title }}</h2>
+          {%- endif -%}
+          
+          {%- if description != blank -%}
+            <p class="section-description">{{ description }}</p>
+          {%- endif -%}
+          
+          {%- if show_rating -%}
+            <div class="social-proof-row">
+              <span class="star-rating">
+                <span class="stars">
+                  {%- for i in (1..5) -%}
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  {%- endfor -%}
+                </span>
+                <span class="rating-text">{{ rating_value | round: 1 }}</span>
+              </span>
+              {%- if tagline != blank -%}
+                <span class="tagline-badge">{{ tagline }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Desktop Heading (left-aligned) -->
+        <div class="desktop-heading">
+          {%- if eyebrow != blank -%}
+            <span class="eyebrow-pill">{{ eyebrow }}</span>
+          {%- endif -%}
+          
+          {%- if title != blank -%}
+            <h2 class="section-title">{{ title }}</h2>
+          {%- endif -%}
+          
+          {%- if description != blank -%}
+            <p class="section-description">{{ description }}</p>
+          {%- endif -%}
+          
+          {%- if show_rating -%}
+            <div class="social-proof-row">
+              <span class="star-rating">
+                <span class="stars">
+                  {%- for i in (1..5) -%}
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  {%- endfor -%}
+                </span>
+                <span class="rating-text">{{ rating_value | round: 1 }}</span>
+              </span>
+              {%- if tagline != blank -%}
+                <span class="tagline-badge">{{ tagline }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Carousel Column -->
+      <div class="carousel-column">
+        <div class="carousel-wrapper" role="region" aria-label="Customer reviews carousel">
+          <div class="carousel-track">
+            {%- for block in section.blocks -%}
+              {%- assign review_author = block.settings.author | default: 'Customer' -%}
+              {%- assign review_stars = block.settings.stars | default: 5 -%}
+              {%- assign review_body = block.settings.body -%}
+              
+              {%- if review_body != blank -%}
+                <div class="review-card-wrapper" {{ block.shopify_attributes }}>
+                  <div class="review-card-border">
+                    <div class="review-card">
+                      <!-- Background ornaments -->
+                      <div class="card-bg-ornament" aria-hidden="true"></div>
+                      <div class="card-ring" aria-hidden="true"></div>
+                      <div class="card-bottom-line" aria-hidden="true"></div>
+                      
+                      <!-- Sparkle decoration -->
+                      <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3l1.25 5.1L18 9.4l-4.75 1.3L12 16l-1.25-5.3L6 9.4l4.75-1.3L12 3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                      </svg>
+                      
+                      <!-- Star rating -->
+                      <div class="card-stars">
+                        {%- for i in (1..5) -%}
+                          {%- assign star_fill = 100 -%}
+                          {%- if i <= review_stars -%}
+                            {%- assign star_fill = 100 -%}
+                          {%- elsif i == review_stars | plus: 0.5 -%}
+                            {%- assign star_fill = 50 -%}
+                          {%- else -%}
+                            {%- assign star_fill = 0 -%}
+                          {%- endif -%}
+                          <svg class="card-star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          </svg>
+                        {%- endfor -%}
+                      </div>
+                      
+                      <!-- Review body -->
+                      <div class="card-body">
+                        <p class="card-body-text">{{ review_body }}</p>
+                      </div>
+                      
+                      <!-- Author -->
+                      <div class="card-author">
+                        {%- assign initials = review_author | split: ' ' | first | slice: 0 | upcase -%}
+                        {%- assign last_initial = review_author | split: ' ' | last | slice: 0 | upcase -%}
+                        {%- if review_author | split: ' ' | size > 1 -%}
+                          {%- assign initials = initials | append: last_initial -%}
+                        {%- endif -%}
+                        <div class="author-avatar">{{ initials }}</div>
+                        <p class="author-name">{{ review_author }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+            
+            {%- if section.blocks.size == 0 -%}
+              {%- comment -%}Default placeholder reviews{%- endcomment -%}
+              {%- assign placeholder_reviews = 'Roomy enough for rollers and still sealed.|Kara|5,Zero frizz even on wash day steam.|Shanice|5,Luxe feel, dries fast, still looks cute.|Jules|5,Finally a cap that fits my braids.|Amari|5,Elastic is comfy and doesn\'t dent my forehead.|Bri|4.8,Worth it for silk press protection alone.|Tay|5' | split: ',' -%}
+              {%- for review_data in placeholder_reviews -%}
+                {%- assign parts = review_data | split: '|' -%}
+                {%- assign review_body = parts[0] | strip -%}
+                {%- assign review_author = parts[1] | strip | default: 'Customer' -%}
+                {%- assign review_stars = parts[2] | strip | default: 5 | plus: 0 -%}
+                <div class="review-card-wrapper">
+                  <div class="review-card-border">
+                    <div class="review-card">
+                      <div class="card-bg-ornament" aria-hidden="true"></div>
+                      <div class="card-ring" aria-hidden="true"></div>
+                      <div class="card-bottom-line" aria-hidden="true"></div>
+                      <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3l1.25 5.1L18 9.4l-4.75 1.3L12 16l-1.25-5.3L6 9.4l4.75-1.3L12 3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                      </svg>
+                      <div class="card-stars">
+                        {%- for i in (1..5) -%}
+                          <svg class="card-star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          </svg>
+                        {%- endfor -%}
+                      </div>
+                      <div class="card-body">
+                        <p class="card-body-text">{{ review_body }}</p>
+                      </div>
+                      <div class="card-author">
+                        {%- assign initials = review_author | split: ' ' | first | slice: 0 | upcase -%}
+                        {%- assign last_initial = review_author | split: ' ' | last | slice: 0 | upcase -%}
+                        {%- if review_author | split: ' ' | size > 1 -%}
+                          {%- assign initials = initials | append: last_initial -%}
+                        {%- endif -%}
+                        <div class="author-avatar">{{ initials }}</div>
+                        <p class="author-name">{{ review_author }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+          
+          <!-- Fade edges -->
+          <div class="carousel-fade-left" aria-hidden="true"></div>
+          <div class="carousel-fade-right" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Lumelle Reviews",
   "tag": "section",
-  "class": "section",
+  "class": "lumelle-reviews-section",
   "settings": [
     {
       "type": "text",
-      "id": "title",
-      "label": "Title",
+      "id": "section_id",
+      "label": "Section ID",
+      "default": "reviews"
+    },
+    {
+      "type": "header",
+      "content": "Heading Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
       "default": "Loved by thousands"
     },
     {
       "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Join 1000+ happy customers"
+      "id": "title",
+      "label": "Title",
+      "default": "Customer Stories"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Real experiences from people who use it every day."
+    },
+    {
+      "type": "header",
+      "content": "Social Proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Summary",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_value",
+      "label": "Rating Value",
+      "min": 1,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.8,
+      "unit": "★"
+    },
+    {
+      "type": "number",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": 10000
     },
     {
       "type": "text",
-      "id": "review_1",
-      "label": "Review 1"
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Trusted by 10k users"
     },
     {
-      "type": "text",
-      "id": "author_1",
-      "label": "Author 1"
+      "type": "header",
+      "content": "Colors"
     },
     {
-      "type": "text",
-      "id": "review_2",
-      "label": "Review 2"
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f5e8e0"
     },
     {
-      "type": "text",
-      "id": "author_2",
-      "label": "Author 2"
-    },
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#433832"
+    }
+  ],
+  "blocks": [
     {
-      "type": "text",
-      "id": "review_3",
-      "label": "Review 3"
-    },
-    {
-      "type": "text",
-      "id": "author_3",
-      "label": "Author 3"
-    },
-    {
-      "type": "text",
-      "id": "review_4",
-      "label": "Review 4"
-    },
-    {
-      "type": "text",
-      "id": "author_4",
-      "label": "Author 4"
-    },
-    {
-      "type": "text",
-      "id": "review_5",
-      "label": "Review 5"
-    },
-    {
-      "type": "text",
-      "id": "author_5",
-      "label": "Author 5"
-    },
-    {
-      "type": "text",
-      "id": "review_6",
-      "label": "Review 6"
-    },
-    {
-      "type": "text",
-      "id": "author_6",
-      "label": "Author 6"
+      "type": "review",
+      "name": "Review",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Customer"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "default": 5,
+          "unit": "★"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review Text",
+          "default": "This product exceeded my expectations!"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Lumelle Reviews"
+      "name": "Lumelle Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Amelia",
+            "stars": 5,
+            "body": "Finally a cap that actually works. I've tried so many shower caps and they all let steam through. This one is completely waterproof—the satin lining keeps my hair bone dry."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Beth",
+            "stars": 5,
+            "body": "No marks on my forehead and looks cute. The elastic is gentle but secure, which is huge for me. Most caps leave deep indentations, but this one doesn't."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Cara",
+            "stars": 5,
+            "body": "Saved my blowout more than once. I gym in the mornings and my style stays intact now. It's already paid for itself in saved salon visits."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Danielle",
+            "stars": 5,
+            "body": "Stayed smooth after a long, steamy shower. I was skeptical about the waterproof claim, but it genuinely blocks all moisture. The satin interior feels luxurious."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Grace",
+            "stars": 5,
+            "body": "Fits over braids without tugging. I have thick box braids and most shower caps are too small. This one has plenty of room to accommodate my hairstyle comfortably."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Kara",
+            "stars": 5,
+            "body": "Roomy enough for rollers and still sealed. I sometimes set my hair in large rollers and this stretches to fit but still creates a perfect seal."
+          }
+        }
+      ]
     }
   ]
 }

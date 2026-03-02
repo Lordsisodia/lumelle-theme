@@ -1,16 +1,189 @@
 {% comment %}
-  Lumelle FAQ Section - Matches React FaqSectionShop component
+  Lumelle FAQ Section - Pixel-perfect conversion from React FAQSection.tsx
+  Accordion with smooth CSS transitions, configurable via Shopify blocks
 {% endcomment %}
 
 {%- style -%}
-.lumelle-faq-section {
-  background: #FFFFFF;
-  padding: 80px 20px;
-}
+  .lumelle-faq-section {
+    background: #FFFFFF;
+    padding: 80px 20px;
+    scroll-margin-top: 96px;
+    color: #55362A;
+  }
+
+  @media (min-width: 768px) {
+    .lumelle-faq-section {
+      scroll-margin-top: 128px;
+    }
+  }
+
+  .lumelle-faq-container {
+    max-width: 896px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  @media (min-width: 768px) {
+    .lumelle-faq-container {
+      padding: 0 24px;
+    }
+  }
+
+  /* Section Heading Styles */
+  .lumelle-faq-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+    color: #55362A;
+  }
+
+  .lumelle-faq-eyebrow {
+    display: inline-flex;
+    border-radius: 999px;
+    background: rgba(253, 212, 220, 0.4);
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: rgba(85, 54, 42, 0.7);
+  }
+
+  .lumelle-faq-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .lumelle-faq-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: pre-line;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .lumelle-faq-title {
+      font-size: 36px;
+    }
+  }
+
+  .lumelle-faq-description {
+    max-width: 672px;
+    font-size: 16px;
+    line-height: 1.625;
+    color: rgba(85, 54, 42, 0.8);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    margin: 0;
+  }
+
+  /* FAQ Accordion Styles */
+  .lumelle-faq-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lumelle-faq-item {
+    border-radius: 24px;
+    border: 1px solid rgba(251, 199, 178, 0.4);
+    background: rgba(253, 212, 220, 0.2);
+    padding: 16px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .lumelle-faq-item:hover {
+    border-color: #FBC7B2;
+    background: rgba(253, 212, 220, 0.3);
+  }
+
+  .lumelle-faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: #55362A;
+    transition: color 0.2s ease;
+  }
+
+  .lumelle-faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lumelle-faq-item summary::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 300;
+    color: #55362A;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .lumelle-faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .lumelle-faq-answer {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.625;
+    color: rgba(85, 54, 42, 0.75);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .lumelle-faq-item[open] .lumelle-faq-answer {
+    max-height: 500px;
+    opacity: 1;
+  }
 {%- endstyle -%}
 
-<section class="lumelle-faq-section">
-  <div id="react-faq"></div>
+<section class="lumelle-faq-section" id="faq">
+  <div class="lumelle-faq-container">
+    <!-- Section Heading -->
+    <div class="lumelle-faq-heading">
+      {% if section.settings.eyebrow != blank %}
+        <span class="lumelle-faq-eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+      
+      <div class="lumelle-faq-title-wrapper">
+        {% if section.settings.title != blank %}
+          <h2 class="lumelle-faq-title">{{ section.settings.title }}</h2>
+        {% endif %}
+        
+        {% if section.settings.description != blank %}
+          <p class="lumelle-faq-description">{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="lumelle-faq-list">
+      {% for block in section.blocks %}
+        <details class="lumelle-faq-item" {{ block.shopify_attributes }}>
+          <summary>
+            <span>{{ block.settings.question }}</span>
+          </summary>
+          <div class="lumelle-faq-answer">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
 </section>
 
 {% schema %}
@@ -23,79 +196,76 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow Text",
-      "default": "FAQ"
+      "default": "Frequently Asked"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Frequently Asked Questions"
+      "default": "Answers before you join"
     },
     {
-      "type": "text",
-      "id": "q_1",
-      "label": "Question 1"
-    },
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We keep WhatsApp fast-paced, so here are the essentials before you hop in."
+    }
+  ],
+  "blocks": [
     {
-      "type": "text",
-      "id": "a_1",
-      "label": "Answer 1"
-    },
-    {
-      "type": "text",
-      "id": "q_2",
-      "label": "Question 2"
-    },
-    {
-      "type": "text",
-      "id": "a_2",
-      "label": "Answer 2"
-    },
-    {
-      "type": "text",
-      "id": "q_3",
-      "label": "Question 3"
-    },
-    {
-      "type": "text",
-      "id": "a_3",
-      "label": "Answer 3"
-    },
-    {
-      "type": "text",
-      "id": "q_4",
-      "label": "Question 4"
-    },
-    {
-      "type": "text",
-      "id": "a_4",
-      "label": "Answer 4"
-    },
-    {
-      "type": "text",
-      "id": "q_5",
-      "label": "Question 5"
-    },
-    {
-      "type": "text",
-      "id": "a_5",
-      "label": "Answer 5"
-    },
-    {
-      "type": "text",
-      "id": "q_6",
-      "label": "Question 6"
-    },
-    {
-      "type": "text",
-      "id": "a_6",
-      "label": "Answer 6"
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>This is the answer to the question.</p>"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Lumelle FAQ"
+      "name": "Lumelle FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I join the WhatsApp group?",
+            "answer": "<p>Simply click the join button on any product page, and you'll be added to our exclusive WhatsApp community instantly.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I leave the group at any time?",
+            "answer": "<p>Yes, you can leave the WhatsApp group at any time by clicking 'Exit Group' in the group info section.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What kind of content will I receive?",
+            "answer": "<p>You'll receive exclusive tips, early access to new products, special discounts, and community support from like-minded individuals.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is my phone number visible to others?",
+            "answer": "<p>Your privacy is important. In WhatsApp groups, only admins can see your phone number. Other members only see your profile name and picture.</p>"
+          }
+        }
+      ]
     }
   ]
 }
 {% endschema %}
+LIQUID_EOF; EXIT_CODE=$?; echo '__CMD_END_nwf2evk1__:'$EXIT_CODE

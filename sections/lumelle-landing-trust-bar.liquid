@@ -1,23 +1,152 @@
 {% comment %}
-  Lumelle Trust Bar Section - React Embed Version
-  This is the small scrolling marquee below the hero
+  Lumelle Trust Bar Section - Native Liquid
+  Scrolling marquee with trust signals
+  Pixel-perfect conversion from React TrustBar.tsx
 {% endcomment %}
 
+{%- liquid
+  assign items_string = section.settings.trust_items | default: '30 day money back guarantee|Free shipping|1000+ 5-star reviews|Satin-lined & waterproof'
+  assign items = items_string | split: '|'
+-%}
+
 {%- style -%}
-#react-trust-bar {
-  min-height: 40px;
+.trust-bar-{{ section.id }} {
+  overflow: hidden;
+  background-color: {{ section.settings.background_color }};
+  color: {{ section.settings.text_color }};
 }
-#react-trust-bar > div {
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
+
+.trust-bar-{{ section.id }} .trust-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 0.75rem 1rem;
+  min-width: max-content;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .trust-bar-{{ section.id }} .trust-track {
+    font-size: 12px;
+  }
+}
+
+.trust-bar-{{ section.id }} .trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.trust-bar-{{ section.id }} .trust-dot {
+  height: 4px;
+  width: 4px;
+  border-radius: 9999px;
+  background-color: {{ section.settings.dot_color }};
+  opacity: 0.35;
+}
+
+/* Marquee Animation */
+@keyframes marquee-{{ section.id }} {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.trust-bar-{{ section.id }} .trust-track {
+  animation: marquee-{{ section.id }} {{ section.settings.animation_speed }}s linear infinite;
+}
+
+.trust-bar-{{ section.id }}:hover .trust-track,
+.trust-bar-{{ section.id }}:focus-within .trust-track {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .trust-bar-{{ section.id }} .trust-track {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-width: auto;
+  }
 }
 {%- endstyle -%}
 
-<div id="react-trust-bar"></div>
+<div 
+  class="trust-bar-{{ section.id }}" 
+  role="marquee" 
+  aria-label="Trust signals"
+>
+  <div class="trust-track">
+    {%- comment -%}Repeat items 3x for seamless loop{%- endcomment -%}
+    {%- for i in (1..3) -%}
+      {%- for item in items -%}
+        {%- assign item_trimmed = item | strip -%}
+        {%- if item_trimmed != blank -%}
+          <span class="trust-item">
+            {{ item_trimmed }}
+            <span class="trust-dot" aria-hidden="true"></span>
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
 
 {% schema %}
 {
   "name": "Lumelle Trust Bar",
+  "tag": "section",
+  "class": "trust-bar-section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "trust_items",
+      "label": "Trust Items",
+      "default": "30 day money back guarantee|Free shipping|1000+ 5-star reviews|Satin-lined & waterproof",
+      "info": "Separate each item with a pipe (|) character"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation Speed (seconds)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 18,
+      "info": "Lower = faster, higher = slower"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5e8e0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#433832"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot Separator Color",
+      "default": "#8b5a4b"
+    }
+  ],
   "presets": [
     {
       "name": "Lumelle Trust Bar"
@@ -25,3 +154,4 @@
   ]
 }
 {% endschema %}
+LIQUID_EOF; EXIT_CODE=$?; echo '__CMD_END_c1t7yp2f__:'$EXIT_CODE
