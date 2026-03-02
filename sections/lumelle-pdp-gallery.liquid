@@ -1,0 +1,607 @@
+{% comment %}
+  Lumelle PDP Gallery Section
+  Converted from React HeroMedia.tsx - Pixel-perfect native Liquid implementation
+  
+  Features:
+  - Main image display with aspect-square ratio
+  - Thumbnail navigation with scroll
+  - Image zoom modal on click
+  - Mobile swipe carousel support
+  - Navigation arrows with hover visibility
+  - Image counter badge
+  - Product badges support
+  
+  Design tokens:
+  - Blush: #FDD4DC
+  - Cocoa: #55362A
+  - Peach: #FBC7B2
+{% endcomment %}
+
+<style>
+  /* Lumelle PDP Gallery Styles */
+  .lumelle-gallery {
+    --blush: #FDD4DC;
+    --blush-60: rgba(253, 212, 220, 0.6);
+    --blush-20: rgba(253, 212, 220, 0.2);
+    --cocoa: #55362A;
+    --peach: #FBC7B2;
+    --peach-30: rgba(251, 199, 178, 0.3);
+  }
+  
+  /* Hide scrollbar for thumbnails */
+  .lumelle-gallery .thumbnail-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .lumelle-gallery .thumbnail-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Main image container hover effect */
+  .lumelle-gallery .main-image-container:hover .nav-arrow {
+    opacity: 1;
+  }
+  
+  @media (min-width: 768px) {
+    .lumelle-gallery .nav-arrow {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .lumelle-gallery .main-image-container:hover .nav-arrow {
+      opacity: 1;
+    }
+  }
+  
+  /* Thumbnail active state */
+  .lumelle-gallery .thumbnail-btn.active {
+    border-color: var(--cocoa);
+    box-shadow: 0 0 0 2px var(--peach-30);
+  }
+  
+  /* Gradient fade edges for thumbnail scroll */
+  .lumelle-gallery .fade-left {
+    background: linear-gradient(to right, white 0%, rgba(255,255,255,0.6) 60%, transparent 100%);
+  }
+  .lumelle-gallery .fade-right {
+    background: linear-gradient(to left, white 0%, rgba(255,255,255,0.6) 60%, transparent 100%);
+  }
+  
+  /* Zoom modal */
+  .lumelle-gallery-modal {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Smooth image transitions */
+  .lumelle-gallery .main-image {
+    transition: opacity 0.2s ease;
+  }
+</style>
+
+<section id="media" class="lumelle-gallery bg-white" data-section-id="{{ section.id }}">
+  <div id="pdp-hero-gallery" class="h-0 scroll-mt-24"></div>
+  
+  <div class="w-full flex flex-col gap-3">
+    {% comment %} Optional launch banner {% endcomment %}
+    {% if section.settings.show_launch_banner %}
+      <a 
+        href="{{ section.settings.launch_banner_link }}"
+        class="mt-2 mb-2 inline-flex w-auto max-w-fit items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] shadow-[0_20px_60px_rgba(251,199,178,0.35)] ring-1 ring-[rgba(251,199,178,0.5)] transition hover:-translate-y-[1px] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(85,54,42,0.5)] md:mt-3"
+        style="color: var(--cocoa);"
+      >
+        <span class="h-2 w-2 rounded-full" style="background-color: var(--cocoa);" aria-hidden="true"></span>
+        {{ section.settings.launch_banner_text }}
+        <span aria-hidden="true">→</span>
+      </a>
+    {% endif %}
+    
+    {% comment %} Main Image Container {% endcomment %}
+    <div 
+      class="main-image-container relative aspect-square w-full overflow-hidden rounded-[2rem] border bg-white md:bg-[rgba(253,212,220,0.2)] group"
+      style="border-color: var(--blush-60);"
+    >
+      {% assign featured_media = product.featured_media %}
+      {% assign current_media_index = 0 %}
+      
+      {% comment %} Main Image Display {% endcomment %}
+      <div class="main-image-wrapper relative w-full h-full">
+        {% for media in product.media limit: 1 %}
+          {% if media.media_type == 'image' %}
+            <button
+              type="button"
+              onclick="openZoomModal(0)"
+              aria-label="View full size"
+              class="main-image relative w-full h-full bg-transparent border-0 p-0 cursor-zoom-in"
+            >
+              <img
+                src="{{ media | image_url: width: 960 }}"
+                alt="{{ product.title | escape }} — product photo 1"
+                class="main-image w-full h-full object-contain"
+                width="960"
+                height="960"
+                draggable="false"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                id="main-image-{{ section.id }}"
+              >
+            </button>
+          {% elsif media.media_type == 'video' %}
+            {{ media | video_tag: class: 'w-full h-full object-contain', autoplay: false, loop: true, muted: true, controls: true }}
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      {% comment %} Image Counter Badge {% endcomment %}
+      {% if product.media.size > 1 %}
+        <div 
+          class="absolute top-3 right-3 z-10 inline-flex items-center rounded-full bg-black/60 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm shadow-lg"
+          id="image-counter-{{ section.id }}"
+        >
+          <span>1/{{ product.media.size }}</span>
+        </div>
+      {% endif %}
+      
+      {% comment %} Navigation Arrows {% endcomment %}
+      {% if product.media.size > 1 %}
+        <button
+          type="button"
+          onclick="navigateGallery(-1)"
+          class="nav-arrow absolute left-3 top-1/2 -translate-y-1/2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur transition hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed opacity-100 md:opacity-0 md:group-hover:opacity-100"
+          style="color: var(--cocoa);"
+          aria-label="Previous image"
+          id="prev-btn-{{ section.id }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+ onclick="navigateGallery(1)"
+          class="nav-arrow absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur transition hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed opacity-100 md:opacity-0 md:group-hover:opacity-100"
+          style="color: var(--cocoa);"
+          aria-label="Next image"
+          id="next-btn-{{ section.id }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+    
+    {% comment %} Product Badges {% endcomment %}
+    {% if section.settings.show_badges and product.tags contains section.settings.badge_tag %}
+      <div class="mt-3 flex flex-wrap items-center gap-2">
+        <span
+          class="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] shadow-[0_20px_60px_rgba(251,199,178,0.35)]"
+          style="background-color: var(--peach); color: var(--cocoa);"
+        >
+          {{ section.settings.badge_text }}
+        </span>
+      </div>
+    {% endif %}
+    
+    {% comment %} Thumbnail Strip {% endcomment %}
+    {% if product.media.size > 1 %}
+      <div class="relative mt-4 w-full">
+        <div 
+          class="thumbnail-scroll w-full overflow-x-auto overscroll-x-contain pb-1"
+          id="thumbnail-scroll-{{ section.id }}"
+        >
+          <div class="inline-flex max-w-full gap-2 px-1 snap-x snap-mandatory touch-pan-x">
+            {% for media in product.media %}
+              <button
+                type="button"
+                onclick="selectImage({{ forloop.index0 }})"
+                class="thumbnail-btn h-20 w-20 shrink-0 overflow-hidden rounded-2xl border snap-start md:h-16 md:w-16 transition-all {% if forloop.first %}active{% endif %}"
+                style="border-color: {% if forloop.first %}var(--cocoa){% else %}var(--blush-60){% endif %}; {% if forloop.first %}box-shadow: 0 0 0 2px var(--peach-30);{% endif %}"
+                aria-label="Show media {{ forloop.index }}"
+                data-index="{{ forloop.index0 }}"
+              >
+                {% if media.media_type == 'image' %}
+                  <img
+                    src="{{ media | image_url: width: 160 }}"
+                    alt="{{ product.title | escape }} - product photo {{ forloop.index }}"
+                    class="h-full w-full object-cover"
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {% elsif media.media_type == 'video' %}
+                  <div class="relative h-full w-full bg-[rgba(253,212,220,0.4)]">
+                    <img
+                      src="{{ media.preview_image | image_url: width: 160 }}"
+                      alt="{{ product.title | escape }} - video thumbnail"
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    >
+                    <span class="absolute inset-0 flex items-center justify-center">
+                      <span 
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-[0_20px_60px_rgba(251,199,178,0.35)]"
+                        style="color: var(--cocoa);"
+                      >
+                        ▶
+                      </span>
+                    </span>
+                  </div>
+                {% endif %}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        
+        {% comment %} Thumbnail scroll fade edges {% endcomment %}
+        <div 
+          class="fade-left pointer-events-none absolute inset-y-0 left-0 w-10 transition-opacity"
+          id="fade-left-{{ section.id }}"
+          style="opacity: 0;"
+          aria-hidden="true"
+        ></div>
+        <div 
+          class="fade-right pointer-events-none absolute inset-y-0 right-0 w-10 transition-opacity"
+          id="fade-right-{{ section.id }}"
+          style="opacity: 0;"
+          aria-hidden="true"
+        ></div>
+        
+        {% comment %} Thumbnail scroll buttons {% endcomment %}
+        <button
+          type="button"
+          onclick="scrollThumbnails('left')"
+          class="hidden md:inline-flex absolute left-1 top-1/2 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-[0_20px_60px_rgba(251,199,178,0.35)] ring-1 ring-[rgba(253,212,220,0.5)] backdrop-blur transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(85,54,42,0.5)]"
+          style="color: var(--cocoa);"
+          id="scroll-left-btn-{{ section.id }}"
+          aria-label="Scroll product media thumbnails left"
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          onclick="scrollThumbnails('right')"
+          class="hidden md:inline-flex absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-[0_20px_60px_rgba(251,199,178,0.35)] ring-1 ring-[rgba(253,212,220,0.5)] backdrop-blur transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(85,54,42,0.5)]"
+          style="color: var(--cocoa);"
+          id="scroll-right-btn-{{ section.id }}"
+          aria-label="Scroll product media thumbnails right"
+        >
+          ›
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% comment %} Zoom Modal {% endcomment %}
+<div 
+  class="lumelle-gallery-modal fixed inset-0 z-50 hidden items-center justify-center bg-black/95"
+  id="zoom-modal-{{ section.id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image viewer"
+>
+  <button
+    type="button"
+    onclick="closeZoomModal()"
+    class="absolute top-4 right-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition"
+    aria-label="Close image viewer"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  
+  <button
+    type="button"
+    onclick="event.stopPropagation(); navigateZoom(-1)"
+    class="absolute left-4 top-1/2 -translate-y-1/2 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition"
+    aria-label="Previous image"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  
+  <button
+    type="button"
+    onclick="event.stopPropagation(); navigateZoom(1)"
+    class="absolute right-4 top-1/2 -translate-y-1/2 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition"
+    aria-label="Next image"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+  
+  <div 
+    class="relative h-[90vh] w-[90vw] max-w-4xl" 
+    onclick="event.stopPropagation()"
+    id="zoom-image-container-{{ section.id }}"
+  >
+    {% for media in product.media limit: 1 %}
+      <img
+        src="{{ media | image_url: width: 1280 }}"
+        alt="{{ product.title | escape }} — image 1 of {{ product.media.size }}"
+        class="zoom-image w-full h-full object-contain"
+        id="zoom-image-{{ section.id }}"
+        loading="eager"
+      >
+    {% endfor %}
+  </div>
+  
+  {% comment %} Image counter in modal {% endcomment %}
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2">
+    <span class="text-sm font-semibold text-white/80" id="zoom-counter-{{ section.id }}">
+      1 / {{ product.media.size }}
+    </span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const sectionId = '{{ section.id }}';
+  const totalImages = {{ product.media.size }};
+  let currentIndex = 0;
+  
+  // Product media URLs
+  const mediaUrls = [
+    {% for media in product.media %}
+      {
+        type: '{{ media.media_type }}',
+        src: '{{ media | image_url: width: 1280 }}',
+        preview: '{{ media.preview_image | image_url: width: 160 }}',
+        alt: '{{ product.title | escape }} — image {{ forloop.index }} of {{ product.media.size }}'
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+  
+  // Elements
+  const mainImage = document.getElementById('main-image-{{ section.id }}');
+  const zoomModal = document.getElementById('zoom-modal-{{ section.id }}');
+  const zoomImage = document.getElementById('zoom-image-{{ section.id }}');
+  const imageCounter = document.getElementById('image-counter-{{ section.id }}');
+  const zoomCounter = document.getElementById('zoom-counter-{{ section.id }}');
+  const thumbnailScroll = document.getElementById('thumbnail-scroll-{{ section.id }}');
+  const fadeLeft = document.getElementById('fade-left-{{ section.id }}');
+  const fadeRight = document.getElementById('fade-right-{{ section.id }}');
+  const scrollLeftBtn = document.getElementById('scroll-left-btn-{{ section.id }}');
+  const scrollRightBtn = document.getElementById('scroll-right-btn-{{ section.id }}');
+  const thumbnailBtns = document.querySelectorAll(`[data-index]`);
+  
+  // Touch handling
+  let touchStart = null;
+  
+  if (mainImage && mainImage.parentElement) {
+    mainImage.parentElement.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      touchStart = { x: touch.clientX, y: touch.clientY, time: Date.now() };
+    }, { passive: true });
+    
+    mainImage.parentElement.addEventListener('touchend', (e) => {
+      if (!touchStart) return;
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - touchStart.x;
+      const deltaY = touch.clientY - touchStart.y;
+      const deltaTime = Date.now() - touchStart.time;
+      
+      touchStart = null;
+      
+      const isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 300;
+      if (isTap) return;
+      
+      const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && Math.abs(deltaX) > 30;
+      if (isHorizontalSwipe) {
+        if (deltaX > 0) {
+          navigateGallery(-1);
+        } else {
+          navigateGallery(1);
+        }
+      }
+    }, { passive: true });
+  }
+  
+  // Update thumbnail scroll state
+  function updateScrollState() {
+    if (!thumbnailScroll) return;
+    
+    const maxScrollLeft = thumbnailScroll.scrollWidth - thumbnailScroll.clientWidth;
+    const hasOverflow = maxScrollLeft > 1;
+    const canScrollLeft = hasOverflow && thumbnailScroll.scrollLeft > 1;
+    const canScrollRight = hasOverflow && thumbnailScroll.scrollLeft < maxScrollLeft - 1;
+    
+    if (fadeLeft) fadeLeft.style.opacity = canScrollLeft ? '1' : '0';
+    if (fadeRight) fadeRight.style.opacity = canScrollRight ? '1' : '0';
+    if (scrollLeftBtn) scrollLeftBtn.style.display = canScrollLeft ? 'inline-flex' : 'none';
+    if (scrollRightBtn) scrollRightBtn.style.display = canScrollRight ? 'inline-flex' : 'none';
+  }
+  
+  if (thumbnailScroll) {
+    thumbnailScroll.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    updateScrollState();
+  }
+  
+  // Scroll thumbnails
+  window.scrollThumbnails = function(direction) {
+    if (!thumbnailScroll) return;
+    const amount = Math.min(240, thumbnailScroll.clientWidth * 0.85);
+    thumbnailScroll.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
+  };
+  
+  // Select image
+  window.selectImage = function(index) {
+    if (index < 0 || index >= mediaUrls.length) return;
+    currentIndex = index;
+    
+    const media = mediaUrls[index];
+    if (media.type === 'image' && mainImage) {
+      mainImage.src = media.src.replace('width=1280', 'width=960');
+      mainImage.alt = media.alt;
+    }
+    
+    // Update counter
+    if (imageCounter) {
+      imageCounter.innerHTML = `<span>${index + 1}/${totalImages}</span>`;
+    }
+    
+    // Update thumbnails
+    thumbnailBtns.forEach((btn, i) => {
+      if (i === index) {
+        btn.classList.add('active');
+        btn.style.borderColor = 'var(--cocoa)';
+        btn.style.boxShadow = '0 0 0 2px var(--peach-30)';
+      } else {
+        btn.classList.remove('active');
+        btn.style.borderColor = 'var(--blush-60)';
+        btn.style.boxShadow = 'none';
+      }
+    });
+    
+    // Scroll thumbnail into view
+    const activeThumbnail = document.querySelector(`[data-index="${index}"]`);
+    if (activeThumbnail && thumbnailScroll) {
+      activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  };
+  
+  // Navigate gallery
+  window.navigateGallery = function(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = totalImages - 1;
+    if (newIndex >= totalImages) newIndex = 0;
+    selectImage(newIndex);
+  };
+  
+  // Zoom modal
+  window.openZoomModal = function(index) {
+    if (!zoomModal || !zoomImage) return;
+    currentIndex = index;
+    
+    const media = mediaUrls[index];
+    if (media.type === 'image') {
+      zoomImage.src = media.src;
+      zoomImage.alt = media.alt;
+    }
+    
+    if (zoomCounter) {
+      zoomCounter.textContent = `${index + 1} / ${totalImages}`;
+    }
+    
+    zoomModal.classList.remove('hidden');
+    zoomModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  
+  window.closeZoomModal = function() {
+    if (!zoomModal) return;
+    zoomModal.classList.add('hidden');
+    zoomModal.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+  
+  window.navigateZoom = function(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = totalImages - 1;
+    if (newIndex >= totalImages) newIndex = 0;
+    
+    currentIndex = newIndex;
+    const media = mediaUrls[newIndex];
+    
+    if (zoomImage && media.type === 'image') {
+      zoomImage.src = media.src;
+      zoomImage.alt = media.alt;
+    }
+    
+    if (zoomCounter) {
+      zoomCounter.textContent = `${newIndex + 1} / ${totalImages}`;
+    }
+  };
+  
+  // Click outside to close modal
+  if (zoomModal) {
+    zoomModal.addEventListener('click', closeZoomModal);
+  }
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!zoomModal || zoomModal.classList.contains('hidden')) return;
+    
+    if (e.key === 'Escape') closeZoomModal();
+    if (e.key === 'ArrowLeft') navigateZoom(-1);
+    if (e.key === 'ArrowRight') navigateZoom(1);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle PDP Gallery",
+  "tag": "section",
+  "class": "lumelle-pdp-gallery-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Launch Banner"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_launch_banner",
+      "label": "Show launch banner",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "launch_banner_text",
+      "label": "Banner text",
+      "default": "New Heatless Curler Launched"
+    },
+    {
+      "type": "url",
+      "id": "launch_banner_link",
+      "label": "Banner link"
+    },
+    {
+      "type": "header",
+      "content": "Product Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show product badges",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "badge_tag",
+      "label": "Tag to show badge for",
+      "default": "new"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "New"
+    },
+    {
+      "type": "select",
+      "id": "badge_variant",
+      "label": "Badge style",
+      "default": "peach",
+      "options": [
+        { "value": "peach", "label": "Peach" },
+        { "value": "cocoa", "label": "Cocoa" },
+        { "value": "rose", "label": "Rose" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle PDP Gallery",
+      "category": "Product"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}
