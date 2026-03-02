@@ -4,10 +4,10 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign cocoa = '#4A3728'
-  assign accent_cta = '#E8B4B8'
-  assign blush = '#FFF0F3'
-  assign text_primary = '#1A1A1A'
+  assign cocoa = '#55362A'
+  assign accent_cta = '#FBC7B2'
+  assign blush = '#FDD4DC'
+  assign text_primary = '#55362A'
 -%}
 
 <style>
@@ -19,37 +19,37 @@
 .lumelle-spotlight__slide{width:100%;flex:0 0 100%}
 .lumelle-spotlight__card{display:grid;gap:1.5rem;border-radius:2.5rem;border:1px solid rgba(232,180,184,0.4);background-color:rgba(255,255,255,0.95);padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
 @media (min-width:768px){.lumelle-spotlight__card{grid-template-columns:0.9fr 1fr}}
-.lumelle-spotlight__image-wrapper{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:1.5rem;background-color:#FFF0F3}
+.lumelle-spotlight__image-wrapper{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:1.5rem;background-color:rgba(253,212,220,0.2)}
 .lumelle-spotlight__image{height:100%;width:100%;object-fit:cover;object-position:center}
-.lumelle-spotlight__content{display:flex;flex-direction:column;gap:1rem;text-align:left;color:#1A1A1A}
+.lumelle-spotlight__content{display:flex;flex-direction:column;gap:1rem;text-align:left;color:#55362A}
 .lumelle-spotlight__header{display:flex;flex-direction:column;gap:0.5rem}
-.lumelle-spotlight__label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.3em;color:rgba(26,26,26,0.6);margin:0}
+.lumelle-spotlight__label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.3em;color:rgba(85,54,42,0.6);margin:0}
 .lumelle-spotlight__title{font-family:var(--font-heading,ui-serif,Georgia,serif);font-size:1.875rem;font-weight:700;line-height:1.375;margin:0}
 @media (min-width:768px){.lumelle-spotlight__title{font-size:2.25rem}}
-.lumelle-spotlight__rating{display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;color:rgba(26,26,26,0.8)}
+.lumelle-spotlight__rating{display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;color:rgba(85,54,42,0.8)}
 .lumelle-spotlight__stars{display:flex;gap:0.125rem}
 .lumelle-spotlight__star{width:18px;height:18px;color:#FBBF24}
 .lumelle-spotlight__star--empty{color:#D1D5DB}
 .lumelle-spotlight__rating-text{font-size:0.875rem;font-weight:600}
-.lumelle-spotlight__description{font-size:1rem;line-height:1.625;color:rgba(26,26,26,0.8);margin:0}
+.lumelle-spotlight__description{font-size:1rem;line-height:1.625;color:rgba(85,54,42,0.8);margin:0}
 .lumelle-spotlight__bullets{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.25rem}
-.lumelle-spotlight__bullet{display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:rgba(26,26,26,0.7)}
-.lumelle-spotlight__bullet-dot{width:0.375rem;height:0.375rem;border-radius:9999px;background-color:#E8B4B8;flex-shrink:0}
+.lumelle-spotlight__bullet{display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:rgba(85,54,42,0.7)}
+.lumelle-spotlight__bullet-dot{width:0.375rem;height:0.375rem;border-radius:9999px;background-color:#FBC7B2;flex-shrink:0}
 .lumelle-spotlight__footer{margin-top:0.75rem;display:flex;flex-direction:column;gap:0.75rem}
 @media (min-width:768px){.lumelle-spotlight__footer{align-items:flex-start}}
 .lumelle-spotlight__price{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.75rem}
-.lumelle-spotlight__price-current{font-size:1.875rem;font-weight:600;color:#1A1A1A}
+.lumelle-spotlight__price-current{font-size:1.875rem;font-weight:600;color:#55362A}
 .lumelle-spotlight__price-discount{display:flex;align-items:baseline;gap:0.5rem}
 .lumelle-spotlight__price-percent{font-size:1.3125rem;font-weight:600;line-height:1;color:#DC2626}
-.lumelle-spotlight__price-now{font-size:1.875rem;font-weight:600;color:#1A1A1A}
-.lumelle-spotlight__price-was{font-size:0.75rem;font-weight:600;color:rgba(26,26,26,0.6)}
+.lumelle-spotlight__price-now{font-size:1.875rem;font-weight:600;color:#55362A}
+.lumelle-spotlight__price-was{font-size:0.75rem;font-weight:600;color:rgba(85,54,42,0.6)}
 .lumelle-spotlight__price-was-value{text-decoration:line-through}
-.lumelle-spotlight__button{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;border:2px solid #4A3728;background-color:#fff;padding:0.625rem 1.75rem;font-size:0.875rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#1A1A1A;box-shadow:0 10px 18px rgba(0,0,0,0.1);transition:transform 150ms ease,box-shadow 150ms ease;text-decoration:none;cursor:pointer}
+.lumelle-spotlight__button{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;border:2px solid #55362A;background-color:#fff;padding:0.625rem 1.75rem;font-size:0.875rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#55362A;box-shadow:0 10px 18px rgba(0,0,0,0.1);transition:transform 150ms ease,box-shadow 150ms ease;text-decoration:none;cursor:pointer}
 .lumelle-spotlight__button:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,0.14)}
 .lumelle-spotlight__pagination{margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
 .lumelle-spotlight__dot{height:0.375rem;border-radius:9999px;transition:all 200ms ease;border:none;padding:0;cursor:pointer;background-color:rgba(74,55,40,0.3);width:0.375rem}
-.lumelle-spotlight__dot:hover{background-color:rgba(74,55,40,0.7)}
-.lumelle-spotlight__dot--active{width:1.5rem;background-color:#4A3728}
+.lumelle-spotlight__dot:hover{background-color:rgba(85,54,42,0.7)}
+.lumelle-spotlight__dot--active{width:1.5rem;background-color:#55362A}
 </style>
 
 <section class="lumelle-spotlight" data-sticky-buy-target aria-label="Product Spotlight">

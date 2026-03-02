@@ -17,7 +17,7 @@
   
   /* Gradient text support */
   .gradient-text-cocoa-cta {
-    background: linear-gradient(to right, #6B4C3B, #A8BBA4);
+    background: linear-gradient(to right, #55362A, #FBC7B2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -56,13 +56,13 @@
         >
           {%- comment -%} Default: Gift icon (shown before success) {%- endcomment -%}
           <span id="gift-icon-{{ section.id }}" class="block">
-            <svg class="h-8 w-8" style="color: #6B4C3B;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="h-8 w-8" style="color: #55362A;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
             </svg>
           </span>
           {%- comment -%} Success: PartyPopper icon (hidden initially) {%- endcomment -%}
           <span id="party-icon-{{ section.id }}" class="hidden">
-            <svg class="h-8 w-8" style="color: #6B4C3B;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="h-8 w-8" style="color: #55362A;" fill="none" stroke="currentColor" stroke-width: 1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0L3 16.5m15-3.38a48.474 48.474 0 0 0-6-.37c-2.032 0-4.034.125-6 .37m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.17c0 .62-.504 1.124-1.125 1.124H4.125A1.125 1.125 0 0 1 3 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 0 1 6 13.12" />
             </svg>
           </span>
@@ -70,20 +70,20 @@
 
         {%- comment -%} Heading (shown before success) {%- endcomment -%}
         <div id="email-capture-heading-{{ section.id }}" class="space-y-2">
-          <h3 class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading-family, inherit); color: #1C1917;">
+          <h3 class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading-family, inherit); color: #55362A;">
             Get <span class="gradient-text-cocoa-cta">{{ section.settings.discount_percent }}% off</span> {{ section.settings.heading_suffix }}
           </h3>
-          <p class="text-base" style="color: rgba(28, 25, 23, 0.7);">
+          <p class="text-base" style="color: rgba(85, 54, 42, 0.7);">
             {{ section.settings.subheading }}
           </p>
         </div>
 
         {%- comment -%} Success Heading (hidden initially) {%- endcomment -%}
         <div id="email-capture-success-heading-{{ section.id }}" class="space-y-2 hidden">
-          <h3 class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading-family, inherit); color: #1C1917;">
+          <h3 class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading-family, inherit); color: #55362A;">
             {{ section.settings.success_heading }}
           </h3>
-          <p class="text-lg" style="color: rgba(28, 25, 23, 0.8);">
+          <p class="text-lg" style="color: rgba(85, 54, 42, 0.8);">
             {{ section.settings.success_subheading }}
           </p>
         </div>
@@ -123,7 +123,7 @@
               type="submit"
               id="submit-btn-{{ section.id }}"
               class="group relative w-full overflow-hidden rounded-2xl px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70"
-              style="background: linear-gradient(to right, #6B4C3B 0%, rgba(107, 76, 59, 0.9) 100%); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);"
+              style="background: linear-gradient(to right, #55362A 0%, rgba(85, 54, 42, 0.9) 100%); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);"
             >
               <span class="relative flex items-center justify-center gap-2">
                 <span id="btn-text-{{ section.id }}">{{ section.settings.button_text }}</span>
@@ -149,11 +149,11 @@
               <span class="text-xs font-semibold uppercase tracking-[0.3em]" style="color: rgba(28, 25, 23, 0.6);">Your code</span>
             </div>
             <div class="mt-3 flex items-center justify-center gap-2">
-              <span class="text-2xl font-bold tracking-wider" style="font-family: var(--font-heading-family, inherit); color: #6B4C3B;">
+              <span class="text-2xl font-bold tracking-wider" style="font-family: var(--font-heading-family, inherit); color: #55362A;">
                 ✨ {{ section.settings.discount_code }} ✨
               </span>
             </div>
-            <div class="mt-3 flex items-center justify-center gap-2 text-sm font-semibold" style="color: #A8BBA4;">
+            <div class="mt-3 flex items-center justify-center gap-2 text-sm font-semibold" style="color: #FBC7B2;">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
               </svg>
