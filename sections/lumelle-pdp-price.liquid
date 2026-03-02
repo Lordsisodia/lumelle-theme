@@ -1,0 +1,777 @@
+{% comment %}
+  Lumelle PDP Price Block - Native Liquid
+  Converted from React PriceBlock.tsx
+  Pixel-perfect match with React styling
+{% endcomment %}
+
+{{ 'lumelle-pdp-price.css' | asset_url | stylesheet_tag }}
+
+<div class="lumelle-pdp-price" data-section-id="{{ section.id }}">
+  <div class="pdp-price-content">
+    {%- comment -%} Product Title {%- endcomment -%}
+    <div class="pdp-title-row">
+      <h1 class="pdp-product-title">{{ product.title }}</h1>
+      
+      {%- comment -%} Share Button {%- endcomment -%}
+      <div class="pdp-share-wrapper">
+        <button type="button" class="pdp-share-btn" aria-label="Share product" onclick="navigator.share ? navigator.share({title: '{{ product.title | escape_js }}', url: window.location.href}) : navigator.clipboard.writeText(window.location.href)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/>
+            <path d="M16 6l-4-4-4 4"/>
+            <path d="M12 2v14"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {%- comment -%} Product Description {%- endcomment -%}
+    {% if section.settings.show_description and product.description != blank %}
+      <p class="pdp-product-desc">{{ product.description | strip_html | truncate: 150 }}</p>
+    {% endif %}
+
+    {%- comment -%} Star Rating {%- endcomment -%}
+    <div class="pdp-rating-row">
+      <div class="pdp-stars">
+        <div class="pdp-star-icons">
+          {%- for i in (1..5) -%}
+            <svg class="pdp-star{% if forloop.index <= section.settings.rating_value %} filled{% endif %}" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          {%- endfor -%}
+        </div>
+        <span class="pdp-rating-value">{{ section.settings.rating_value | default: 4.9 }}</span>
+        <span class="pdp-rating-label">({{ section.settings.review_count | default: '2,847' }})</span>
+      </div>
+      <span class="pdp-divider"></span>
+      <span class="pdp-free-returns">
+        <svg class="pdp-check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        Free returns
+      </span>
+    </div>
+
+    {%- comment -%} Review Snippet {%- endcomment -%}
+    <div class="pdp-review-snippet">
+      <div class="pdp-snippet-stars">
+        <span class="pdp-amber-stars">★★★★★</span>
+      </div>
+      <p class="pdp-snippet-text">"{{ section.settings.review_snippet | default: 'Finally a towel that actually fits all my hair. Dries so much faster and my frizz is basically gone!' }}"</p>
+      <p class="pdp-snippet-author">— {{ section.settings.review_author | default: 'Amelia' }}, verified buyer</p>
+    </div>
+
+    {%- comment -%} Price Section {%- endcomment -%}
+    <div class="pdp-price-section">
+      {%- assign current_variant = product.selected_or_first_available_variant -%}
+      {%- assign price = current_variant.price -%}
+      {%- assign compare_price = current_variant.compare_at_price -%}
+      
+      {% if compare_price > price %}
+        <div class="pdp-price-sale">
+          <span class="pdp-price-current">{{ price | money }}</span>
+          {%- assign discount_percent = compare_price | minus: price | times: 100 | divided_by: compare_price -%}
+          <span class="pdp-discount-badge">Save {{ discount_percent }}%</span>
+          <span class="pdp-price-original">{{ compare_price | money }}</span>
+        </div>
+      {% else %}
+        <span class="pdp-price-current pdp-price-regular">{{ price | money }}</span>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Badges Row {%- endcomment -%}
+    <div class="pdp-badges-row">
+      <div class="pdp-stock-badge">
+        <span class="pdp-stock-dot"></span>
+        <span class="pdp-stock-text">Selling fast</span>
+      </div>
+      
+      <div class="pdp-shipping-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        <span>Free shipping</span>
+      </div>
+    </div>
+
+    <div class="pdp-dispatch-info">
+      Dispatch target: 48h · Free 30-day returns
+    </div>
+
+    {%- comment -%} Quantity Selector {%- endcomment -%}
+    <div class="pdp-quantity-wrapper">
+      <div class="pdp-quantity-selector">
+        <button type="button" class="pdp-qty-btn pdp-qty-decrease" onclick="updateQuantity(-1)" aria-label="Decrease quantity">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/>
+          </svg>
+        </button>
+        
+        <div class="pdp-qty-display">
+          <span class="pdp-qty-value" id="pdp-quantity-{{ section.id }}">1</span>
+          <span class="pdp-qty-total" id="pdp-total-{{ section.id }}">{{ price | money }}</span>
+        </div>
+        
+        <button type="button" class="pdp-qty-btn pdp-qty-increase" onclick="updateQuantity(1)" aria-label="Increase quantity">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {%- comment -%} Add to Cart / Buy Now Buttons {%- endcomment -%}
+    <div class="pdp-buttons">
+      <button type="button" class="pdp-atc-btn" onclick="addToCart({{ current_variant.id }})" id="pdp-atc-{{ section.id }}">
+        <span class="pdp-atc-text">Add to Cart</span>
+        <span class="pdp-atc-loading" style="display: none;">
+          <svg class="pdp-spinner" viewBox="0 0 24 24" fill="none">
+            <circle class="pdp-spinner-track" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="pdp-spinner-head" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+          Adding to Cart...
+        </span>
+      </button>
+      
+      <button type="button" class="pdp-buy-btn" onclick="buyNow({{ current_variant.id }})" id="pdp-buy-{{ section.id }}">
+        Buy Now
+      </button>
+    </div>
+
+    {%- comment -%} Trust Badges {%- endcomment -%}
+    <div class="pdp-trust-badges">
+      <div class="pdp-trust-icons">
+        <span class="pdp-trust-item">
+          <svg class="pdp-trust-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Secure checkout
+        </span>
+        <span class="pdp-trust-item">
+          <svg class="pdp-trust-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          30-day guarantee
+        </span>
+      </div>
+      <div class="pdp-payment-icons">
+        <span class="pdp-payment-badge">VISA</span>
+        <span class="pdp-payment-badge">MC</span>
+        <span class="pdp-payment-badge">Apple Pay</span>
+        <span class="pdp-payment-badge">G Pay</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Lumelle PDP Price - Pixel Perfect Native Liquid */
+  :root {
+    --lumelle-cocoa: #55362A;
+    --lumelle-blush: #FDD4DC;
+    --lumelle-peach: #FBC7B2;
+    --lumelle-blush-rgb: 253, 212, 220;
+    --lumelle-cocoa-rgb: 85, 54, 42;
+    --lumelle-peach-rgb: 251, 199, 178;
+  }
+
+  .lumelle-pdp-price {
+    min-width: 0;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .pdp-price-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* space-y-5 */
+    color: var(--lumelle-cocoa);
+  }
+
+  /* Title Row */
+  .pdp-title-row {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .pdp-product-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.95rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--lumelle-cocoa);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .pdp-product-title {
+      font-size: 2.25rem; /* text-4xl */
+    }
+  }
+
+  .pdp-share-wrapper {
+    margin-left: auto;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pdp-share-btn {
+    display: inline-flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgba(253, 212, 220, 0.6);
+    background: white;
+    color: var(--lumelle-cocoa);
+    box-shadow: 0 20px 60px rgba(var(--lumelle-peach-rgb), 0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .pdp-share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Description */
+  .pdp-product-desc {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--lumelle-cocoa);
+  }
+
+  /* Rating Row */
+  .pdp-rating-row {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .pdp-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .pdp-star-icons {
+    display: flex;
+    gap: 0.125rem;
+  }
+
+  .pdp-star {
+    width: 16px;
+    height: 16px;
+    color: #D1D5DB;
+  }
+
+  .pdp-star.filled {
+    color: #FBBF24;
+  }
+
+  .pdp-rating-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-rating-label {
+    font-size: 0.875rem;
+    color: rgba(85, 54, 42, 0.7);
+  }
+
+  .pdp-divider {
+    height: 1rem;
+    width: 1px;
+    background: rgba(85, 54, 42, 0.2);
+  }
+
+  .pdp-free-returns {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: rgba(85, 54, 42, 0.7);
+  }
+
+  .pdp-check-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Review Snippet */
+  .pdp-review-snippet {
+    margin-top: 0.75rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--lumelle-blush-rgb), 0.2);
+    padding: 0.75rem;
+    border: 1px solid rgba(var(--lumelle-blush-rgb), 0.3);
+  }
+
+  .pdp-snippet-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pdp-amber-stars {
+    color: #F59E0B;
+    font-size: 0.875rem;
+  }
+
+  .pdp-snippet-text {
+    font-size: 0.875rem;
+    color: rgba(85, 54, 42, 0.8);
+    font-style: italic;
+    line-height: 1.625;
+    margin: 0;
+  }
+
+  .pdp-snippet-author {
+    font-size: 0.75rem;
+    color: rgba(85, 54, 42, 0.6);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  /* Price Section */
+  .pdp-price-section {
+    margin-top: 1rem;
+  }
+
+  .pdp-price-current {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--lumelle-cocoa);
+    line-height: 1.25;
+  }
+
+  @media (min-width: 768px) {
+    .pdp-price-current {
+      font-size: 3rem; /* text-5xl */
+    }
+  }
+
+  .pdp-price-sale {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .pdp-discount-badge {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #DC2626;
+    background: #FFF1F2;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+  .pdp-price-original {
+    font-size: 1rem;
+    color: rgba(85, 54, 42, 0.5);
+    text-decoration: line-through;
+  }
+
+  /* Badges Row */
+  .pdp-badges-row {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .pdp-stock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background: rgba(var(--lumelle-blush-rgb), 0.2);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .pdp-stock-dot {
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    background: var(--lumelle-cocoa);
+  }
+
+  .pdp-stock-text {
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-shipping-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: rgba(85, 54, 42, 0.8);
+  }
+
+  .pdp-shipping-badge span {
+    font-weight: 600;
+  }
+
+  /* Dispatch Info */
+  .pdp-dispatch-info {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: rgba(85, 54, 42, 0.6);
+  }
+
+  /* Quantity Selector */
+  .pdp-quantity-wrapper {
+    margin-top: 0.75rem;
+  }
+
+  .pdp-quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--lumelle-blush-rgb), 0.6);
+    background: white;
+    padding: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .pdp-qty-btn {
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.15s;
+  }
+
+  .pdp-qty-btn:active {
+    transform: scale(0.95);
+  }
+
+  .pdp-qty-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .pdp-qty-decrease {
+    background: rgba(var(--lumelle-blush-rgb), 0.3);
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-qty-increase {
+    background: var(--lumelle-peach);
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-qty-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pdp-qty-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--lumelle-cocoa);
+  }
+
+  .pdp-qty-total {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(85, 54, 42, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Buttons */
+  .pdp-buttons {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .pdp-atc-btn {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--lumelle-cocoa);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    border: none;
+    box-shadow: 0 12px 28px rgba(var(--lumelle-cocoa-rgb), 0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .pdp-atc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(var(--lumelle-cocoa-rgb), 0.35);
+  }
+
+  .pdp-atc-btn:active {
+    transform: scale(0.98);
+  }
+
+  .pdp-atc-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .pdp-atc-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pdp-spinner {
+    height: 1rem;
+    width: 1rem;
+    animation: spin 1s linear infinite;
+  }
+
+  .pdp-spinner-track {
+    opacity: 0.25;
+  }
+
+  .pdp-spinner-head {
+    opacity: 0.75;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .pdp-buy-btn {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(var(--lumelle-blush-rgb), 0.7);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lumelle-cocoa);
+    border: none;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .pdp-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .pdp-buy-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* Trust Badges */
+  .pdp-trust-badges {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pdp-trust-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: rgba(85, 54, 42, 0.5);
+  }
+
+  .pdp-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .pdp-trust-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .pdp-payment-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+  }
+
+  .pdp-payment-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #E5E7EB;
+  }
+</style>
+
+<script>
+  const sectionId = '{{ section.id }}';
+  const variantId = {{ product.selected_or_first_available_variant.id }};
+  const variantPrice = {{ product.selected_or_first_available_variant.price }};
+  const maxQty = 10;
+  let currentQty = 1;
+
+  function updateQuantity(delta) {
+    const newQty = currentQty + delta;
+    if (newQty < 1 || newQty > maxQty) return;
+    currentQty = newQty;
+    
+    document.getElementById(`pdp-quantity-${sectionId}`).textContent = currentQty;
+    
+    const total = (variantPrice * currentQty) / 100;
+    document.getElementById(`pdp-total-${sectionId}`).textContent = formatMoney(total);
+    
+    // Update button states
+    document.querySelector('.pdp-qty-decrease').disabled = currentQty <= 1;
+    document.querySelector('.pdp-qty-increase').disabled = currentQty >= maxQty;
+  }
+
+  function formatMoney(amount) {
+    return '£' + amount.toFixed(2);
+  }
+
+  function addToCart(variantId) {
+    const btn = document.getElementById(`pdp-atc-${sectionId}`);
+    const textEl = btn.querySelector('.pdp-atc-text');
+    const loadingEl = btn.querySelector('.pdp-atc-loading');
+    
+    btn.disabled = true;
+    textEl.style.display = 'none';
+    loadingEl.style.display = 'flex';
+    
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: currentQty
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      btn.disabled = false;
+      textEl.style.display = 'inline';
+      loadingEl.style.display = 'none';
+      textEl.textContent = 'Added!';
+      
+      // Trigger cart update event
+      document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      
+      setTimeout(() => {
+        textEl.textContent = 'Add to Cart';
+      }, 2000);
+    })
+    .catch(error => {
+      btn.disabled = false;
+      textEl.style.display = 'inline';
+      loadingEl.style.display = 'none';
+      console.error('Error adding to cart:', error);
+    });
+  }
+
+  function buyNow(variantId) {
+    const btn = document.getElementById(`pdp-buy-${sectionId}`);
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: currentQty
+      })
+    })
+    .then(() => {
+      window.location.href = '/checkout';
+    })
+    .catch(error => {
+      btn.disabled = false;
+      btn.textContent = 'Buy Now';
+      console.error('Error:', error);
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Lumelle PDP Price",
+  "tag": "section",
+  "class": "lumelle-pdp-price-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show product description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_value",
+      "label": "Star rating value",
+      "min": 1,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.9,
+      "unit": "★"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count label",
+      "default": "2,847"
+    },
+    {
+      "type": "textarea",
+      "id": "review_snippet",
+      "label": "Review snippet text",
+      "default": "Finally a towel that actually fits all my hair. Dries so much faster and my frizz is basically gone!"
+    },
+    {
+      "type": "text",
+      "id": "review_author",
+      "label": "Review author name",
+      "default": "Amelia"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lumelle PDP Price (Native)"
+    }
+  ]
+}
+{% endschema %}
