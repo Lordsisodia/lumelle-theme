@@ -1,8 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "lumelle-static-hero",
-      "settings": {}
+      "settings": {
+        "image_position": "center center",
+        "trust_text": "10,000+ routines elevated",
+        "avatar_1": "shopify://shop_images/5.jpg",
+        "avatar_2": "shopify://shop_images/IMG_4063.jpg",
+        "avatar_3": "shopify://shop_images/IMG_2752.jpg",
+        "avatar_4": "shopify://shop_images/WhatsApp_Image_2025-12-04_at_15.07.16_4db8d052.jpg",
+        "avatar_5": "shopify://shop_images/Screenshot_2026-02-24_145726.png",
+        "headline": "Luxury shower cap that keeps hair frizz-free",
+        "subheadline": "Satin-lined, waterproof, and creator-tested to protect silk presses, curls, and braids from steam.",
+        "cta_text": "Shop shower cap",
+        "cta_link": "",
+        "rating_text": "4.8",
+        "product_image_alt": "Lumelle shower cap"
+      }
     },
     "trust_bar": {
       "type": "lumelle-react-trust-bar",
@@ -24,12 +47,12 @@
       "type": "lumelle-react-bundle-cards",
       "settings": {}
     },
-    "faq": {
-      "type": "lumelle-react-faq",
-      "settings": {}
-    },
     "final_cta": {
       "type": "lumelle-react-cta",
+      "settings": {}
+    },
+    "faq": {
+      "type": "lumelle-react-faq",
       "settings": {}
     },
     "email_capture": {
